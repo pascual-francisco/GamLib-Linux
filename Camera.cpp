@@ -95,7 +95,7 @@ void Camera::print()const
     cout << "Top = "<< top << endl;
     cout << "Bottom = "<< bottom << endl;
     cout << "Near = "<< near << endl;
-    cout << "Far " = << far << endl;
+    cout << "Far = "  << far << endl;
     cout << "Eye X = "<< EyeX << endl;
     cout << "Eye Y = "<< EyeY << endl;
     cout << "Eye Z = "<< EyeZ << endl;
