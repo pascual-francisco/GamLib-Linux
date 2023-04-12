@@ -44,17 +44,3 @@ class Camera
 };
 #endif
 
-/*
-	//Init Projection
-	projection = glm::ortho(0.0f, float(viewPort.w), 0.0f, float(viewPort.h), 1000.0f, -1000.0f);
-
-	//Init Camera
-	view = glm::lookAt(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, -1.0f), vec3(0.0f, 1.0f, 0.0f));
-
-	//Init Origin
-	view = glm::translate(view, vec3(0.0f, 0.0f, 0.0f));
-
-	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
-
-*/
