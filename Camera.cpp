@@ -54,7 +54,9 @@ void Camera::initCamera(bool active, GLuint programID,  GLuint type, GLfloat lef
     this->upZ = upZ;
 
     initProjection(left, right, bottom, top, near, far);
+
     initView(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+
     initOrigin(eyeX, eyeY, eyeZ);
 
 	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
