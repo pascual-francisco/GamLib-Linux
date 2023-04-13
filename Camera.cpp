@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-Camera:: Camera(active,programID,type,left,right,bottom,top,near,far,eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ)
+Camera::Camera(active,programID,type,left,right,bottom,top,near,far,eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ)
 {
     this->active = active;
 	this->programID = programID;
@@ -9,8 +9,8 @@ Camera:: Camera(active,programID,type,left,right,bottom,top,near,far,eyeX,eyeY,e
     this->right = right;
     this->top = top;
     this->bottom = bottom;
-    this->near = near;
-    this->far = far;
+    this->zNear = near;
+    this->zFar = far;
     this->eyeX = eyeX;
     this->eyeY = eyeY;
     this->eyeZ = eyeZ;
@@ -41,8 +41,8 @@ void Camera::initCamera(bool active, GLuint programID,  GLuint type, GLfloat lef
     this->right = right;
     this->top = top;
     this->bottom = bottom;
-    this->near = near;
-    this->far = far;
+    this->zNear = near;
+    this->zFar = far;
     this->eyeX = eyeX;
     this->eyeY = eyeY;
     this->eyeZ = eyeZ;
@@ -96,11 +96,11 @@ void Camera::print()const
     cout << "Right = "<< right << endl;
     cout << "Top = "<< top << endl;
     cout << "Bottom = "<< bottom << endl;
-    cout << "Near = "<< near << endl;
-    cout << "Far = "  << far << endl;
-    cout << "Eye X = "<< EyeX << endl;
-    cout << "Eye Y = "<< EyeY << endl;
-    cout << "Eye Z = "<< EyeZ << endl;
+    cout << "ZNear = "<< zNear << endl;
+    cout << "ZFar = "  << zFar << endl;
+    cout << "Eye X = "<< eyeX << endl;
+    cout << "Eye Y = "<< eyeY << endl;
+    cout << "Eye Z = "<< eyeZ << endl;
     cout << "Center X = "<< centerX << endl;
     cout << "Center Y = "<< centerY << endl;
     cout << "Center Z = "<< centerZ << endl;

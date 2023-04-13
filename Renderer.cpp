@@ -68,7 +68,6 @@ void Renderer::initSDL()
 		logFile.open(assetsPath + "Rendererlog.txt", ios::trunc);
 	}
 
-	int sdlResult = 0;
 	char buffer[300] = { 0 };
 
 	time_t now = time(0);
@@ -138,8 +137,6 @@ void Renderer::initSDL()
 void Renderer::initOpenGL()
 {
 	//Initialize OpenGL//
-	GLenum glewError = 0;
-	char buffer[300] = { 0 };
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glShadeModel(GL_SMOOTH);

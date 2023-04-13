@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GamLib 6.0" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/GamLib 6" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+					<Add directory="include" />
+					<Add directory="./" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/GamLib 6" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+					<Add option="-O2" />
+					<Add directory="include" />
+					<Add directory="./" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="user32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="D:/glew-2.1.0/include/GL" />
+			<Add directory="D:/glm-master/glm" />
+			<Add directory="D:/SDL2_image-2.0.0/x86_64-w64-mingw32/include/SDL2" />
+			<Add directory="D:/SDL2_mixer-2.0.0/x86_64-w64-mingw32/include/SDL2" />
+			<Add directory="D:/SDL2-2.26.5/x86_64-w64-mingw32/include/SDL2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lmingw32" />
+			<Add option="-lSDL2main" />
+			<Add option="-lSDL2" />
+			<Add option="-lSDL2_image" />
+			<Add option="-lSDL2_mixer" />
+			<Add option="-lopengl32" />
+			<Add option="-lglu32" />
+			<Add option="-lglew32" />
+			<Add option="-lglew32s" />
+			<Add directory="D:/glew-2.1.0/lib/Release/x64" />
+			<Add directory="D:/SDL2_image-2.0.0/x86_64-w64-mingw32/lib" />
+			<Add directory="D:/SDL2_mixer-2.0.0/x86_64-w64-mingw32/lib" />
+			<Add directory="D:/SDL2-2.26.5/x86_64-w64-mingw32/lib" />
+		</Linker>
+		<Unit filename="BufferObject.h" />
+		<Unit filename="Camera.cpp" />
+		<Unit filename="Camera.h" />
+		<Unit filename="Entity.cpp" />
+		<Unit filename="Entity.h" />
+		<Unit filename="EntityDelegate.h" />
+		<Unit filename="EntityManager.h" />
+		<Unit filename="EventManager.cpp" />
+		<Unit filename="EventManager.h" />
+		<Unit filename="FSMState.h" />
+		<Unit filename="FeedbackBuffer.cpp" />
+		<Unit filename="FeedbackBuffer.h" />
+		<Unit filename="FrameBuffer.cpp" />
+		<Unit filename="FrameBuffer.h" />
+		<Unit filename="GamLib.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="GameObject.h" />
+		<Unit filename="GraphicElement.h" />
+		<Unit filename="HitBox.cpp" />
+		<Unit filename="HitBox.h" />
+		<Unit filename="IndexBuffer.cpp" />
+		<Unit filename="IndexBuffer.h" />
+		<Unit filename="Joystick.cpp" />
+		<Unit filename="Joystick.h" />
+		<Unit filename="KeyFrame.cpp" />
+		<Unit filename="KeyFrame.h" />
+		<Unit filename="KeyFrameDelegate.cpp" />
+		<Unit filename="KeyFrameDelegate.h" />
+		<Unit filename="Mechanics.cpp" />
+		<Unit filename="Mechanics.h" />
+		<Unit filename="ObjectManager.cpp" />
+		<Unit filename="ObjectManager.h" />
+		<Unit filename="PackBuffer.cpp" />
+		<Unit filename="PackBuffer.h" />
+		<Unit filename="PixelBuffer.cpp" />
+		<Unit filename="PixelBuffer.h" />
+		<Unit filename="RenderBuffer.cpp" />
+		<Unit filename="RenderBuffer.h" />
+		<Unit filename="Renderer.cpp" />
+		<Unit filename="Renderer.h" />
+		<Unit filename="Scene.cpp" />
+		<Unit filename="Scene.h" />
+		<Unit filename="Shader.cpp" />
+		<Unit filename="Shader.h" />
+		<Unit filename="SoundDelegate.h" />
+		<Unit filename="SoundManager.cpp" />
+		<Unit filename="SoundManager.h" />
+		<Unit filename="Sprite.cpp" />
+		<Unit filename="Sprite.h" />
+		<Unit filename="SpriteDelegate.h" />
+		<Unit filename="Stdafx.cpp" />
+		<Unit filename="Stdafx.h" />
+		<Unit filename="Texture.cpp" />
+		<Unit filename="Texture.h" />
+		<Unit filename="TextureBuffer.cpp" />
+		<Unit filename="TextureBuffer.h" />
+		<Unit filename="TextureManager.cpp" />
+		<Unit filename="TextureManager.h" />
+		<Unit filename="Tile.cpp" />
+		<Unit filename="Tile.h" />
+		<Unit filename="TileMap.h" />
+		<Unit filename="TileMapManager.cpp" />
+		<Unit filename="TileMapManager.h" />
+		<Unit filename="Timer.cpp" />
+		<Unit filename="Timer.h" />
+		<Unit filename="TimerDelegate.cpp" />
+		<Unit filename="TimerDelegate.h" />
+		<Unit filename="Track.cpp" />
+		<Unit filename="Track.h" />
+		<Unit filename="TrackAction.cpp" />
+		<Unit filename="TrackAction.h" />
+		<Unit filename="TrackDelegate.cpp" />
+		<Unit filename="TrackDelegate.h" />
+		<Unit filename="Transformation.cpp" />
+		<Unit filename="Transformation.h" />
+		<Unit filename="UniformBuffer.cpp" />
+		<Unit filename="UniformBuffer.h" />
+		<Unit filename="UnpackBuffer.cpp" />
+		<Unit filename="UnpackBuffer.h" />
+		<Unit filename="VertexArray.cpp" />
+		<Unit filename="VertexArray.h" />
+		<Unit filename="VertexBuffer.cpp" />
+		<Unit filename="VertexBuffer.h" />
+		<Unit filename="VertexBufferLayout.cpp" />
+		<Unit filename="VertexBufferLayout.h" />
+		<Unit filename="framework.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
+		<Unit filename="resource.h" />
+		<Unit filename="targetver.h" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

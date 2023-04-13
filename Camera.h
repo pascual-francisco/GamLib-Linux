@@ -14,8 +14,8 @@ class Camera
     GLfloat right;
     GLfloat top;
     GLfloat bottom;
-    GLdouble zNear;
-    GLdouble zFar;
+    GLfloat zNear;
+    GLfloat zFar;
     GLfloat eyeX;
     GLfloat eyeY;
     GLfloat eyeZ;
