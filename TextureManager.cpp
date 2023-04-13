@@ -16,7 +16,6 @@ TextureManager::~TextureManager()
 void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLuint target)
 {
 	GLuint textureID = 0;
-	char index[4] = { 0 };
 	string file;
 	SDL_Surface *ptrImage = NULL;
 
@@ -104,7 +103,6 @@ void TextureManager::initTileSet(GLuint name, string path, GLuint tileWidth, GLu
 {
 	GLuint quantity = columns * rows;
 	GLuint textureID = 0;
-	char index[4] = { 0 };
 	string file;
 	SDL_Surface *ptrImage1 = nullptr;
 	SDL_Surface *ptrImage2 = nullptr;
@@ -159,7 +157,7 @@ void TextureManager::initTileSet(GLuint name, string path, GLuint tileWidth, GLu
 	}
 }
 
-void print() const
+void TextureManager:: print() const
 {
 
 }

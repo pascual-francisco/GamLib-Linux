@@ -1,9 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
-Scene::Scene(GLuint id, bool act, viewportX , viewportY , viewportW ,viewportH, GLuint program, GLuint type, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top,
-    GLfloat near, GLfloat far, GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX,
-    GLfloat upY, GLfloat upZ)
+Scene::Scene(GLuint id, bool act, GLfloat viewportX, GLfloat viewportY, GLfloat viewportW, GLfloat viewportH, GLuint program, GLuint type, GLfloat left, GLfloat right, GLfloat bottom,
+			 GLfloat top, GLfloat znear, GLfloat zfar, GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ)
 {
 	sceneID = id;
 	active = act;
@@ -43,7 +42,7 @@ Scene::Scene(GLuint id, bool act, viewportX , viewportY , viewportW ,viewportH, 
 	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
 
-    ptrCamera = new Camera(true, program, type, left, right, bottom, top, near, far, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+    ptrCamera = new Camera(true, program, type, left, right, bottom, top, znear, zfar, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
 }
 
 Scene::~Scene()

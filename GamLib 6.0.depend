@@ -1352,10 +1352,10 @@
 1605752525 source:d:\code blocks\gamlib 6.0\renderbuffer.cpp
 	"stdafx.h"
 
-1681183240 source:d:\code blocks\gamlib 6.0\renderer.cpp
+1681359894 source:d:\code blocks\gamlib 6.0\renderer.cpp
 	"stdafx.h"
 
-1612739511 source:d:\code blocks\gamlib 6.0\scene.cpp
+1681361885 source:d:\code blocks\gamlib 6.0\scene.cpp
 	"stdafx.h"
 
 1603059118 source:d:\code blocks\gamlib 6.0\shader.cpp
@@ -1376,7 +1376,7 @@
 1603037623 source:d:\code blocks\gamlib 6.0\texturebuffer.cpp
 	"stdafx.h"
 
-1680924974 source:d:\code blocks\gamlib 6.0\texturemanager.cpp
+1681362201 source:d:\code blocks\gamlib 6.0\texturemanager.cpp
 	"stdafx.h"
 
 1600622248 source:d:\code blocks\gamlib 6.0\tile.cpp
@@ -1430,10 +1430,10 @@
 	<inttypes.h>
 	<stdint.h>
 
-1681359290 d:\code blocks\gamlib 6.0\camera.h
+1681362427 d:\code blocks\gamlib 6.0\camera.h
 	"Stdafx.h"
 
-1680913386 source:d:\code blocks\gamlib 6.0\camera.cpp
+1681362035 source:d:\code blocks\gamlib 6.0\camera.cpp
 	"stdafx.h"
 
 1681167319 source:d:\code blocks\gamlib 6.0\joystick.cpp
