@@ -42,8 +42,6 @@ void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLui
 
 		if (quantity > 1 && quantity < 10 )
 		{
-			//Attack_BattonBone_1.png//
-			//Attack_BattonBone_
 			file = path + "1.png";
 
 			ptrImage = IMG_Load(file.c_str());
