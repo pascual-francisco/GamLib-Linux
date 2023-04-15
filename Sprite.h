@@ -7,22 +7,23 @@
 class Sprite : public GraphicElement
 {
 	public:
-	GLuint		textureUnit;
-	GLuint		textureID;			
-	vector<HitBox *>hitBox;
-	vec2		positionOffset;
-	vec4		textureOffset;
-	vec4		color[4];
-	bool		active;
-	
-	GLuint		animationState;
-	GLint		firstFrame;
-	GLint		lastFrame;
-	GLint		actualFrame;
-	GLfloat		frameCounter;
-	GLfloat		frameTime;
-	GLuint		loopCounter;
-	bool		loop;	
+	bool			active;
+	GLuint			textureUnit;
+	GLuint			textureID;
+	vector<HitBox*>	hitBox;
+	vec2			positionOffset;
+	vec4			textureOffset;
+	GLfloat 		texturePageOffset;
+	vec4			color[4];
+
+	GLuint			animationState;
+	GLint			firstFrame;
+	GLint			lastFrame;
+	GLint			actualFrame;
+	GLfloat			frameCounter;
+	GLfloat			frameTime;
+	GLuint			loopCounter;
+	bool			loop;
 
 	enum AnimationStates
 	{
@@ -34,7 +35,7 @@ class Sprite : public GraphicElement
 		PAUSE,
 		STOP
 	};
-	
+
 	__declspec(dllexport) Sprite(GLuint id = 0, GLint ff = 0, GLint lf = 1, GLint af = 0, GLfloat ft = 0, GLuint s = 0);
 	__declspec(dllexport) Sprite(const Sprite &);
 	__declspec(dllexport) ~Sprite();

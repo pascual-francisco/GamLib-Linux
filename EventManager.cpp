@@ -7,7 +7,7 @@ EventManager::EventManager()
 
 EventManager::~EventManager()
 {
-    //dtor
+
 }
 
 void EventManager::checkEvents()

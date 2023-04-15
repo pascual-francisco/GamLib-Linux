@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 ObjectManager::ObjectManager(GLuint program, GLenum mode)
-{	
+{
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
 	ptrvColLayout = nullptr;
@@ -11,7 +11,7 @@ ObjectManager::ObjectManager(GLuint program, GLenum mode)
 	ptrvRotLayout = nullptr;
 	ptrVertexBuffer = nullptr;
 	ptrVertexArray = nullptr;
-	ptrIndexBuffer = nullptr;	
+	ptrIndexBuffer = nullptr;
 
 	programID = program;
 	drawingMode = mode;
@@ -22,33 +22,33 @@ ObjectManager::ObjectManager(GLuint program, GLenum mode)
 	batchDrawCalls = 0;
 	textureCounter = 0;
 	vertexBufferStrideCount = 21;
-	quadFloatCount = 84;					
+	quadFloatCount = 84;
 }
 
 ObjectManager::~ObjectManager()
-{	
+{
 	delete ptrVertexBuffer;
 	delete ptrVertexArray;
 	delete ptrIndexBuffer;
 	delete ptrvPosLayout;
-	delete ptrvTexLayout;	
-	delete ptrvColLayout;	
+	delete ptrvTexLayout;
+	delete ptrvColLayout;
 	delete ptrvTraLayout;
 	delete ptrvScaLayout;
 	delete ptrvRotLayout;
 }
 
 void ObjectManager::initDataArray()
-{	
+{
 	GLuint sprites = 0;
-	GLuint vertices = 4;	
+	GLuint vertices = 4;
 
 	vector<Entity *>::iterator eit;
 	vector<Sprite *>::iterator sit;
 	vector<float >::iterator dit;
 
 	if (entitiesArray.size() > 0)
-	{		
+	{
 		for (eit = entitiesArray.begin(); eit != entitiesArray.end(); eit++)
 		{
 			if ((*eit) != nullptr)
@@ -59,7 +59,7 @@ void ObjectManager::initDataArray()
 					{
 						sprites++;
 					}
-				}			
+				}
 			}
 		}
 	}
@@ -67,7 +67,7 @@ void ObjectManager::initDataArray()
 	dataArray = vector<float>(sprites * vertices * vertexBufferStrideCount);
 
 	initBuffers();
-	initLayouts();		
+	initLayouts();
 	updateEnitities();
 }
 
@@ -75,13 +75,13 @@ void ObjectManager::initBuffers()
 {
 	//Vertex Array//
 	ptrVertexArray = new VertexArray();
-	
+
 	//Vertex Buffer//
 	ptrVertexBuffer = new VertexBuffer(dataArray.size(), sizeof(GLfloat), dataArray.data());
-	
+
 	//Index Buffer//
 	ptrIndexBuffer = new IndexBuffer(6 * (dataArray.size() / quadFloatCount), sizeof(GL_UNSIGNED_INT), nullptr);
-	
+
 	batchDrawCalls = ptrIndexBuffer->bufferCount / batchDrawOffset;
 }
 
@@ -91,7 +91,7 @@ void ObjectManager::initLayouts()
 	DATA BUFFER:
 	Entity 0
 		Sprite 0 [XYZW-STPQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
-		21 Float * 4 Vertices = 84 Floats 
+		21 Float * 4 Vertices = 84 Floats
 		1 Quad = 84 Floats
 */
 	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 4, GL_FALSE, 21, 0 * 4);
@@ -99,8 +99,8 @@ void ObjectManager::initLayouts()
 	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 21, 8 * 4);
 	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 21, 12 * 4);
 	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 21, 15 * 4);
-	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 21, 18 * 4);			
-	
+	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 21, 18 * 4);
+
 	ptrVertexArray->detach();
 	ptrVertexBuffer->detach();
 	ptrIndexBuffer->detach();
@@ -126,30 +126,30 @@ void ObjectManager::updateEnitities()
 		for (eit = entitiesArray.begin(); eit != entitiesArray.end(); eit++)
 		{
 			if ((*eit) != nullptr)
-			{ 
+			{
 				(*eit)->update();
-			
+
 				(*eit)->mechanics.speed.x += (*eit)->mechanics.acceleration.x;
 				(*eit)->mechanics.speed.y += (*eit)->mechanics.acceleration.y;
 
 				(*eit)->mechanics.position.x += (*eit)->mechanics.speed.x;
 				(*eit)->mechanics.position.y += (*eit)->mechanics.speed.y;
-			
+
 				if ((*eit)->sprite.size() > 0)
 				{
 					for (sit = (*eit)->sprite.begin(); sit != (*eit)->sprite.end(); sit++)
-					{						
+					{
 						(*sit)->transformation.translate.x = (*sit)->positionOffset.x + (*eit)->mechanics.position.x;
 						(*sit)->transformation.translate.y = (*sit)->positionOffset.y + (*eit)->mechanics.position.y;
 
 						(*sit)->update();
 
 						updateDataArray(*sit, offset);
-					
+
 						offset += quadFloatCount;
 					}
 				}
-			}			
+			}
 		}
 	}
 }
@@ -164,8 +164,8 @@ void ObjectManager::updateVertexBuffer()
 void ObjectManager::updateDataArray(Sprite *sprite, GLuint offset)
 {
 	updatePosition(sprite, offset + 0);
-	updateTexture(sprite, offset + 4);	
-	updateColor(sprite, offset + 8);	
+	updateTexture(sprite, offset + 4);
+	updateColor(sprite, offset + 8);
 	updateTranslate(sprite, offset + 12);
 	updateScale(sprite, offset + 15);
 	updateRotate(sprite, offset + 18);
@@ -183,7 +183,7 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
-	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);	
+	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	dataArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.y;
@@ -193,7 +193,7 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	dataArray[offset] = 1;
 	offset += (21 - 3);
 
-	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);	
+	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	dataArray[offset] = w - sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.y;
@@ -203,7 +203,7 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	dataArray[offset] = 1;
 	offset += (21 - 3);
 
-	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);	
+	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
 	dataArray[offset] = w - sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = h - sprite->transformation.pivot.y;
@@ -220,17 +220,17 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
 	offset++;
-	dataArray[offset] = 1; 
+	dataArray[offset] = 1;
 }
 
 void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
-{			
+{
 	//glTexCoord2f(image->textureX.value, image->textureY.value + image->textureHeight.value);
 	dataArray[offset] = sprite->textureOffset.x;
 	offset++;
 	dataArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->actualFrame);
+	dataArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->textureID);
 	offset += (21 - 3);
@@ -240,7 +240,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	dataArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->actualFrame);
+	dataArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->textureID);
 	offset += (21 - 3);
@@ -250,7 +250,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	dataArray[offset] = sprite->textureOffset.y;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->actualFrame);
+	dataArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->textureID);
 	offset += (21 - 3);
@@ -260,7 +260,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	dataArray[offset] = sprite->textureOffset.y;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->actualFrame);
+	dataArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->textureID);
 }
@@ -397,9 +397,9 @@ void ObjectManager::updateRotate(Sprite *sprite, GLuint offset)
 
 void ObjectManager::batchDraw(GLenum mode)
 {
-	drawingMode = mode;	
-	
-	ptrVertexArray->attach();	
+	drawingMode = mode;
+
+	ptrVertexArray->attach();
 	ptrVertexBuffer->attach();
 	ptrIndexBuffer->attach();
 
@@ -428,7 +428,7 @@ void ObjectManager::batchDraw(GLenum mode)
 		{
 			//Bind each quad texture to 32 texture units
 			for (int j = 0; j < maxTextureUnits; j++)
-			{		
+			{
 				glActiveTexture(GL_TEXTURE0 + GLint(dataArray[offset]));
 				glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(dataArray[offset]));
 
@@ -440,7 +440,7 @@ void ObjectManager::batchDraw(GLenum mode)
 					dataArray[offset] = GLfloat(j);
 					offset += (vertexBufferStrideCount);
 				}
-			}			
+			}
 			glDrawRangeElements(drawingMode, i * batchDrawOffset, (i * batchDrawOffset) + batchDrawOffset, ptrIndexBuffer->bufferCount, GL_UNSIGNED_INT, 0);
 		}
 	}
@@ -451,12 +451,12 @@ void ObjectManager::batchDraw(GLenum mode)
 
 void ObjectManager::update()
 {
-	updateEnitities();	
+	updateEnitities();
 	updateVertexBuffer();
 }
 
 void ObjectManager::print() const
-{	
+{
 	printInfo();
 	printEntities();
 	printDataArray();
@@ -478,54 +478,30 @@ void ObjectManager::printInfo() const
 }
 
 void ObjectManager::printDataArray() const
-{	
+{
 	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Buffer Data: " << endl;
-	
+
 	for (uint i = 0; i < dataArray.size(); i++)
 	{
 		if (i > 0)
 		{
 			if (i % vertexBufferStrideCount == 0)
-				cout << endl;			
+				cout << endl;
 		}
 		cout << dataArray[i] << ",    ";
 	}
-	
+
 	cout <<endl<< "******************************************************************************************************************************************************************************" << endl;
 }
 
 void ObjectManager::printEntities() const
-{	
+{
 	cout << "**************************************************" << endl;
 	cout << "Buffer Entities: " << endl;
 
 	for (GLuint i = 0; i < entitiesArray.size(); i++)
-		entitiesArray[i]->print();	
+		entitiesArray[i]->print();
 
 	cout << "**************************************************" << endl;
 }
-
-/*/
-
-if (entitiesArrayCount > 0)
-{
-	for (GLuint i = 0; i < entitiesArrayCount; i++)
-	{
-		entitiesArray[i]->update();
-
-		if (entitiesArray[i]->sprite != nullptr)
-		{
-			if (entitiesArray[i]->spriteCount > 0)
-			{
-				for (GLuint j = 0; j < entitiesArray[i]->spriteCount; j++)
-				{
-					entitiesArray[i]->sprite[j].update();
-					updateDataArray(i, j, offset);
-					offset += quadFloatCount;
-				}
-			}
-		}
-	}
-}
-}*/

@@ -19,6 +19,7 @@ Sprite::Sprite(const Sprite &object)
 		textureUnit = object.textureUnit;
 		transformation = object.transformation;
 		textureOffset = object.textureOffset;
+		texturePageOffset = object.texturePageOffset;
 		hitBox = object.hitBox;
 		color[0] = object.color[0];
 		color[1] = object.color[1];
@@ -50,17 +51,14 @@ void Sprite::init(GLuint id, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-
 	setAnimation(ff, lf, af, ft, s);
-
 	transformation.translate = vec3(0.0f, 0.0f, 0.0f);
 	transformation.pivot = vec3(0.0f, 0.0f, 0.0f);
 	transformation.rotate = vec3(0.0f, 0.0f, 0.0f);
 	transformation.scale = vec3(1.0f, 1.0f, 1.0f);
-
 	textureOffset = vec4(0.0f, 0.0f, 1.0f, 1.0f);
 	positionOffset = vec2(0.0f, 0.0f);
+	texturePageOffset = 0.0f;
 
 	for (uint i = 0; i < 4; i++)
 	{
@@ -84,6 +82,7 @@ const Sprite &Sprite::operator=(const Sprite &object)
 		transformation = object.transformation;
 		hitBox = object.hitBox;
 		textureOffset = object.textureOffset;
+		texturePageOffset = object.texturePageOffset;
 		color[0] = object.color[0];
 		color[1] = object.color[1];
 		color[2] = object.color[2];
@@ -157,6 +156,8 @@ bool Sprite::operator ==(const Sprite &object) const
 			active == object.active &&
 			textureID == object.textureID &&
 			positionOffset == object.positionOffset &&
+			textureOffset == object.textureOffset &&
+			texturePageOffset == object.texturePageOffset &&
 			textureUnit == object.textureUnit &&
 			hitBox == object.hitBox &&
 			transformation.translate == object.transformation.translate &&
@@ -346,6 +347,7 @@ void Sprite::print() const
 	cout << "Texture Unit = " << textureUnit << endl;
 	cout << "Texture ID = " << textureID << endl;
 	cout << "Texture Offset = [" << textureOffset.x << ", " << textureOffset.y << ", " << textureOffset.z << ", " << textureOffset.w << "]" << endl;
+	cout << "Texture Page Offset = [" << texturePageOffset << "]" << endl;
 	cout << "Position Offset = [" << positionOffset.x << ", " << positionOffset.y << ", " << textureOffset.z << ", " << textureOffset.w << "]" << endl;
 
 	transformation.print();

@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint program, GLenum mode)
-{			
+{
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
 	ptrvColLayout = nullptr;
@@ -15,7 +15,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 
 	batchDrawCount = 0;
 	batchDrawCalls = 0;
-	textureCounter = 0;	
+	textureCounter = 0;
 	offsetX = 0;
 	offsetY = 0;
 	speedX = 0;
@@ -37,11 +37,11 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	maxTextureUnits = 0;
 
 	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits * 6;	
+	batchDrawOffset = maxTextureUnits * 6;
 	pageTileCount = pageTiles;
 	mapPageCount = mapDataCount / pageTileCount;
 
-	mapTilesArray = vector<Sprite *>(mapDataCount);		
+	mapTilesArray = vector<Sprite *>(mapDataCount);
 	tilesArray = vector<Sprite *>( pageTileCount * 4);
 	vertexArray = vector<float>(tilesArray.size() * vertexBufferStrideCount * 4);
 
@@ -50,7 +50,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	vector<float >::iterator vait;
 
 	//Init all the tiles from the array of data
-	
+
 	if (mapTilesArray.size() > 0)
 	{
 		uint i = 0;
@@ -63,7 +63,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 			i++;
 		}
 	}
-	
+
 	//Init 4 pages of tiles for copy to vertex buffer
 
 	if (tilesArray.size() > 0)
@@ -73,26 +73,25 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 			(*tait) = new Sprite(0, 0, 1, 0, 0.0f, 0);
 			(*tait)->init(0, 0, 1, 0, 0.0f, 0);
 			(*tait)->hitBox.push_back(new HitBox());
-		}	
+		}
 	}
 
-	//Create data array for updates		
+	//Create data array for updates
 
 	if (vertexArray.size() > 0)
 	{
 		for (vait = vertexArray.begin(); vait != vertexArray.end(); vait++)
-			(*vait) = 0.0f;	
+			(*vait) = 0.0f;
 	}
-
 
 	initBuffers();
 	initLayouts();
-	updateEnitities();	
+	updateEnitities();
 }
 
 TileMapManager::~TileMapManager()
 {
-	
+
 	delete ptrVertexBuffer;
 	delete ptrVertexArray;
 	delete ptrIndexBuffer;
@@ -112,7 +111,7 @@ void TileMapManager::initBuffers()
 	//Vertex Buffer//
 	ptrVertexBuffer = new VertexBuffer(vertexArray.size(), sizeof(GLfloat), vertexArray.data());
 
-	//Index Buffer//	
+	//Index Buffer//
 	ptrIndexBuffer = new IndexBuffer(6 * pageTileCount * 4, sizeof(GL_UNSIGNED_INT), nullptr);
 
 	batchDrawCalls = ptrIndexBuffer->bufferCount / batchDrawOffset;
@@ -140,7 +139,7 @@ void TileMapManager::initLayouts()
 }
 
 void TileMapManager::update()
-{		
+{
 	offsetX = offsetX + speedX;
 	offsetY = offsetY + speedY;
 
@@ -149,19 +148,19 @@ void TileMapManager::update()
 }
 
 void TileMapManager::loadPage(GLfloat tileDestinationX, GLfloat tileDestinationY, GLuint pageSource, GLuint pageDestination)
-{	
+{
 	uint tw = viewPortW / tileWidth;
 	uint th = viewPortH / tileHeight;
 
 	uint w = 0;
 	uint h = th - 1;
-	
+
 	for (uint i = 0 ; i < pageTileCount; i++)
-	{	
+	{
 		tilesArray[i + (pageTileCount * pageDestination)] = mapTilesArray[i +( pageTileCount * pageSource)];
 		tilesArray[i + (pageTileCount * pageDestination)]->transformation.translate.x = (w * tileWidth) + (tileDestinationX * tileWidth);
 		tilesArray[i + (pageTileCount * pageDestination)]->transformation.translate.y = (h * tileHeight) + (tileDestinationY * tileHeight);
-		
+
 		if (w < (tw - 1))
 		{
 			w++;
@@ -184,7 +183,7 @@ void TileMapManager::movePage(GLfloat tileDestinationX, GLfloat tileDestinationY
 	uint h = th - 1;
 
 	for (uint i = 0; i < pageTileCount; i++)
-	{	
+	{
 		tilesArray[i + (pageTileCount * page)]->transformation.translate.x = (w * tileWidth) + (tileDestinationX * tileWidth);
 		tilesArray[i + (pageTileCount * page)]->transformation.translate.y = (h * tileHeight) + (tileDestinationY * tileHeight);
 
@@ -232,14 +231,14 @@ void TileMapManager::updateEnitities()
 		{
 			//Update all sprites
 			(*tait)->update();
-			
+
 			//Copy data from Entities array to data array of floats
 			updateVertexArray(*tait, offset);
-			
+
 			//Apply offset
 			offset += quadFloatCount;
 		}
-	}	
+	}
 }
 
 void TileMapManager::updateVertexArray(Sprite *sprite, GLuint offset)
@@ -257,14 +256,14 @@ void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 	GLint w = 0;
 	GLint h = 0;
 	GLint d = 0;
-	
+
 	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
-	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);	
+	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	vertexArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.y;
@@ -274,7 +273,7 @@ void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = 1;
 	offset += (21 - 3);
 
-	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);	
+	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	vertexArray[offset] = w - sprite->transformation.pivot.x;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.y;
@@ -284,7 +283,7 @@ void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = 1;
 	offset += (21 - 3);
 
-	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);	
+	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
 	vertexArray[offset] = w - sprite->transformation.pivot.x;
 	offset++;
 	vertexArray[offset] = h - sprite->transformation.pivot.y;
@@ -311,9 +310,9 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	vertexArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->actualFrame);
+	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->textureID);	
+	vertexArray[offset] = GLfloat(sprite->textureID);
 	offset += (21 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value + image->textureHeight.value);
@@ -321,7 +320,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	vertexArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->actualFrame);
+	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->textureID);
 	offset += (21 - 3);
@@ -331,7 +330,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	vertexArray[offset] = sprite->textureOffset.y;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->actualFrame);
+	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->textureID);
 	offset += (21 - 3);
@@ -341,7 +340,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset++;
 	vertexArray[offset] = sprite->textureOffset.y;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->actualFrame);
+	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->textureID);
 }
@@ -385,7 +384,7 @@ void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 }
 
 void TileMapManager::updateTranslate(Sprite *sprite, GLuint offset)
-{		
+{
 	sprite->hitBox[0]->box.x = sprite->transformation.translate.x + offsetX;
 	sprite->hitBox[0]->box.y = sprite->transformation.translate.y + offsetY;
 	sprite->hitBox[0]->box.w = tileWidth;
@@ -481,14 +480,14 @@ void TileMapManager::updateRotate(Sprite *sprite, GLuint offset)
 }
 
 void TileMapManager::updateVertexBuffer()
-{	
+{
 	ptrVertexBuffer->attach();
 	glBufferSubData(GL_ARRAY_BUFFER, 0, vertexArray.size() * sizeof(GLfloat), vertexArray.data());
 	ptrVertexBuffer->detach();
 }
 
 void TileMapManager::batchDraw()
-{		
+{
 	ptrVertexArray->attach();
 	ptrVertexBuffer->attach();
 	ptrIndexBuffer->attach();
@@ -500,19 +499,19 @@ void TileMapManager::batchDraw()
 	{
 		//Bind each quad texture to 32 texture units
 		for (int j = 0; j < maxTextureUnits; j++)
-		{						
+		{
 			glActiveTexture(GL_TEXTURE0 + GLuint(vertexArray[offset]));
-			glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(vertexArray[offset]));		
+			glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(vertexArray[offset]));
 
 			for (uint k = 0; k < 4; k++)
 			{
 				batchDrawCount = i;
-				textureCounter = j;				
+				textureCounter = j;
 				vertexArray[offset] = j;
 				offset += (vertexBufferStrideCount);
 			}
-			
-		}		
+
+		}
 		glDrawRangeElements(drawingMode, i * batchDrawOffset, (i * batchDrawOffset) + batchDrawOffset, ptrIndexBuffer->bufferCount, GL_UNSIGNED_INT, 0);
 	}
 	ptrVertexArray->detach();
@@ -581,8 +580,8 @@ void TileMapManager::printTiles() const
 	uint w = 0;
 
 	for (uint i = 0; i <tilesArray.size(); i++)
-	{		
-		cout << "[ " << tilesArray[i]->textureID << " ]";	
+	{
+		cout << "[ " << tilesArray[i]->textureID << " ]";
 
 		if (w < ((viewPortW / tileWidth) - 1))
 			w++;
@@ -590,7 +589,7 @@ void TileMapManager::printTiles() const
 		{
 			w = 0;
 			cout << "," << endl;
-		}	
+		}
 	}
 }
 
