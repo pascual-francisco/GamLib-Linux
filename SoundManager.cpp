@@ -30,7 +30,7 @@ void SoundManager::initSFX(GLuint name, string path)
 	Mix_Chunk *chunk = nullptr;
 
 	chunk = Mix_LoadWAV(path.c_str());
-	
+
 	if (chunk != nullptr)
 		sfxMap.insert(SFXMap::value_type(name, chunk));
 
@@ -50,6 +50,7 @@ void SoundManager::initBGM(GLuint name, string path)
 
 void SoundManager::playBGM(GLuint name)
 {
+
 }
 
 void SoundManager::playSFX(GLuint name)
@@ -60,14 +61,14 @@ void SoundManager::print() const
 {
 	cout << "**************************************************" << endl;
 	cout << "Sound Manager Info:" << endl;
-	cout << "Frequecy = " << frequency << endl;
+	cout << "Frequency = " << frequency << endl;
 	cout << "Format = " << format << endl;
 	cout << "Channels = " << channels<< endl;
 	cout << "Chunk Size = " << chunkSize << endl;
 	cout << "BGM Map Info:" << endl;
-	cout << "BGM count = " << bgmMap.size() << endl;	
+	cout << "BGM count = " << bgmMap.size() << endl;
 	cout << "SFX Map Info:" << endl;
-	cout << "SFX count = " << sfxMap.size() << endl;	
+	cout << "SFX count = " << sfxMap.size() << endl;
 	cout << "**************************************************" << endl;
 }
 

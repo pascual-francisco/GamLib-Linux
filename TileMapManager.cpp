@@ -55,25 +55,25 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	{
 		uint i = 0;
 
-		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
-		{
-			(*mtit) = new Sprite(0, 0, 1, 0, 0.0f, 0);
-			(*mtit)->init(mapData[i], 0, 1, 0, 0.0f, 0);
-			(*mtit)->hitBox.push_back(new HitBox());
-			i++;
-		}
+//		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
+//		{
+//			(*mtit) = new Sprite(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.0f, 0);
+//			(*mtit)->init(mapData[i], 0, 1, 0, 0.0f, 0);
+//			(*mtit)->hitBox.push_back(new HitBox());
+//			i++;
+//		}
 	}
 
 	//Init 4 pages of tiles for copy to vertex buffer
 
 	if (tilesArray.size() > 0)
 	{
-		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
-		{
-			(*tait) = new Sprite(0, 0, 1, 0, 0.0f, 0);
-			(*tait)->init(0, 0, 1, 0, 0.0f, 0);
-			(*tait)->hitBox.push_back(new HitBox());
-		}
+//		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
+//		{
+//			(*tait) = new Sprite(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.0f, 0);
+//			(*tait)->init(0, 0, 1, 0, 0.0f, 0);
+//			(*tait)->hitBox.push_back(new HitBox());
+//		}
 	}
 
 	//Create data array for updates
@@ -253,15 +253,15 @@ void TileMapManager::updateVertexArray(Sprite *sprite, GLuint offset)
 
 void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 {
-	GLint w = 0;
-	GLint h = 0;
-	GLint d = 0;
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+//	GLint w = 0;
+//	GLint h = 0;
+//	GLint d = 0;
+//
+//	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
+//	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
+//	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
+//	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
+//	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	vertexArray[offset] = -sprite->transformation.pivot.x;
@@ -274,7 +274,7 @@ void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset += (21 - 3);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
-	vertexArray[offset] = w - sprite->transformation.pivot.x;
+	vertexArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
@@ -284,9 +284,9 @@ void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset += (21 - 3);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
-	vertexArray[offset] = w - sprite->transformation.pivot.x;
+	vertexArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
 	offset++;
-	vertexArray[offset] = h - sprite->transformation.pivot.y;
+	vertexArray[offset] = sprite->textureOffset.w - sprite->transformation.pivot.y;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.z;
 	offset++;
@@ -296,7 +296,7 @@ void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 	//glVertex3f(-image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value)
 	vertexArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
-	vertexArray[offset] = h - sprite->transformation.pivot.y;
+	vertexArray[offset] = sprite->textureOffset.w - sprite->transformation.pivot.y;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.z;
 	offset++;

@@ -42,7 +42,7 @@ void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLui
 
 		if (quantity > 1 && quantity < 10 )
 		{
-			file = path + "1.png";
+			file = path + "0.png";
 
 			ptrImage = IMG_Load(file.c_str());
 
@@ -50,29 +50,27 @@ void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLui
 				glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, ptrImage->w, ptrImage->h, quantity, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
 
-			for (GLuint i = 1; i < quantity + 1; i++)
+			for (GLuint i = 0; i < quantity; i++)
 			{
 				file = path + to_string(i) + ".png";
 
 				ptrImage = IMG_Load(file.c_str());
 
 				if (ptrImage != NULL)
-					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i - 1, ptrImage->w, ptrImage->h, 1, GL_RGBA, GL_UNSIGNED_BYTE, ptrImage->pixels);
+					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, ptrImage->w, ptrImage->h, 1, GL_RGBA, GL_UNSIGNED_BYTE, ptrImage->pixels);
 			}
 		}
 
 		if (quantity >= 10)
 		{
-			//Idle_RT-55J_01.png//
-			//Idle_RT-55J_
-			file = path + "01.png";
+			file = path + "00.png";
 			ptrImage = IMG_Load(file.c_str());
 
 			if (ptrImage != NULL)
 				glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, ptrImage->w, ptrImage->h, quantity, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
 
-			for (GLuint i = 1; i < quantity + 1; i++)
+			for (GLuint i = 0; i < quantity; i++)
 			{
 				if (i < 10)
 				{
@@ -86,7 +84,7 @@ void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLui
 				ptrImage = IMG_Load(file.c_str());
 
 				if (ptrImage != NULL)
-					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i - 1, ptrImage->w, ptrImage->h, 1, GL_RGBA, GL_UNSIGNED_BYTE, ptrImage->pixels);
+					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, ptrImage->w, ptrImage->h, 1, GL_RGBA, GL_UNSIGNED_BYTE, ptrImage->pixels);
 
 			}
 		}

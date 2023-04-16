@@ -1,9 +1,9 @@
 #pragma once
 #include "stdafx.h"
 
-Sprite::Sprite(GLuint id, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
+Sprite::Sprite(GLuint id, GLfloat po, GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
 {
-	init(id, ff, lf, af, ft, s);
+	init(id, po, tx, ty, tw, th, ff, lf, af, ft, s);
 }
 
 Sprite::~Sprite()
@@ -33,32 +33,39 @@ Sprite::Sprite(const Sprite &object)
 		frameTime = object.frameTime;
 		loopCounter = object.loopCounter;
 		loop = object.loop;
+		sheetSize = object.sheetSize;
 	}
 }
 
-void Sprite::init(GLuint id, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
+void Sprite::init(GLuint id, GLfloat po, GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
 {
-	GLint w = 0;
-	GLint h = 0;
-	GLint d = 0;
-
 	active = true;
 	textureUnit = 0;
-
 	textureID = id;
+	sheetSize.x = 0.0f;
+	sheetSize.y = 0.0f;
+	sheetSize.z = 0.0f;
+
+	GLint w, h,d;
 	glBindTexture(GL_TEXTURE_2D_ARRAY, textureID);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+	sheetSize.x = w;
+	sheetSize.y = h;
+	sheetSize.z = d;
+
 	setAnimation(ff, lf, af, ft, s);
+
 	transformation.translate = vec3(0.0f, 0.0f, 0.0f);
 	transformation.pivot = vec3(0.0f, 0.0f, 0.0f);
 	transformation.rotate = vec3(0.0f, 0.0f, 0.0f);
 	transformation.scale = vec3(1.0f, 1.0f, 1.0f);
-	textureOffset = vec4(0.0f, 0.0f, 1.0f, 1.0f);
+	textureOffset = vec4(tx/sheetSize.x, ty/sheetSize.y, tw/sheetSize.x, th/sheetSize.y);
 	positionOffset = vec2(0.0f, 0.0f);
-	texturePageOffset = 0.0f;
+	texturePageOffset = po;
 
 	for (uint i = 0; i < 4; i++)
 	{

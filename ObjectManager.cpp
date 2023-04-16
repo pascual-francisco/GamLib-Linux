@@ -173,16 +173,6 @@ void ObjectManager::updateDataArray(Sprite *sprite, GLuint offset)
 
 void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 {
-	GLint w = 0;
-	GLint h = 0;
-	GLint d = 0;
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
 	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	dataArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
@@ -194,7 +184,7 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset += (21 - 3);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
-	dataArray[offset] = w - sprite->transformation.pivot.x;
+	dataArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
@@ -204,9 +194,9 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset += (21 - 3);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
-	dataArray[offset] = w - sprite->transformation.pivot.x;
+	dataArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
 	offset++;
-	dataArray[offset] = h - sprite->transformation.pivot.y;
+	dataArray[offset] = sprite->textureOffset.w - sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
 	offset++;
@@ -216,7 +206,7 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	//glVertex3f(-image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value)
 	dataArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
-	dataArray[offset] = h - sprite->transformation.pivot.y;
+	dataArray[offset] = sprite->textureOffset.w; - sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
 	offset++;

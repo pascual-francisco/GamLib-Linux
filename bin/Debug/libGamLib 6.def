@@ -291,12 +291,12 @@ EXPORTS
     _ZN6ShaderD1Ev @290
     _ZN6ShaderD2Ev @291
     _ZN6Sprite12setAnimationEiiifj @292
-    _ZN6Sprite4initEjiiifj @293
+    _ZN6Sprite4initEjfffffiiifj @293
     _ZN6Sprite6updateEv @294
     _ZN6SpriteC1ERKS_ @295
-    _ZN6SpriteC1Ejiiifj @296
+    _ZN6SpriteC1Ejfffffiiifj @296
     _ZN6SpriteC2ERKS_ @297
-    _ZN6SpriteC2Ejiiifj @298
+    _ZN6SpriteC2Ejfffffiiifj @298
     _ZN6SpriteD1Ev @299
     _ZN6SpriteD2Ev @300
     _ZN6SpriteaSERKS_ @301
