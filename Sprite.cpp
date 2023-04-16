@@ -52,13 +52,10 @@ void Sprite::init(GLuint id, GLfloat po, GLfloat tx, GLfloat ty, GLfloat tw, GLf
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
 	sheetSize.x = w;
 	sheetSize.y = h;
 	sheetSize.z = d;
-
 	setAnimation(ff, lf, af, ft, s);
-
 	transformation.translate = vec3(0.0f, 0.0f, 0.0f);
 	transformation.pivot = vec3(0.0f, 0.0f, 0.0f);
 	transformation.rotate = vec3(0.0f, 0.0f, 0.0f);
