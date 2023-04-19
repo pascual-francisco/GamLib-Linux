@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint program, GLenum mode)
+TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint tz, GLuint program, GLenum mode)
 {
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
@@ -31,6 +31,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 	programID = program;
 	tileWidth = tw;
 	tileHeight = th;
+	tileSeparation = tz;
 	viewPortW = vw;
 	viewPortH = vh;
 	drawingMode = mode;
@@ -81,9 +82,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 			tileFrames = ((mapData[i] & 0x000000FF0) >> 4 );
 			tileSize = ((mapData[i] & 0x00000000F));
 
-			//Sprite::Sprite(GLuint id, GLfloat po, GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
-
-			(*mtit) = new Sprite(palette, palettePage, 0.0f, 0.0f, tw, th);
+			(*mtit) = new Sprite(palette, palettePage, tw *  tileColumn, th * tileRow, tw, th, tz, 0, tileFrames, 0, 3, 0);
 			(*mtit)->hitBox.push_back(new HitBox());
 			i++;
 		}
@@ -168,6 +167,11 @@ void TileMapManager::update()
 
 	updateEnitities();
 	updateVertexBuffer();
+}
+
+void TileMapManager::loadTile()
+{
+
 }
 
 void TileMapManager::loadPage(GLfloat tileDestinationX, GLfloat tileDestinationY, GLuint pageSource, GLuint pageDestination)

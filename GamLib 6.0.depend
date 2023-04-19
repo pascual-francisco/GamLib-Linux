@@ -1241,7 +1241,7 @@
 1632273352 d:\code blocks\gamlib 6.0\hitbox.h
 	"stdafx.h"
 
-1681614582 d:\code blocks\gamlib 6.0\sprite.h
+1681870337 d:\code blocks\gamlib 6.0\sprite.h
 	"stdafx.h"
 
 1611450551 d:\code blocks\gamlib 6.0\gameobject.h
@@ -1291,7 +1291,7 @@
 1602981411 d:\code blocks\gamlib 6.0\indexbuffer.h
 	"stdafx.h"
 
-1681867264 d:\code blocks\gamlib 6.0\tilemapmanager.h
+1681870548 d:\code blocks\gamlib 6.0\tilemapmanager.h
 	"stdafx.h"
 
 1611615486 d:\code blocks\gamlib 6.0\objectmanager.h
@@ -1364,7 +1364,7 @@
 1681608493 source:d:\code blocks\gamlib 6.0\soundmanager.cpp
 	"stdafx.h"
 
-1681615058 source:d:\code blocks\gamlib 6.0\sprite.cpp
+1681870962 source:d:\code blocks\gamlib 6.0\sprite.cpp
 	"stdafx.h"
 
 1392776132 source:d:\code blocks\gamlib 6.0\stdafx.cpp
@@ -1382,7 +1382,7 @@
 1600622248 source:d:\code blocks\gamlib 6.0\tile.cpp
 	"stdafx.h"
 
-1681614180 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
+1681870585 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
 	"stdafx.h"
 
 1597630276 source:d:\code blocks\gamlib 6.0\timer.cpp

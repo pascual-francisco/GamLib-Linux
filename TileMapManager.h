@@ -42,6 +42,7 @@ class TileMapManager
 	GLenum	drawingMode;
 	GLuint	mapPageCount;
 	GLuint  pageTileCount;
+	GLuint	tileSeparation;
 
 	vector<Sprite *>	mapTilesArray;
 	vector<Sprite *>	tilesArray;
@@ -57,10 +58,11 @@ class TileMapManager
 	VertexBuffer		*ptrVertexBuffer;
 	VertexArray			*ptrVertexArray;
 
-	__declspec(dllexport) TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLulong *mapData = nullptr, GLuint vw = 256, GLuint vh = 224, GLuint tw = 16, GLuint th = 16, GLuint program = 0, GLenum mode = GL_TRIANGLES);
+	__declspec(dllexport) TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLulong *mapData = nullptr, GLuint vw = 256, GLuint vh = 224, GLuint tw = 16, GLuint th = 16, GLuint tz = 0,  GLuint program = 0, GLenum mode = GL_TRIANGLES);
 	__declspec(dllexport) ~TileMapManager();
 	__declspec(dllexport) void batchDraw();
 	__declspec(dllexport) void update();
+	__declspec(dllexport) void loadTile();
 	__declspec(dllexport) void loadPage(GLfloat tileDestinationX = 0, GLfloat tileDestinationY = 0, GLuint pageSource = 0, GLuint pageDestination = 0);
 	__declspec(dllexport) void movePage(GLfloat tileDestinationX = 0, GLfloat tileDestinationY = 0, GLuint page = 0);
 	__declspec(dllexport) void loadFirstPage(GLuint pageSource = 0);
