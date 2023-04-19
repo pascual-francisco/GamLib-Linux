@@ -1291,7 +1291,7 @@
 1602981411 d:\code blocks\gamlib 6.0\indexbuffer.h
 	"stdafx.h"
 
-1612654955 d:\code blocks\gamlib 6.0\tilemapmanager.h
+1681867264 d:\code blocks\gamlib 6.0\tilemapmanager.h
 	"stdafx.h"
 
 1611615486 d:\code blocks\gamlib 6.0\objectmanager.h
@@ -1364,7 +1364,7 @@
 1681608493 source:d:\code blocks\gamlib 6.0\soundmanager.cpp
 	"stdafx.h"
 
-1681533081 source:d:\code blocks\gamlib 6.0\sprite.cpp
+1681615058 source:d:\code blocks\gamlib 6.0\sprite.cpp
 	"stdafx.h"
 
 1392776132 source:d:\code blocks\gamlib 6.0\stdafx.cpp

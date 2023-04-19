@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint program, GLenum mode)
+TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint program, GLenum mode)
 {
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
@@ -49,31 +49,54 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	vector<Sprite *>::iterator tait;
 	vector<float >::iterator vait;
 
+	BYTE palette = 0x00;
+	BYTE palettePage = 0x00;
+	WORD tileColumn = 0x0000;
+	WORD tileRow = 0x0000;
+	WORD tileFrames = 0x0000;
+	BYTE tileSize = 0x00;
+
 	//Init all the tiles from the array of data
+	/*
+	//[Palette,Page-Column-Row-Frames-Size,Seperation-Collision]
+	long  x = 0x2301040A5;
+    cout<<" palette = " << ( (x & 0xF00000000) >> 32 )  <<endl;
+    cout<<" page = " <<    ( (x & 0x0F0000000) >> 28 )  <<endl;
+    cout<<" column = " <<  ( (x & 0x00FF00000) >> 20 )  <<endl;
+    cout<<" row = " <<     ( (x & 0x0000FF000) >> 12 )  <<endl;
+    cout<<" frames = " <<  ( (x & 0x000000FF0) >> 4  )  <<endl;
+    cout<<" size = " <<    ( (x & 0x00000000F)       ) <<endl;
+	*/
 
 	if (mapTilesArray.size() > 0)
 	{
 		uint i = 0;
 
-//		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
-//		{
-//			(*mtit) = new Sprite(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.0f, 0);
-//			(*mtit)->init(mapData[i], 0, 1, 0, 0.0f, 0);
-//			(*mtit)->hitBox.push_back(new HitBox());
-//			i++;
-//		}
+		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
+		{
+			palette = ((mapData[i] & 0xF00000000) >> 32);
+			palettePage = ((mapData[i] & 0x0F0000000) >> 28);
+			tileColumn = ((mapData[i] & 0x00FF00000) >> 20);
+			tileRow = ((mapData[i] & 0x0000FF000) >> 12);
+			tileFrames = ((mapData[i] & 0x000000FF0) >> 4 );
+			tileSize = ((mapData[i] & 0x00000000F));
+
+			//Sprite::Sprite(GLuint id, GLfloat po, GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
+
+			(*mtit) = new Sprite(palette, palettePage, 0.0f, 0.0f, tw, th);
+			(*mtit)->hitBox.push_back(new HitBox());
+			i++;
+		}
 	}
 
 	//Init 4 pages of tiles for copy to vertex buffer
-
 	if (tilesArray.size() > 0)
 	{
-//		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
-//		{
-//			(*tait) = new Sprite(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.0f, 0);
-//			(*tait)->init(0, 0, 1, 0, 0.0f, 0);
-//			(*tait)->hitBox.push_back(new HitBox());
-//		}
+		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
+		{
+			(*tait) = new Sprite();
+			(*tait)->hitBox.push_back(new HitBox());
+		}
 	}
 
 	//Create data array for updates
@@ -253,15 +276,15 @@ void TileMapManager::updateVertexArray(Sprite *sprite, GLuint offset)
 
 void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 {
-//	GLint w = 0;
-//	GLint h = 0;
-//	GLint d = 0;
-//
-//	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
-//	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
-//	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
-//	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
-//	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+	GLint w = 0;
+	GLint h = 0;
+	GLint d = 0;
+
+	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
+	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	vertexArray[offset] = -sprite->transformation.pivot.x;
