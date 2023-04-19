@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint tz, GLuint program, GLenum mode)
+TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint tz, GLuint program, GLenum mode)
 {
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
@@ -55,18 +55,16 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 	WORD tileColumn = 0x0000;
 	WORD tileRow = 0x0000;
 	WORD tileFrames = 0x0000;
-	BYTE tileSize = 0x00;
 
 	//Init all the tiles from the array of data
 	/*
 	//[Palette,Page-Column-Row-Frames-Size,Seperation-Collision]
-	long  x = 0x2301040A5;
-    cout<<" palette = " << ( (x & 0xF00000000) >> 32 )  <<endl;
-    cout<<" page = " <<    ( (x & 0x0F0000000) >> 28 )  <<endl;
-    cout<<" column = " <<  ( (x & 0x00FF00000) >> 20 )  <<endl;
-    cout<<" row = " <<     ( (x & 0x0000FF000) >> 12 )  <<endl;
-    cout<<" frames = " <<  ( (x & 0x000000FF0) >> 4  )  <<endl;
-    cout<<" size = " <<    ( (x & 0x00000000F)       ) <<endl;
+	 int  x = 0x2501010A;
+    cout<<" palette = " << ( (x & 0xF0000000) >> 28 )  <<endl;
+    cout<<" page = " <<    ( (x & 0x0F000000) >> 24 )  <<endl;
+    cout<<" column = " <<  ( (x & 0x00FF0000) >> 16 )  <<endl;
+    cout<<" row = " <<     ( (x & 0x0000FF00) >> 8 )  <<endl;
+    cout<<" frames = " <<  ( (x & 0x000000FF)   )  <<endl;
 	*/
 
 	if (mapTilesArray.size() > 0)
@@ -75,12 +73,12 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 
 		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
 		{
-			palette = ((mapData[i] & 0xF00000000) >> 32);
-			palettePage = ((mapData[i] & 0x0F0000000) >> 28);
-			tileColumn = ((mapData[i] & 0x00FF00000) >> 20);
-			tileRow = ((mapData[i] & 0x0000FF000) >> 12);
-			tileFrames = ((mapData[i] & 0x000000FF0) >> 4 );
-			tileSize = ((mapData[i] & 0x00000000F));
+			palette = ((mapData[i] & 0xF0000000) >> 28);
+			palettePage = ((mapData[i] & 0x0F000000) >> 24);
+			tileColumn = ((mapData[i] & 0x00FF0000) >> 16);
+			tileRow = ((mapData[i] & 0x0000FF00) >> 8);
+			tileFrames = ((mapData[i] & 0x000000FF) );
+
 
 			(*mtit) = new Sprite(palette, palettePage, tw *  tileColumn, th * tileRow, tw, th, tz, 0, tileFrames, 0, 3, 0);
 			(*mtit)->hitBox.push_back(new HitBox());

@@ -184,8 +184,8 @@ EXPORTS
     _ZN14TileMapManager8loadTileEv @183
     _ZN14TileMapManager8movePageEffj @184
     _ZN14TileMapManager9batchDrawEv @185
-    _ZN14TileMapManagerC1EjjPmjjjjjjj @186
-    _ZN14TileMapManagerC2EjjPmjjjjjjj @187
+    _ZN14TileMapManagerC1EjjPjjjjjjjj @186
+    _ZN14TileMapManagerC2EjjPjjjjjjjj @187
     _ZN14TileMapManagerD1Ev @188
     _ZN14TileMapManagerD2Ev @189
     _ZN14TransformationC1Ev @190
