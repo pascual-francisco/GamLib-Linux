@@ -85,8 +85,6 @@
 		<Unit filename="Game.h" />
 		<Unit filename="GameObject.h" />
 		<Unit filename="GraphicElement.h" />
-		<Unit filename="HitBox.cpp" />
-		<Unit filename="HitBox.h" />
 		<Unit filename="IndexBuffer.cpp" />
 		<Unit filename="IndexBuffer.h" />
 		<Unit filename="Joystick.cpp" />
@@ -125,6 +123,8 @@
 		<Unit filename="TextureBuffer.h" />
 		<Unit filename="TextureManager.cpp" />
 		<Unit filename="TextureManager.h" />
+		<Unit filename="Tile.cpp" />
+		<Unit filename="Tile.h" />
 		<Unit filename="TileMap.h" />
 		<Unit filename="TileMapManager.cpp" />
 		<Unit filename="TileMapManager.h" />

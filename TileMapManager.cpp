@@ -54,18 +54,10 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	BYTE palettePage = 0x00;
 	WORD tileColumn = 0x0000;
 	WORD tileRow = 0x0000;
-	WORD tileFrames = 0x0000;
+	BYTE tileFrames = 0x00;
+	BYTE collisionData = 0x00;
 
 	//Init all the tiles from the array of data
-	/*
-	//[Palette,Page-Column-Row-Frames-Size,Seperation-Collision]
-	 int  x = 0x2501010A;
-    cout<<" palette = " << ( (x & 0xF0000000) >> 28 )  <<endl;
-    cout<<" page = " <<    ( (x & 0x0F000000) >> 24 )  <<endl;
-    cout<<" column = " <<  ( (x & 0x00FF0000) >> 16 )  <<endl;
-    cout<<" row = " <<     ( (x & 0x0000FF00) >> 8 )  <<endl;
-    cout<<" frames = " <<  ( (x & 0x000000FF)   )  <<endl;
-	*/
 
 	if (mapTilesArray.size() > 0)
 	{
@@ -73,15 +65,14 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 
 		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
 		{
-			palette = ((mapData[i] & 0xF0000000) >> 28);
-			palettePage = ((mapData[i] & 0x0F000000) >> 24);
-			tileColumn = ((mapData[i] & 0x00FF0000) >> 16);
-			tileRow = ((mapData[i] & 0x0000FF00) >> 8);
-			tileFrames = ((mapData[i] & 0x000000FF) );
-
+			palette = 		((mapData[i] & 0xF0000000) >> 28);
+			palettePage = 	((mapData[i] & 0x0F000000) >> 24);
+			tileColumn = 	((mapData[i] & 0x00FF0000) >> 16);
+			tileRow = 		((mapData[i] & 0x0000FF00) >> 8);
+			tileFrames = 	((mapData[i] & 0x000000F0) >> 4);
+			collisionData = ((mapData[i] & 0x0000000F)     );
 
 			(*mtit) = new Sprite(palette, palettePage, tw *  tileColumn, th * tileRow, tw, th, tz, 0, tileFrames, 0, 3, 0);
-			(*mtit)->hitBox.push_back(new HitBox());
 			i++;
 		}
 	}
@@ -92,7 +83,6 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
 		{
 			(*tait) = new Sprite();
-			(*tait)->hitBox.push_back(new HitBox());
 		}
 	}
 
@@ -410,11 +400,6 @@ void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 
 void TileMapManager::updateTranslate(Sprite *sprite, GLuint offset)
 {
-	sprite->hitBox[0]->box.x = sprite->transformation.translate.x + offsetX;
-	sprite->hitBox[0]->box.y = sprite->transformation.translate.y + offsetY;
-	sprite->hitBox[0]->box.w = tileWidth;
-	sprite->hitBox[0]->box.h = tileHeight;
-
 	vertexArray[offset] = sprite->transformation.translate.x + offsetX;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.y + offsetY;

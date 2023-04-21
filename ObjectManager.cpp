@@ -109,15 +109,6 @@ void ObjectManager::initLayouts()
 void ObjectManager::updateEnitities()
 {
 	GLuint offset = 0;
-	/*
-	SDL_Rect viewPort;
-	SDL_Rect sprite;
-	viewPort.x = 0;
-	viewPort.y = 0;
-	viewPort.w = 256;
-	viewPort.h = 224;
-	*/
-
 	vector<Entity *>::iterator eit;
 	vector<Sprite *>::iterator sit;
 

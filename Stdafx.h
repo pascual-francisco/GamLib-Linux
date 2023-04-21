@@ -46,8 +46,9 @@ using namespace glm;
 #include "Mechanics.h"
 #include "FSMState.h"
 #include "GraphicElement.h"
-#include "HitBox.h"
+#include "Animation.h"
 #include "Sprite.h"
+#include "Tile.h"
 
 #include "GameObject.h"
 #include "Entity.h"

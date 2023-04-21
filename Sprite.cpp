@@ -20,7 +20,6 @@ Sprite::Sprite(const Sprite &object)
 		transformation = object.transformation;
 		textureOffset = object.textureOffset;
 		texturePageOffset = object.texturePageOffset;
-		hitBox = object.hitBox;
 		color[0] = object.color[0];
 		color[1] = object.color[1];
 		color[2] = object.color[2];
@@ -93,7 +92,6 @@ const Sprite &Sprite::operator=(const Sprite &object)
 		positionOffset = object.positionOffset;
 		textureUnit = object.textureUnit;
 		transformation = object.transformation;
-		hitBox = object.hitBox;
 		textureOffset = object.textureOffset;
 		texturePageOffset = object.texturePageOffset;
 		color[0] = object.color[0];
@@ -172,7 +170,6 @@ bool Sprite::operator ==(const Sprite &object) const
 			textureOffset == object.textureOffset &&
 			texturePageOffset == object.texturePageOffset &&
 			textureUnit == object.textureUnit &&
-			hitBox == object.hitBox &&
 			transformation.translate == object.transformation.translate &&
 			transformation.rotate == object.transformation.rotate &&
 			transformation.scale == object.transformation.scale &&
@@ -365,17 +362,8 @@ void Sprite::print() const
 
 	transformation.print();
 
-	if (hitBox.size() > 0)
-	{
-		for (uint i = 0; i < hitBox.size() - 1; i++ )
-		{
-			if (hitBox[i] != NULL)
-				hitBox[i]->print();
-		}
-
-		cout << "Color [0] = [ " << color[0].r << ", " << color[0].g << ", " << color[0].b << ", " << color[0].a << " ]" << endl;
-		cout << "Color [1] = [ " << color[1].r << ", " << color[1].g << ", " << color[1].b << ", " << color[1].a << " ]" << endl;
-		cout << "Color [2] = [ " << color[2].r << ", " << color[2].g << ", " << color[2].b << ", " << color[2].a << " ]" << endl;
-		cout << "Color [3] = [ " << color[3].r << ", " << color[3].g << ", " << color[3].b << ", " << color[3].a << " ]" << endl;
-	}
+	cout << "Color [0] = [ " << color[0].r << ", " << color[0].g << ", " << color[0].b << ", " << color[0].a << " ]" << endl;
+	cout << "Color [1] = [ " << color[1].r << ", " << color[1].g << ", " << color[1].b << ", " << color[1].a << " ]" << endl;
+	cout << "Color [2] = [ " << color[2].r << ", " << color[2].g << ", " << color[2].b << ", " << color[2].a << " ]" << endl;
+	cout << "Color [3] = [ " << color[3].r << ", " << color[3].g << ", " << color[3].b << ", " << color[3].a << " ]" << endl;
 }

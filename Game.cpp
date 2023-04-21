@@ -3,13 +3,13 @@
 
 Game::Game(bool mode, string file, GLfloat x, GLfloat y, GLfloat w, GLfloat h)
 {
+	active = true;
+	actualScene = 0;
 	assetsPath = file;
 	viewPort.x = x;
 	viewPort.y = y;
 	viewPort.w = w;
 	viewPort.h = h;
-	actualScene = 0;
-	active = true;
 	debugMode = mode;
 	upButton = false;
 	downButton = false;

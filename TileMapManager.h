@@ -44,8 +44,8 @@ class TileMapManager
 	GLuint  pageTileCount;
 	GLuint	tileSeparation;
 
-	vector<Sprite *>	mapTilesArray;
-	vector<Sprite *>	tilesArray;
+	vector<Tile *>	mapTilesArray;
+	vector<Tile *>	tilesArray;
 	vector<float>		vertexArray;
 
 	VertexBufferLayout	*ptrvPosLayout;
