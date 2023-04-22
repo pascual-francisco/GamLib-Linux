@@ -599,7 +599,7 @@ void TileMapManager::printTiles() const
 
 	for (uint i = 0; i <tilesArray.size(); i++)
 	{
-		cout << "[ " << tilesArray[i]->texturePalette << " ]";
+		cout << "[ " << tilesArray[i]->tileCell.x << "," << tilesArray[i]->tileCell.y <<" ]";
 
 		if (w < ((viewPortW / tileWidth) - 1))
 			w++;

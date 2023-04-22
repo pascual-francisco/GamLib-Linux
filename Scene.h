@@ -11,8 +11,6 @@ class Scene
 	GLuint			sceneID;
 	GLuint			programID;
 	SDL_FRect		viewPort;
-	mat4			projection;
-	mat4			view;
 	ObjectManager	*ptrObjects;
 	TileMapManager	*ptrBackground;
 	TileMapManager	*ptrForeground;

@@ -1300,7 +1300,7 @@
 1604786315 d:\code blocks\gamlib 6.0\soundmanager.h
 	"stdafx.h"
 
-1681270485 d:\code blocks\gamlib 6.0\scene.h
+1682173870 d:\code blocks\gamlib 6.0\scene.h
 	"stdafx.h"
 
 1680915383 d:\code blocks\gamlib 6.0\renderer.h
@@ -1355,7 +1355,7 @@
 1682138403 source:d:\code blocks\gamlib 6.0\renderer.cpp
 	"stdafx.h"
 
-1682137772 source:d:\code blocks\gamlib 6.0\scene.cpp
+1682173938 source:d:\code blocks\gamlib 6.0\scene.cpp
 	"stdafx.h"
 
 1603059118 source:d:\code blocks\gamlib 6.0\shader.cpp
@@ -1382,7 +1382,7 @@
 1682048503 source:d:\code blocks\gamlib 6.0\tile.cpp
 	"stdafx.h"
 
-1682170852 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
+1682172856 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
 	"stdafx.h"
 
 1597630276 source:d:\code blocks\gamlib 6.0\timer.cpp
@@ -1433,7 +1433,7 @@
 1681362427 d:\code blocks\gamlib 6.0\camera.h
 	"Stdafx.h"
 
-1681362413 source:d:\code blocks\gamlib 6.0\camera.cpp
+1682173834 source:d:\code blocks\gamlib 6.0\camera.cpp
 	"stdafx.h"
 
 1682165009 source:d:\code blocks\gamlib 6.0\joystick.cpp

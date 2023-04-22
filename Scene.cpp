@@ -12,9 +12,6 @@ GLfloat top, GLfloat znear, GLfloat zfar, GLfloat eyeX, GLfloat eyeY, GLfloat ey
 	viewPort.w = viewportW;
 	viewPort.h = viewportH;
 
-	projection = mat4(1.0f);
-	view = mat4(1.0f);
-
 	ptrObjects = nullptr;
 	ptrBackground = nullptr;
 	ptrForeground = nullptr;
@@ -27,7 +24,9 @@ Scene::~Scene()
     delete ptrCamera;
 	delete ptrObjects;
 	delete ptrBackground;
-	delete ptrForeground;
+
+	if(ptrForeground!=nullptr)
+		delete ptrForeground;
 }
 
 void Scene::update()

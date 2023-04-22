@@ -22,8 +22,7 @@ Camera::Camera(bool active, GLuint programID,  GLuint type, GLfloat left, GLfloa
     this->upY = upY;
     this->upZ = upZ;
 
-    projection = mat4(1.0f);
-	view = mat4(1.0f);
+
     initCamera(active, programID, type, left, right, bottom, top, znear, zfar, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
 }
 
@@ -44,6 +43,8 @@ void Camera::initCamera(bool active, GLuint programID,  GLuint type, GLfloat lef
 
     initOrigin(eyeX, eyeY, eyeZ);
 
+    projection = mat4(1.0f);
+	view = mat4(1.0f);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
 }
@@ -85,7 +86,7 @@ void Camera::initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ)
 
 void Camera::print()const
 {
-    cout << "**************************************************" << endl;
+    cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Camera Info:" << endl;
 	cout << "Program ID = " << programID << endl;
 	cout << "Active ="<< active << endl;
@@ -105,5 +106,6 @@ void Camera::print()const
     cout << "Up X = "<< upX << endl;
     cout << "Up Y = " << upY << endl;
     cout << "Up Z = " << upZ << endl;
-    cout << "**************************************************" << endl;
+    cout << "Camera Info:" << endl;
+    cout << "******************************************************************************************************************************************************************************" << endl;
 }
