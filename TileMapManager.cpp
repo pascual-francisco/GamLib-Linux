@@ -536,12 +536,11 @@ void TileMapManager::print() const
 	printInfo();
 	printSprites();
 	printDataArray();
-	printSprites();
 }
 
 void TileMapManager::printInfo() const
 {
-	cout << "**************************************************" << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Tile Map Manager Info:" << endl;
 	cout << "Offset X = " << offsetX << endl;
 	cout << "Offset Y = " << offsetY << endl;
@@ -555,7 +554,8 @@ void TileMapManager::printInfo() const
 	cout << "Quad Count = " << vertexArray.size() / vertexBufferStrideCount << endl;
 	cout << "Quad Float Count = " << quadFloatCount << endl;
 	cout << "Vertex Buffer Stride Count = " << vertexBufferStrideCount << endl;
-	cout << "**************************************************" << endl;
+	cout << "Tile Map Manager Info:" << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 
 void TileMapManager::printDataArray() const
@@ -574,7 +574,8 @@ void TileMapManager::printDataArray() const
 		cout << vertexArray[i] << ",    ";
 	}
 
-	cout << endl << "******************************************************************************************************************************************************************************" << endl;
+	cout <<endl<< "Buffer Data: " << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 
 void TileMapManager::printSprites() const
@@ -585,11 +586,15 @@ void TileMapManager::printSprites() const
 	for (GLuint i = 0; i < tilesArray.size(); i++)
 		tilesArray[i]->print();
 
+	cout << "Buffer Sprites: " << endl;
 	cout << "**************************************************" << endl;
 }
 
 void TileMapManager::printTiles() const
 {
+	cout << "******************************************************************************************************************************************************************************" << endl;
+	cout << "Tile Map Sprites: " << endl;
+
 	uint w = 0;
 
 	for (uint i = 0; i <tilesArray.size(); i++)
@@ -604,5 +609,7 @@ void TileMapManager::printTiles() const
 			cout << "," << endl;
 		}
 	}
+	cout << "Tile Map Sprites: " << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 

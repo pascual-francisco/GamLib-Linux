@@ -213,6 +213,8 @@ bool Animation::operator*( Animation &)
 
 void Animation::print() const
 {
+	cout << "******************************************************************************************************************************************************************************" << endl;
+    cout << "Animation Data: " << endl;
     cout << "Actual State = " << animationState << endl;
     cout << "Actual Frame = " << actualFrame << endl;
 	cout << "First Frame = " << firstFrame << endl;
@@ -221,4 +223,6 @@ void Animation::print() const
 	cout << "Loop = " << loop << endl;
 	cout << "Loop Counter = " << loopCounter << endl;
 	cout << "Frame Counter = " << frameCounter << endl;
+	cout << "Animation Data: " << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }

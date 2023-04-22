@@ -11,7 +11,7 @@ class FSMState
 	GLfloat time;
 	GLfloat counter;
 
-	__declspec(dllexport) FSMState() 
+	__declspec(dllexport) FSMState()
 	{
 		name = "";
 		time = 0.0f;
@@ -25,6 +25,7 @@ class FSMState
 
 	__declspec(dllexport) void print() const
 	{
+
 		cout << "State Name = " << name << endl;
 		cout << "State Time = " << time << endl;
 		cout << "State Counter = " << counter << endl;

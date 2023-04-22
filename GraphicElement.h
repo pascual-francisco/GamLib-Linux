@@ -60,6 +60,7 @@ class GraphicElement
 	__declspec(dllexport) virtual void update() = 0;
 	__declspec(dllexport) virtual void print() const
 	{
+
 		cout << "Texture Palette = " << texturePalette << endl;
 		cout << "Palette Page  = " << palettePage << endl;
 		cout << "Tile Cell = [" << tileCell.x << ", " << tileCell.y << "]" << endl;
@@ -72,6 +73,7 @@ class GraphicElement
 		cout << "vertexColor [1] = [ " << vertexColor[1].r << ", " << vertexColor[1].g << ", " << vertexColor[1].b << ", " << vertexColor[1].a << " ]" << endl;
 		cout << "vertexColor [2] = [ " << vertexColor[2].r << ", " << vertexColor[2].g << ", " << vertexColor[2].b << ", " << vertexColor[2].a << " ]" << endl;
 		cout << "vertexColor [3] = [ " << vertexColor[3].r << ", " << vertexColor[3].g << ", " << vertexColor[3].b << ", " << vertexColor[3].a << " ]" << endl;
+
 	}
 };
 

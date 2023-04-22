@@ -5,7 +5,7 @@ Entity::Entity()
 {
 	active = true;
 	name = "Entity";
-	mechanics = Mechanics();		
+	mechanics = Mechanics();
 };
 
 Entity::~Entity()
@@ -18,12 +18,12 @@ Entity::Entity(const Entity &e)
 	active = e.active;
 	name = e.name;
 	mechanics = e.mechanics;
-	sprite = e.sprite;	
+	sprite = e.sprite;
 	healthPoints = e.healthPoints;
 	attackDamage = e.attackDamage;
 	weakness = e.weakness;
 	tracks = e.tracks;
-	
+
 }
 
 const Entity& Entity::operator=(const Entity &e)
@@ -36,7 +36,7 @@ const Entity& Entity::operator=(const Entity &e)
 		sprite = e.sprite;
 		healthPoints = e.healthPoints;
 		attackDamage = e.attackDamage;
-		weakness = e.weakness;	
+		weakness = e.weakness;
 		tracks = e.tracks;
 	}
 	return *this;
@@ -47,7 +47,7 @@ bool Entity::operator==(const Entity &e) const
 		active == e.active &&
 		name == e.name &&
 		mechanics == e.mechanics &&
-		sprite == e.sprite &&		
+		sprite == e.sprite &&
 		healthPoints == e.healthPoints &&
 		attackDamage == e.attackDamage &&
 		weakness == e.weakness &&
@@ -74,17 +74,20 @@ bool Entity::operator>(const Entity &e) const
 
 void Entity::update()
 {
-	
+
 }
 
 void Entity::print() const
 {
+	cout << "******************************************************************************************************************************************************************************" << endl;
+	cout << "Entity Info: " << endl;
+
 	mechanics.print();
 
 	if (sprite.size() > 0)
 	{
-		for (uint i = 0; i<sprite.size() - 1; i++)		
-		{			
+		for (uint i = 0; i<sprite.size() - 1; i++)
+		{
 			if (sprite[i] != NULL)
 			{
 				cout << "Sprite [" << i << "]" << endl;
@@ -98,4 +101,8 @@ void Entity::print() const
 		cout << "Sprite is empty" << endl;
 		cout << "-----------------------------" << endl;
 	}
+
+
+	cout << "Entity Info: " << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }

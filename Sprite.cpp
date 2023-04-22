@@ -163,7 +163,20 @@ void Sprite::update()
 
 void Sprite::print() const
 {
+	cout << "******************************************************************************************************************************************************************************" << endl;
+	cout << "Sprite Info: " << endl;
+
 	GraphicElement::print();
-	ptrAnimation->print();
+
+	if(ptrAnimation != nullptr)
+	{
+		ptrAnimation->print();
+	}
+	else
+	{
+		cout << "Animation is empty"<<endl;
+	}
 	cout << "Position Offset = [ " << positionOffset.x << " , " << positionOffset.y << " ]" <<endl;
+	cout << "Sprite Info: " << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }

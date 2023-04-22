@@ -448,7 +448,7 @@ void ObjectManager::print() const
 
 void ObjectManager::printInfo() const
 {
-	cout << "**************************************************" << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Object Manager Info:" << endl;
 	cout << "Program ID = " << programID << endl;
 	cout << "Batch Draw Calls = " << batchDrawCalls << endl;
@@ -458,7 +458,8 @@ void ObjectManager::printInfo() const
 	cout << "Quad Count = " << dataArray.size() / quadFloatCount << endl;
 	cout << "Quad Float Count = "<<quadFloatCount << endl;
 	cout << "Vertex Buffer Stride Count = " <<vertexBufferStrideCount << endl;
-	cout << "**************************************************" << endl;
+	cout << "Object Manager Info:" << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 
 void ObjectManager::printDataArray() const
@@ -477,16 +478,18 @@ void ObjectManager::printDataArray() const
 		cout << dataArray[i] << ",    ";
 	}
 
+	cout << "Buffer Data: " << endl;
 	cout <<endl<< "******************************************************************************************************************************************************************************" << endl;
 }
 
 void ObjectManager::printEntities() const
 {
 	cout << "**************************************************" << endl;
-	cout << "Buffer Entities: " << endl;
+	cout << "Buffer Entities Data: " << endl;
 
 	for (GLuint i = 0; i < entitiesArray.size(); i++)
 		entitiesArray[i]->print();
 
+	cout << "Buffer Entities Data: " << endl;
 	cout << "**************************************************" << endl;
 }
