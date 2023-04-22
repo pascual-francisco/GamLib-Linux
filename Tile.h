@@ -7,21 +7,16 @@
 class Tile : public GraphicElement
 {
 	public:
-	GLuint			texturePalette;
-	Glfloat			textureOffset;
-	vec4			color[4];
-	GLubyte			collisionData;
+	GLuint	firstFrame;
+	GLuint	lastFrame;
+	GLuint	actualFrame;
+	GLuint	frameCounter;
+	GLuint	frameTime;
 
-	GLint			firstFrame;
-	GLint			lastFrame;
-	GLint			actualFrame;
-	GLfloat			frameCounter;
-	GLfloat			frameTime;
-
-	__declspec(dllexport) Tile(GLuint palette = 0, GLfloat page = 0.0f, GLfloat tilex = 0.0f, GLfloat tiley = 0.0f, GLint lastframe = 1, GLfloat frametime = 5);
+	__declspec(dllexport) Tile(GLuint palette = 0, GLuint page = 0, GLuint tilex = 0, GLuint tiley = 0, GLuint tilewidth = 16, GLuint tileheight = 16, GLuint lastframe = 1, GLuint frametime = 0);
 	__declspec(dllexport) Tile(const Tile &);
 	__declspec(dllexport) ~Tile();
-	__declspec(dllexport)  init(GLuint palette = 0, GLfloat page = 0.0f, GLfloat tilex = 0.0f, GLfloat tiley = 0.0f, GLint lastframe = 1, GLfloat frametime = 5);
+	__declspec(dllexport)  init(GLuint palette = 0, GLuint page = 0, GLuint tilex = 0, GLuint tiley = 0, GLuint tilewidth = 16, GLuint tileheight = 16, GLuint lastframe = 1, GLuint frametime = 0);
 	__declspec(dllexport)  const Tile &operator=(const Tile &);
 	__declspec(dllexport)  bool operator==(const Tile &) const;
 	__declspec(dllexport)  bool operator<(const Tile &) const;

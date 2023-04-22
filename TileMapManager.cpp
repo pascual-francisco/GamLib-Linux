@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint tz, GLuint program, GLenum mode)
+TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint viewportw, GLuint viewporth, GLuint tilewidth, GLuint tileheight, GLuint tileseparation, GLuint tileframetime, GLuint program, GLenum mode)
 {
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
@@ -26,14 +26,15 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	actualPage = 0;
 	mainPage = true;
 	drawingMode = GL_TRIANGLES;
-	vertexBufferStrideCount = 21;
-	quadFloatCount = 84;
+	vertexBufferStrideCount = 17;
+	quadFloatCount = 68;
 	programID = program;
-	tileWidth = tw;
-	tileHeight = th;
-	tileSeparation = tz;
-	viewPortW = vw;
-	viewPortH = vh;
+	tileWidth = tilewidth;
+	tileHeight = tileheight;
+	tileSeparation = tileseparation;
+	tileFrameTime = tileframetime;
+	viewPortW = viewportw;
+	viewPortH = viewporth;
 	drawingMode = mode;
 	maxTextureUnits = 0;
 
@@ -51,7 +52,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	vector<float >::iterator vait;
 
 	BYTE palette = 0x00;
-	BYTE palettePage = 0x00;
+	BYTE page = 0x00;
 	WORD tileColumn = 0x0000;
 	WORD tileRow = 0x0000;
 	BYTE tileFrames = 0x00;
@@ -66,13 +67,21 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
 		{
 			palette = 		((mapData[i] & 0xF0000000) >> 28);
-			palettePage = 	((mapData[i] & 0x0F000000) >> 24);
+			page = 			((mapData[i] & 0x0F000000) >> 24);
 			tileColumn = 	((mapData[i] & 0x00FF0000) >> 16);
 			tileRow = 		((mapData[i] & 0x0000FF00) >> 8);
 			tileFrames = 	((mapData[i] & 0x000000F0) >> 4);
 			collisionData = ((mapData[i] & 0x0000000F)     );
 
-			(*mtit) = new Sprite(palette, palettePage, tw *  tileColumn, th * tileRow, tw, th, tz, 0, tileFrames, 0, 3, 0);
+			(*mtit) = new Sprite(palette, page);
+			(*mtit)->tileCell.x = tileColumn;
+			(*mtit)->tileCell.y = tileRow;
+			(*mtit)->tileSeparation = tileSeparation;
+			(*mtit)->collisionData = collisionData;
+
+			if(tileFrames > 0)
+				(*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
+
 			i++;
 		}
 	}
@@ -132,16 +141,16 @@ void TileMapManager::initLayouts()
 	/*
 	DATA BUFFER:
 	Entity 0
-		Sprite 0 [XYZW-STPQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
-		21 Float * 4 Vertices = 84 Floats
-		1 Quad = 84 Floats
+		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 17  Floats
+		17 Float * 4 Vertices = 68 Floats
+		1 Quad = 68 Floats
 	*/
-	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 4, GL_FALSE, 21, 0 * 4);
-	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 21, 4 * 4);
-	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 21, 8 * 4);
-	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 21, 12 * 4);
-	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 21, 15 * 4);
-	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 21, 18 * 4);
+	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 3, GL_FALSE, 17, 0 * 4);
+	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 17, 3 * 4);
+	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 17, 7 * 4);
+	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 17, 10 * 4);
+	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 17, 13 * 4);
+	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 17, 16 * 4);
 
 	ptrVertexArray->detach();
 	ptrVertexBuffer->detach();
@@ -259,143 +268,136 @@ void TileMapManager::updateEnitities()
 void TileMapManager::updateVertexArray(Sprite *sprite, GLuint offset)
 {
 	updatePosition( sprite, offset + 0);
-	updateTexture(sprite, offset + 4);
-	updateColor(sprite, offset + 8);
-	updateTranslate(sprite, offset + 12);
-	updateScale(sprite, offset + 15);
-	updateRotate(sprite, offset + 18);
+	updateTexture(sprite, offset + 3);
+	updateColor(sprite, offset + 7);
+	updateTranslate(sprite, offset + 10);
+	updateScale(sprite, offset + 13);
+	updateRotate(sprite, offset + 16);
 }
 
 void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 {
-	GLint w = 0;
-	GLint h = 0;
-	GLint d = 0;
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_DEPTH, &d);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
 	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	vertexArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	vertexArray[offset] = 1;
-	offset += (21 - 3);
+	offset += (17 - 2);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
-	vertexArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
+	vertexArray[offset] = (sprite->tileDimension.x / sprite->pageDimension.x) - sprite->transformation.pivot.x;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	vertexArray[offset] = 1;
-	offset += (21 - 3);
+	offset += (17 - 2);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
-	vertexArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
+	vertexArray[offset] = (sprite->tileDimension.x / sprite->pageDimension.x) - sprite->transformation.pivot.x;
 	offset++;
-	vertexArray[offset] = sprite->textureOffset.w - sprite->transformation.pivot.y;
+	vertexArray[offset] = (sprite->tileDimension.y / sprite->pageDimension.y) - sprite->transformation.pivot.y;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	vertexArray[offset] = 1;
-	offset += (21 - 3);
+	offset += (17 - 2);
 
 	//glVertex3f(-image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value)
 	vertexArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
-	vertexArray[offset] = sprite->textureOffset.w - sprite->transformation.pivot.y;
+	vertexArray[offset] = (sprite->tileDimension.y / sprite->pageDimension.y) - sprite->transformation.pivot.y;
 	offset++;
 	vertexArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	vertexArray[offset] = 1;
 }
 
 void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 {
+	GLfloat textureX = ( (sprite->tileCell.x * tileWidth) + (tileSeparation *  sprite->tileCell.x) ) / sprite->tileDimension.x;
+	GLfloat textureY = ( (sprite->tileCell.y * tileHeight) + (tileSeparation *  sprite->tileCell.y) ) / sprite->tileDimension.y;
+	GLfloat textureW = tileWidth / sprite->pageDimension.x;
+	GLfloat textureH = tileHeight / sprite->pageDimension.y;
+
+	if(sprite->ptrAnimation != nullptr)
+	{
+		sprite->ptrAnimation->update();
+		textureX = ( ( (sprite->tileCell.x + sprite->ptrAnimation->actualFrame) * tileWidth) + (tileSeparation *  sprite->tileCell.x) ) / sprite->pageDimension.x;
+	}
+
 	//glTexCoord2f(image->textureX.value, image->textureY.value + image->textureHeight.value);
-	vertexArray[offset] = sprite->textureOffset.x;
+	vertexArray[offset] = textureX;
 	offset++;
-	vertexArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
+	vertexArray[offset] = textureX + textureH;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
+	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->textureID);
-	offset += (21 - 3);
+	vertexArray[offset] = GLfloat(sprite->texturePalette);
+	offset += (17 - 2);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value + image->textureHeight.value);
-	vertexArray[offset] = sprite->textureOffset.x + sprite->textureOffset.z;
+	vertexArray[offset] = textureX + textureW;
 	offset++;
-	vertexArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
+	vertexArray[offset] = textureY + textureH;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
+	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->textureID);
-	offset += (21 - 3);
+	vertexArray[offset] = GLfloat(sprite->texturePalette);
+	offset += (17 - 2);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value);
-	vertexArray[offset] = sprite->textureOffset.x + sprite->textureOffset.z;
+	vertexArray[offset] = textureX + textureW;
 	offset++;
-	vertexArray[offset] = sprite->textureOffset.y;
+	vertexArray[offset] = textureY;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
+	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->textureID);
-	offset += (21 - 3);
+	vertexArray[offset] = GLfloat(sprite->texturePalette);
+	offset += (17 - 2);
 
 	//glTexCoord2f(image->textureX.value, image->textureY.value);
-	vertexArray[offset] = sprite->textureOffset.x;
+	vertexArray[offset] = textureX;
 	offset++;
-	vertexArray[offset] = sprite->textureOffset.y;
+	vertexArray[offset] = textureY;
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->texturePageOffset);
+	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	vertexArray[offset] = GLfloat(sprite->textureID);
+	vertexArray[offset] = GLfloat(sprite->texturePalette);
 }
 
 void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 {
-	vertexArray[offset] = sprite->color[0].r;
+	vertexArray[offset] = sprite->vertexColor[0].r;
 	offset++;
-	vertexArray[offset] = sprite->color[0].g;
+	vertexArray[offset] = sprite->vertexColor[0].g;
 	offset++;
-	vertexArray[offset] = sprite->color[0].b;
+	vertexArray[offset] = sprite->vertexColor[0].b;
 	offset++;
-	vertexArray[offset] = sprite->color[0].a;
-	offset += (21 - 3);
+	vertexArray[offset] = sprite->vertexColor[0].a;
+	offset += (17 - 2);
 
-	vertexArray[offset] = sprite->color[1].r;
+	vertexArray[offset] = sprite->vertexColor[1].r;
 	offset++;
-	vertexArray[offset] = sprite->color[1].g;
+	vertexArray[offset] = sprite->vertexColor[1].g;
 	offset++;
-	vertexArray[offset] = sprite->color[1].b;
+	vertexArray[offset] = sprite->vertexColor[1].b;
 	offset++;
-	vertexArray[offset] = sprite->color[1].a;
-	offset += (21 - 3);
+	vertexArray[offset] = sprite->vertexColor[1].a;
+	offset += (17 - 2);
 
-	vertexArray[offset] = sprite->color[2].r;
+	vertexArray[offset] = sprite->vertexColor[2].r;
 	offset++;
-	vertexArray[offset] = sprite->color[2].g;
+	vertexArray[offset] = sprite->vertexColor[2].g;
 	offset++;
-	vertexArray[offset] = sprite->color[2].b;
+	vertexArray[offset] = sprite->vertexColor[2].b;
 	offset++;
-	vertexArray[offset] = sprite->color[2].a;
-	offset += (21 - 3);
+	vertexArray[offset] = sprite->vertexColor[2].a;
+	offset += (17 - 2);
 
-	vertexArray[offset] = sprite->color[3].r;
+	vertexArray[offset] = sprite->vertexColor[3].r;
 	offset++;
-	vertexArray[offset] = sprite->color[3].g;
+	vertexArray[offset] = sprite->vertexColor[3].g;
 	offset++;
-	vertexArray[offset] = sprite->color[3].b;
+	vertexArray[offset] = sprite->vertexColor[3].b;
 	offset++;
-	vertexArray[offset] = sprite->color[3].a;
+	vertexArray[offset] = sprite->vertexColor[3].a;
 }
 
 void TileMapManager::updateTranslate(Sprite *sprite, GLuint offset)
@@ -405,21 +407,21 @@ void TileMapManager::updateTranslate(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = sprite->transformation.translate.y + offsetY;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.translate.x + offsetX;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.y + offsetY;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.translate.x + offsetX;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.y + offsetY;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.translate.x + offsetX;
 	offset++;
@@ -435,21 +437,21 @@ void TileMapManager::updateScale(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = sprite->transformation.scale.y;
 	offset++;
 	vertexArray[offset] = sprite->transformation.scale.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.scale.x;
 	offset++;
 	vertexArray[offset] = sprite->transformation.scale.y;
 	offset++;
 	vertexArray[offset] = sprite->transformation.scale.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.scale.x;
 	offset++;
 	vertexArray[offset] = sprite->transformation.scale.y;
 	offset++;
 	vertexArray[offset] = sprite->transformation.scale.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.scale.x;
 	offset++;
@@ -466,21 +468,21 @@ void TileMapManager::updateRotate(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = sprite->transformation.rotate.y;
 	offset++;
 	vertexArray[offset] = sprite->transformation.rotate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.rotate.x;
 	offset++;
 	vertexArray[offset] = sprite->transformation.rotate.y;
 	offset++;
 	vertexArray[offset] = sprite->transformation.rotate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.rotate.x;
 	offset++;
 	vertexArray[offset] = sprite->transformation.rotate.y;
 	offset++;
 	vertexArray[offset] = sprite->transformation.rotate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	vertexArray[offset] = sprite->transformation.rotate.x;
 	offset++;
@@ -503,11 +505,11 @@ void TileMapManager::batchDraw()
 	ptrIndexBuffer->attach();
 
 	//Define offset to texture unit on vertex buffer
-	GLuint offset = 7;
-	//Draw vertices in groups of 32
+	GLuint offset = 6;
+	//Draw vertices in groups of GL_MAX_TEXTURE_IMAGE_UNITS
 	for (uint i = 0; i < batchDrawCalls; i++)
 	{
-		//Bind each quad texture to 32 texture units
+		//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
 		for (int j = 0; j < maxTextureUnits; j++)
 		{
 			glActiveTexture(GL_TEXTURE0 + GLuint(vertexArray[offset]));
@@ -591,7 +593,7 @@ void TileMapManager::printTiles() const
 
 	for (uint i = 0; i <tilesArray.size(); i++)
 	{
-		cout << "[ " << tilesArray[i]->textureID << " ]";
+		cout << "[ " << tilesArray[i]->texturePalette << " ]";
 
 		if (w < ((viewPortW / tileWidth) - 1))
 			w++;

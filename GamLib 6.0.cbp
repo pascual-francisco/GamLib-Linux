@@ -125,9 +125,6 @@
 		<Unit filename="TextureBuffer.h" />
 		<Unit filename="TextureManager.cpp" />
 		<Unit filename="TextureManager.h" />
-		<Unit filename="Tile.cpp" />
-		<Unit filename="Tile.h" />
-		<Unit filename="TileMap.h" />
 		<Unit filename="TileMapManager.cpp" />
 		<Unit filename="TileMapManager.h" />
 		<Unit filename="Timer.cpp" />

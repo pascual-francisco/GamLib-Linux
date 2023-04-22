@@ -19,12 +19,6 @@ GLfloat top, GLfloat znear, GLfloat zfar, GLfloat eyeX, GLfloat eyeY, GLfloat ey
 	ptrBackground = nullptr;
 	ptrForeground = nullptr;
 
-	//Init Samplers
-	int samplers[32];
-	for (uint i = 0; i < 32; i++)
-		samplers[i] = i;
-
-	glUniform1iv(glGetUniformLocation(programID, "fSamplers"), 32, samplers);
     ptrCamera = new Camera(true, program, type, left, right, bottom, top, znear, zfar, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
 }
 

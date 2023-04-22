@@ -223,6 +223,18 @@ void Renderer::initShaders()
 
 	if (ptrShaders[0] != nullptr)
 		ptrShaders[0]->attach();
+
+	//Init Samplers
+	GLint maxTextureUnits = 0;
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+
+	int samplers[maxTextureUnits];
+	for (uint i = 0; i < maxTextureUnits; i++)
+		samplers[i] = i;
+
+	glUniform1iv(glGetUniformLocation(ptrShaders[0]->programID, "fSamplers"), maxTextureUnits, samplers);
+
+	logFile << "Max Texture Units = "<<  maxTextureUnits << endl;
 }
 
 void Renderer::update()

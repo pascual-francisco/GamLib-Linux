@@ -71,13 +71,13 @@ void Animation::init(GLint firstframe, GLint lastframe, GLint actualframe, GLflo
 		frameTime = 0;
 	}
 
-	if (actualstate >= Sprite::AnimationStates::FORWARD ||actualstate <= Sprite::AnimationStates::STOP)
+	if (actualstate >= AnimationStates::FORWARD ||actualstate <= AnimationStates::STOP)
 	{
 		animationState = actualstate;
 	}
 	else
 	{
-		animationState = Sprite::AnimationStates::FORWARD;
+		animationState = AnimationStates::FORWARD;
 	}
 }
 
@@ -217,4 +217,8 @@ void Animation::print() const
     cout << "Actual Frame = " << actualFrame << endl;
 	cout << "First Frame = " << firstFrame << endl;
 	cout << "Last Frame = " << lastFrame << endl;
+	cout << "Frame Time = " << frameTime << endl;
+	cout << "Loop = " << loop << endl;
+	cout << "Loop Counter = " << loopCounter << endl;
+	cout << "Frame Counter = " << frameCounter << endl;
 }

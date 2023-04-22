@@ -21,8 +21,8 @@ ObjectManager::ObjectManager(GLuint program, GLenum mode)
 	batchDrawCount = 0;
 	batchDrawCalls = 0;
 	textureCounter = 0;
-	vertexBufferStrideCount = 21;
-	quadFloatCount = 84;
+	vertexBufferStrideCount = 17;
+	quadFloatCount = 68;
 }
 
 ObjectManager::~ObjectManager()
@@ -94,12 +94,12 @@ void ObjectManager::initLayouts()
 		21 Float * 4 Vertices = 84 Floats
 		1 Quad = 84 Floats
 */
-	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 4, GL_FALSE, 21, 0 * 4);
-	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 21, 4 * 4);
-	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 21, 8 * 4);
-	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 21, 12 * 4);
-	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 21, 15 * 4);
-	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 21, 18 * 4);
+	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 3, GL_FALSE, 17, 0 * 4);
+	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 17, 3 * 4);
+	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 17, 7 * 4);
+	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 17, 10 * 4);
+	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 17, 13 * 4);
+	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 17, 16 * 4);
 
 	ptrVertexArray->detach();
 	ptrVertexBuffer->detach();
@@ -155,11 +155,11 @@ void ObjectManager::updateVertexBuffer()
 void ObjectManager::updateDataArray(Sprite *sprite, GLuint offset)
 {
 	updatePosition(sprite, offset + 0);
-	updateTexture(sprite, offset + 4);
-	updateColor(sprite, offset + 8);
-	updateTranslate(sprite, offset + 12);
-	updateScale(sprite, offset + 15);
-	updateRotate(sprite, offset + 18);
+	updateTexture(sprite, offset + 3);
+	updateColor(sprite, offset + 7);
+	updateTranslate(sprite, offset + 10);
+	updateScale(sprite, offset + 13);
+	updateRotate(sprite, offset + 16);
 }
 
 void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
@@ -170,118 +170,121 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	dataArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	dataArray[offset] = 1;
-	offset += (21 - 3);
+	offset += (17 - 2);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
-	dataArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
+	dataArray[offset] = (sprite->tileDimension.x / sprite->pageDimension.x) - sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	dataArray[offset] = 1;
-	offset += (21 - 3);
+	offset += (17 - 2);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
-	dataArray[offset] = sprite->textureOffset.z - sprite->transformation.pivot.x;
+	dataArray[offset] = (sprite->tileDimension.x / sprite->pageDimension.x) - sprite->transformation.pivot.x;
 	offset++;
-	dataArray[offset] = sprite->textureOffset.w - sprite->transformation.pivot.y;
+	dataArray[offset] = (sprite->tileDimension.y / sprite->pageDimension.y) - sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	dataArray[offset] = 1;
-	offset += (21 - 3);
+	offset += (17 - 2);
 
 	//glVertex3f(-image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value)
 	dataArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
-	dataArray[offset] = sprite->textureOffset.w; - sprite->transformation.pivot.y;
+	dataArray[offset] = (sprite->tileDimension.y / sprite->pageDimension.y) - sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
-	offset++;
-	dataArray[offset] = 1;
 }
 
 void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 {
+	GLfloat textureX = ( (sprite->tileCell.x * sprite->tileDimension.x) + (1 *  sprite->tileCell.x) ) / sprite->pageDimension.x;
+	GLfloat textureY = ( (sprite->tileCell.y * sprite->tileDimension.y) + (1 *  sprite->tileCell.y) ) / sprite->pageDimension.y;
+	GLfloat textureW = sprite->tileDimension.x / sprite->pageDimension.x;
+	GLfloat textureH = sprite->tileDimension.y / sprite->pageDimension.y;
+
+	if(sprite->ptrAnimation != nullptr)
+	{
+		sprite->ptrAnimation->update();
+		textureX = ( ( (sprite->tileCell.x + sprite->ptrAnimation->actualFrame) *  sprite->tileDimension.x ) + (1 *  sprite->tileCell.x) ) / sprite->pageDimension.x;
+	}
+
 	//glTexCoord2f(image->textureX.value, image->textureY.value + image->textureHeight.value);
-	dataArray[offset] = sprite->textureOffset.x;
+	dataArray[offset] = textureX;
 	offset++;
-	dataArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
+	dataArray[offset] = textureX + textureH;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->texturePageOffset);
+	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	dataArray[offset] = GLfloat(sprite->textureID);
-	offset += (21 - 3);
+	dataArray[offset] = GLfloat(sprite->texturePalette);
+	offset += (17 - 2);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value + image->textureHeight.value);
-	dataArray[offset] = sprite->textureOffset.x + sprite->textureOffset.z;
+	dataArray[offset] = textureX + textureW;
 	offset++;
-	dataArray[offset] = sprite->textureOffset.y + sprite->textureOffset.w;
+	dataArray[offset] = textureY + textureH;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->texturePageOffset);
+	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	dataArray[offset] = GLfloat(sprite->textureID);
-	offset += (21 - 3);
+	dataArray[offset] = GLfloat(sprite->texturePalette);
+	offset += (17 - 2);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value);
-	dataArray[offset] = sprite->textureOffset.x + sprite->textureOffset.z;
+	dataArray[offset] = textureX + textureW;
 	offset++;
-	dataArray[offset] = sprite->textureOffset.y;
+	dataArray[offset] = textureY;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->texturePageOffset);
+	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	dataArray[offset] = GLfloat(sprite->textureID);
-	offset += (21 - 3);
+	dataArray[offset] = GLfloat(sprite->texturePalette);
+	offset += (17 - 2);
 
 	//glTexCoord2f(image->textureX.value, image->textureY.value);
-	dataArray[offset] = sprite->textureOffset.x;
+	dataArray[offset] = textureX;
 	offset++;
-	dataArray[offset] = sprite->textureOffset.y;
+	dataArray[offset] = textureY;
 	offset++;
-	dataArray[offset] = GLfloat(sprite->texturePageOffset);
+	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
-	dataArray[offset] = GLfloat(sprite->textureID);
+	dataArray[offset] = GLfloat(sprite->texturePalette);
 }
 
 void ObjectManager::updateColor(Sprite *sprite, GLuint offset)
 {
-	dataArray[offset] = sprite->color[0].r;
+	dataArray[offset] = sprite->vertexColor[0].r;
 	offset++;
-	dataArray[offset] = sprite->color[0].g;
+	dataArray[offset] = sprite->vertexColor[0].g;
 	offset++;
-	dataArray[offset] = sprite->color[0].b;
+	dataArray[offset] = sprite->vertexColor[0].b;
 	offset++;
-	dataArray[offset] = sprite->color[0].a;
-	offset += (21 - 3);
+	dataArray[offset] = sprite->vertexColor[0].a;
+	offset += (17 - 2);
 
-	dataArray[offset] = sprite->color[1].r;
+	dataArray[offset] = sprite->vertexColor[1].r;
 	offset++;
-	dataArray[offset] = sprite->color[1].g;
+	dataArray[offset] = sprite->vertexColor[1].g;
 	offset++;
-	dataArray[offset] = sprite->color[1].b;
+	dataArray[offset] = sprite->vertexColor[1].b;
 	offset++;
-	dataArray[offset] = sprite->color[1].a;
-	offset += (21 - 3);
+	dataArray[offset] = sprite->vertexColor[1].a;
+	offset += (17 - 2);
 
-	dataArray[offset] = sprite->color[2].r;
+	dataArray[offset] = sprite->vertexColor[2].r;
 	offset++;
-	dataArray[offset] = sprite->color[2].g;
+	dataArray[offset] = sprite->vertexColor[2].g;
 	offset++;
-	dataArray[offset] = sprite->color[2].b;
+	dataArray[offset] = sprite->vertexColor[2].b;
 	offset++;
-	dataArray[offset] = sprite->color[2].a;
-	offset += (21 - 3);
+	dataArray[offset] = sprite->vertexColor[2].a;
+	offset += (17 - 2);
 
-	dataArray[offset] = sprite->color[3].r;
+	dataArray[offset] = sprite->vertexColor[3].r;
 	offset++;
-	dataArray[offset] = sprite->color[3].g;
+	dataArray[offset] = sprite->vertexColor[3].g;
 	offset++;
-	dataArray[offset] = sprite->color[3].b;
+	dataArray[offset] = sprite->vertexColor[3].b;
 	offset++;
-	dataArray[offset] = sprite->color[3].a;
+	dataArray[offset] = sprite->vertexColor[3].a;
 }
 
 void ObjectManager::updateTranslate(Sprite *sprite, GLuint offset)
@@ -291,21 +294,21 @@ void ObjectManager::updateTranslate(Sprite *sprite, GLuint offset)
 	dataArray[offset] = sprite->transformation.translate.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.translate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.translate.x;
 	offset++;
 	dataArray[offset] = sprite->transformation.translate.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.translate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.translate.x;
 	offset++;
 	dataArray[offset] = sprite->transformation.translate.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.translate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.translate.x;
 	offset++;
@@ -322,21 +325,21 @@ void ObjectManager::updateScale(Sprite *sprite, GLuint offset)
 	dataArray[offset] = sprite->transformation.scale.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.scale.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.scale.x;
 	offset++;
 	dataArray[offset] = sprite->transformation.scale.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.scale.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.scale.x;
 	offset++;
 	dataArray[offset] = sprite->transformation.scale.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.scale.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.scale.x;
 	offset++;
@@ -353,21 +356,21 @@ void ObjectManager::updateRotate(Sprite *sprite, GLuint offset)
 	dataArray[offset] = sprite->transformation.rotate.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.rotate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.rotate.x;
 	offset++;
 	dataArray[offset] = sprite->transformation.rotate.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.rotate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.rotate.x;
 	offset++;
 	dataArray[offset] = sprite->transformation.rotate.y;
 	offset++;
 	dataArray[offset] = sprite->transformation.rotate.z;
-	offset += (21 - 2);
+	offset += (17 - 2);
 
 	dataArray[offset] = sprite->transformation.rotate.x;
 	offset++;
@@ -385,7 +388,7 @@ void ObjectManager::batchDraw(GLenum mode)
 	ptrIndexBuffer->attach();
 
 	//Define offset to texture unit on vertex buffer
-	GLuint offset = 7;
+	GLuint offset = 6;
 
 	if ((dataArray.size() / quadFloatCount) < GLuint(maxTextureUnits))
 	{
@@ -404,10 +407,10 @@ void ObjectManager::batchDraw(GLenum mode)
 	}
 	else
 	{
-		//Draw vertices in groups of 32
+		//Draw vertices in groups of GL_MAX_TEXTURE_IMAGE_UNITS
 		for (uint i = 0; i < batchDrawCalls; i++)
 		{
-			//Bind each quad texture to 32 texture units
+			//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
 			for (int j = 0; j < maxTextureUnits; j++)
 			{
 				glActiveTexture(GL_TEXTURE0 + GLint(dataArray[offset]));

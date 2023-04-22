@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *mapData, GLuint vw, GLuint vh, GLuint tw, GLuint th, GLuint program, GLenum mode)
+TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint viewportw, GLuint viewporth, GLuint tilewidth, GLuint tileheight, GLuint tileseparation, GLuint tileframetime, GLuint program, GLenum mode)
 {
 	ptrvPosLayout = nullptr;
 	ptrvTexLayout = nullptr;
@@ -26,13 +26,15 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 	actualPage = 0;
 	mainPage = true;
 	drawingMode = GL_TRIANGLES;
-	vertexBufferStrideCount = 21;
-	quadFloatCount = 84;
+	vertexBufferStrideCount = 17;
+	quadFloatCount = 68;
 	programID = program;
-	tileWidth = tw;
-	tileHeight = th;
-	viewPortW = vw;
-	viewPortH = vh;
+	tileWidth = tilewidth;
+	tileHeight = tileheight;
+	tileSeparation = tileseparation;
+	tileFrameTime = tileframetime;
+	viewPortW = viewportw;
+	viewPortH = viewporth;
 	drawingMode = mode;
 	maxTextureUnits = 0;
 
@@ -50,23 +52,13 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 	vector<float >::iterator vait;
 
 	BYTE palette = 0x00;
-	BYTE palettePage = 0x00;
-	WORD tileColunm = 0x0000;
+	BYTE page = 0x00;
+	WORD tileColumn = 0x0000;
 	WORD tileRow = 0x0000;
-	WORD tileFrames = 0x0000;
-	BYTE tileSize = 0x00;
+	BYTE tileFrames = 0x00;
+	BYTE collisionData = 0x00;
 
 	//Init all the tiles from the array of data
-	/*
-	//[Palette,Page-Column-Row-Frames-Size,Seperation-Collision]
-	long  x = 0x2301040A5;
-    cout<<" palette = " << ( (x & 0xF00000000) >> 32 )  <<endl;
-    cout<<" page = " <<    ( (x & 0x0F0000000) >> 28 )  <<endl;
-    cout<<" column = " <<  ( (x & 0x00FF00000) >> 20 )  <<endl;
-    cout<<" row = " <<     ( (x & 0x0000FF000) >> 12 )  <<endl;
-    cout<<" frames = " <<  ( (x & 0x000000FF0) >> 4  )  <<endl;
-    cout<<" size = " <<    ( (x & 0x00000000F)       ) <<endl;
-	*/
 
 	if (mapTilesArray.size() > 0)
 	{
@@ -74,17 +66,18 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 
 		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
 		{
-			palette = ((mapData[i] & 0xF00000000) >> 32);
-			palettePage = ((mapData[i] & 0x0F0000000) >> 28);
-			tileColunm = ((mapData[i] & 0x00FF00000) >> 20);
-			tileRow = ((mapData[i] & 0x0000FF000) >> 12);
-			tileFrames = ((mapData[i] & 0x000000FF0) >> 4 );
-			tileSize = ((mapData[i] & 0x00000000F));
+			palette = 		((mapData[i] & 0xF0000000) >> 28);
+			page = 			((mapData[i] & 0x0F000000) >> 24);
+			tileColumn = 	((mapData[i] & 0x00FF0000) >> 16);
+			tileRow = 		((mapData[i] & 0x0000FF00) >> 8);
+			tileFrames = 	((mapData[i] & 0x000000F0) >> 4);
+			collisionData = ((mapData[i] & 0x0000000F)     );
 
-			//Sprite::Sprite(GLuint id, GLfloat po, GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th, GLint ff, GLint lf, GLint af, GLfloat ft, GLuint s)
+			(*mtit) = new Sprite(palette, page);
 
-			(*mtit) = new Sprite(palette, palettePage, 0.0f, 0.0f,tw,  );
-			(*mtit)->hitBox.push_back(new HitBox());
+
+
+
 			i++;
 		}
 	}
@@ -95,7 +88,6 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLulong *m
 		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
 		{
 			(*tait) = new Sprite();
-			(*tait)->hitBox.push_back(new HitBox());
 		}
 	}
 
@@ -145,16 +137,16 @@ void TileMapManager::initLayouts()
 	/*
 	DATA BUFFER:
 	Entity 0
-		Sprite 0 [XYZW-STPQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
-		21 Float * 4 Vertices = 84 Floats
-		1 Quad = 84 Floats
+		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 17  Floats
+		17 Float * 4 Vertices = 68 Floats
+		1 Quad = 68 Floats
 	*/
-	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 4, GL_FALSE, 21, 0 * 4);
-	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 21, 4 * 4);
-	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 21, 8 * 4);
-	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 21, 12 * 4);
-	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 21, 15 * 4);
-	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 21, 18 * 4);
+	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 3, GL_FALSE, 17, 0 * 4);
+	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 17, 3 * 4);
+	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 17, 7 * 4);
+	ptrvTraLayout = new VertexBufferLayout(programID, "vTra", 3, GL_FALSE, 17, 10 * 4);
+	ptrvScaLayout = new VertexBufferLayout(programID, "vSca", 3, GL_FALSE, 17, 13 * 4);
+	ptrvRotLayout = new VertexBufferLayout(programID, "vRot", 3, GL_FALSE, 17, 16 * 4);
 
 	ptrVertexArray->detach();
 	ptrVertexBuffer->detach();
@@ -168,6 +160,11 @@ void TileMapManager::update()
 
 	updateEnitities();
 	updateVertexBuffer();
+}
+
+void TileMapManager::loadTile()
+{
+
 }
 
 void TileMapManager::loadPage(GLfloat tileDestinationX, GLfloat tileDestinationY, GLuint pageSource, GLuint pageDestination)
@@ -267,18 +264,18 @@ void TileMapManager::updateEnitities()
 void TileMapManager::updateVertexArray(Sprite *sprite, GLuint offset)
 {
 	updatePosition( sprite, offset + 0);
-	updateTexture(sprite, offset + 4);
-	updateColor(sprite, offset + 8);
-	updateTranslate(sprite, offset + 12);
+	updateTexture(sprite, offset + 3);
+	updateColor(sprite, offset + 7);
+	updateTranslate(sprite, offset + 15);
 	updateScale(sprite, offset + 15);
 	updateRotate(sprite, offset + 18);
 }
 
 void TileMapManager::updatePosition(Sprite *sprite, GLuint offset)
 {
-	GLint w = 0;
-	GLint h = 0;
-	GLint d = 0;
+	GLint paletteWidth = 0;
+	GLint paletteHeight = 0;
+	GLint paletteDepth = 0;
 
 	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->textureID);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
@@ -408,11 +405,6 @@ void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 
 void TileMapManager::updateTranslate(Sprite *sprite, GLuint offset)
 {
-	sprite->hitBox[0]->box.x = sprite->transformation.translate.x + offsetX;
-	sprite->hitBox[0]->box.y = sprite->transformation.translate.y + offsetY;
-	sprite->hitBox[0]->box.w = tileWidth;
-	sprite->hitBox[0]->box.h = tileHeight;
-
 	vertexArray[offset] = sprite->transformation.translate.x + offsetX;
 	offset++;
 	vertexArray[offset] = sprite->transformation.translate.y + offsetY;
@@ -516,11 +508,11 @@ void TileMapManager::batchDraw()
 	ptrIndexBuffer->attach();
 
 	//Define offset to texture unit on vertex buffer
-	GLuint offset = 7;
-	//Draw vertices in groups of 32
+	GLuint offset = 6;
+	//Draw vertices in groups of GL_MAX_TEXTURE_IMAGE_UNITS
 	for (uint i = 0; i < batchDrawCalls; i++)
 	{
-		//Bind each quad texture to 32 texture units
+		//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
 		for (int j = 0; j < maxTextureUnits; j++)
 		{
 			glActiveTexture(GL_TEXTURE0 + GLuint(vertexArray[offset]));

@@ -4,7 +4,7 @@
 1597199833 source:d:\code blocks\gamlib 6.0\dllmain.cpp
 	"stdafx.h"
 
-1682048028 d:\code blocks\gamlib 6.0\stdafx.h
+1682131609 d:\code blocks\gamlib 6.0\stdafx.h
 	<windows.h>
 	<list>
 	<map>
@@ -44,7 +44,6 @@
 	"GraphicElement.h"
 	"Animation.h"
 	"Sprite.h"
-	"Tile.h"
 	"GameObject.h"
 	"Entity.h"
 	"BufferObject.h"
@@ -1236,13 +1235,13 @@
 1610209936 d:\code blocks\gamlib 6.0\fsmstate.h
 	"stdafx.h"
 
-1682048694 d:\code blocks\gamlib 6.0\graphicelement.h
+1682138637 d:\code blocks\gamlib 6.0\graphicelement.h
 	"stdafx.h"
 
 1632273352 d:\code blocks\gamlib 6.0\hitbox.h
 	"stdafx.h"
 
-1682047652 d:\code blocks\gamlib 6.0\sprite.h
+1682128720 d:\code blocks\gamlib 6.0\sprite.h
 	"stdafx.h"
 
 1611450551 d:\code blocks\gamlib 6.0\gameobject.h
@@ -1292,10 +1291,10 @@
 1602981411 d:\code blocks\gamlib 6.0\indexbuffer.h
 	"stdafx.h"
 
-1681876646 d:\code blocks\gamlib 6.0\tilemapmanager.h
+1682131635 d:\code blocks\gamlib 6.0\tilemapmanager.h
 	"stdafx.h"
 
-1611615486 d:\code blocks\gamlib 6.0\objectmanager.h
+1682122289 d:\code blocks\gamlib 6.0\objectmanager.h
 	"stdafx.h"
 
 1604786315 d:\code blocks\gamlib 6.0\soundmanager.h
@@ -1341,7 +1340,7 @@
 1609702293 source:d:\code blocks\gamlib 6.0\mechanics.cpp
 	"stdafx.h"
 
-1682039981 source:d:\code blocks\gamlib 6.0\objectmanager.cpp
+1682138589 source:d:\code blocks\gamlib 6.0\objectmanager.cpp
 	"stdafx.h"
 
 1602981969 source:d:\code blocks\gamlib 6.0\packbuffer.cpp
@@ -1353,10 +1352,10 @@
 1605752525 source:d:\code blocks\gamlib 6.0\renderbuffer.cpp
 	"stdafx.h"
 
-1681359894 source:d:\code blocks\gamlib 6.0\renderer.cpp
+1682138403 source:d:\code blocks\gamlib 6.0\renderer.cpp
 	"stdafx.h"
 
-1682045639 source:d:\code blocks\gamlib 6.0\scene.cpp
+1682137772 source:d:\code blocks\gamlib 6.0\scene.cpp
 	"stdafx.h"
 
 1603059118 source:d:\code blocks\gamlib 6.0\shader.cpp
@@ -1383,7 +1382,7 @@
 1682048503 source:d:\code blocks\gamlib 6.0\tile.cpp
 	"stdafx.h"
 
-1682045573 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
+1682138528 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
 	"stdafx.h"
 
 1597630276 source:d:\code blocks\gamlib 6.0\timer.cpp
@@ -2975,12 +2974,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1682048568 d:\code blocks\gamlib 6.0\tile.h
+1682128742 d:\code blocks\gamlib 6.0\tile.h
 	"stdafx.h"
 
 1682048101 d:\code blocks\gamlib 6.0\animation.h
 	"Stdafx.h"
 
-1682048402 source:d:\code blocks\gamlib 6.0\animation.cpp
+1682126929 source:d:\code blocks\gamlib 6.0\animation.cpp
 	"Stdafx.h"
 

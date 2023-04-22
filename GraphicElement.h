@@ -7,17 +7,74 @@
 class GraphicElement
 {
 	public:
-	Transformation transformation;
-	vec4 color;
-	vec4 alphaColor;
+	bool 			active;
+	GLuint 			texturePalette;
+	GLuint 			palettePage;
+	GLuint 			tileSeparation;
+	vec2			tileCell;
+	vec2			tileDimension;
+	vec2			pageDimension;
+	Transformation 	transformation;
+	vec4			vertexColor[4];
+	GLubyte			collisionData;
 
-	__declspec(dllexport) GraphicElement() {};
+	__declspec(dllexport) GraphicElement()
+	{
+		active = true;
+		texturePalette = 0;
+		palettePage = 0;
+		tileSeparation = 0;
+		tileCell.x = 0.0;
+		tileCell.y = 0.0;
+		tileDimension.x = 16.0f;
+		tileDimension.y = 16.0f;
+		pageDimension.x = 16.0f;
+		pageDimension.y = 16.0f;
+		transformation.pivot.x = 0;
+		transformation.pivot.y = 0;
+		transformation.pivot.z = 0;
+		transformation.translate.x = 0;
+		transformation.translate.y = 0;
+		transformation.translate.z = 0;
+		transformation.scale.x = 1;
+		transformation.scale.y = 1;
+		transformation.scale.z = 1;
+		transformation.rotate.x = 0;
+		transformation.rotate.y = 0;
+		transformation.rotate.z = 0;
+		collisionData = 0;
+
+
+		for (uint i = 0; i < 4; i++)
+		{
+			vertexColor[i].r = 0.0f;
+			vertexColor[i].g = 0.0f;
+			vertexColor[i].b = 0.0f;
+		}
+
+		for (uint i = 0; i < 4; i++)
+			vertexColor[i].a = 1.0f;
+		};
+
 	__declspec(dllexport) ~GraphicElement(){};
-
-
 	__declspec(dllexport) virtual void update() = 0;
-	__declspec(dllexport) virtual void print() const = 0;
+	__declspec(dllexport) virtual void print() const
+	{
+		cout << "Texture Palette = " << texturePalette << endl;
+		cout << "Palette Page  = " << palettePage << endl;
+		cout << "Tile Cell = [" << tileCell.x << ", " << tileCell.y << "]" << endl;
+		cout << "Tile Dimension = [" << tileDimension.x << ", " << tileDimension.y << "]" << endl;
+		cout << "Page Dimension = [" << pageDimension.x << ", " << pageDimension.y << "]" << endl;
+		cout << "Tile Separation = " << tileSeparation << endl;
+		cout << "Collision Data = " << collisionData << endl;
+		transformation.print();
+		cout << "vertexColor [0] = [ " << vertexColor[0].r << ", " << vertexColor[0].g << ", " << vertexColor[0].b << ", " << vertexColor[0].a << " ]" << endl;
+		cout << "vertexColor [1] = [ " << vertexColor[1].r << ", " << vertexColor[1].g << ", " << vertexColor[1].b << ", " << vertexColor[1].a << " ]" << endl;
+		cout << "vertexColor [2] = [ " << vertexColor[2].r << ", " << vertexColor[2].g << ", " << vertexColor[2].b << ", " << vertexColor[2].a << " ]" << endl;
+		cout << "vertexColor [3] = [ " << vertexColor[3].r << ", " << vertexColor[3].g << ", " << vertexColor[3].b << ", " << vertexColor[3].a << " ]" << endl;
+	}
 };
 
 #endif // !GRAPHICELEMENT_H
+
 

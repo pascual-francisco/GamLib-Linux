@@ -43,9 +43,10 @@ class TileMapManager
 	GLuint	mapPageCount;
 	GLuint  pageTileCount;
 	GLuint	tileSeparation;
+	GLuint 	tileFrameTime;
 
-	vector<Tile *>	mapTilesArray;
-	vector<Tile *>	tilesArray;
+	vector<Sprite *>	mapTilesArray;
+	vector<Sprite *>	tilesArray;
 	vector<float>		vertexArray;
 
 	VertexBufferLayout	*ptrvPosLayout;
@@ -58,7 +59,7 @@ class TileMapManager
 	VertexBuffer		*ptrVertexBuffer;
 	VertexArray			*ptrVertexArray;
 
-	__declspec(dllexport) TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLuint *mapData = nullptr, GLuint vw = 256, GLuint vh = 224, GLuint tw = 16, GLuint th = 16, GLuint tz = 0,  GLuint program = 0, GLenum mode = GL_TRIANGLES);
+	__declspec(dllexport) TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLuint *mapData = nullptr, GLuint viewportwidth = 256, GLuint viewportheight = 224, GLuint tilewidth = 16, GLuint tileheight = 16, GLuint tileseparation = 0, GLuint tileframetime = 0,  GLuint program = 0, GLenum mode = GL_TRIANGLES);
 	__declspec(dllexport) ~TileMapManager();
 	__declspec(dllexport) void batchDraw();
 	__declspec(dllexport) void update();
