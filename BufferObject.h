@@ -108,5 +108,5 @@ class BufferObject
 
 	};
 };
-#endif // !VERTEXBUFFER_H
+#endif // !BUFFEROBJECT_H
 #pragma once

@@ -1250,7 +1250,7 @@
 1611450553 d:\code blocks\gamlib 6.0\entity.h
 	"stdafx.h"
 
-1680833397 d:\code blocks\gamlib 6.0\bufferobject.h
+1682164952 d:\code blocks\gamlib 6.0\bufferobject.h
 	"stdafx.h"
 
 1603754797 d:\code blocks\gamlib 6.0\renderbuffer.h
@@ -1321,7 +1321,7 @@
 1632273431 source:d:\code blocks\gamlib 6.0\hitbox.cpp
 	"stdafx.h"
 
-1605752425 source:d:\code blocks\gamlib 6.0\indexbuffer.cpp
+1682165009 source:d:\code blocks\gamlib 6.0\indexbuffer.cpp
 	"stdafx.h"
 
 1597197141 source:d:\code blocks\gamlib 6.0\keyframe.cpp
@@ -1340,7 +1340,7 @@
 1609702293 source:d:\code blocks\gamlib 6.0\mechanics.cpp
 	"stdafx.h"
 
-1682138589 source:d:\code blocks\gamlib 6.0\objectmanager.cpp
+1682168698 source:d:\code blocks\gamlib 6.0\objectmanager.cpp
 	"stdafx.h"
 
 1602981969 source:d:\code blocks\gamlib 6.0\packbuffer.cpp
@@ -1364,7 +1364,7 @@
 1681608493 source:d:\code blocks\gamlib 6.0\soundmanager.cpp
 	"stdafx.h"
 
-1682039034 source:d:\code blocks\gamlib 6.0\sprite.cpp
+1682138624 source:d:\code blocks\gamlib 6.0\sprite.cpp
 	"stdafx.h"
 
 1392776132 source:d:\code blocks\gamlib 6.0\stdafx.cpp
@@ -1382,7 +1382,7 @@
 1682048503 source:d:\code blocks\gamlib 6.0\tile.cpp
 	"stdafx.h"
 
-1682138528 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
+1682168690 source:d:\code blocks\gamlib 6.0\tilemapmanager.cpp
 	"stdafx.h"
 
 1597630276 source:d:\code blocks\gamlib 6.0\timer.cpp
@@ -1436,7 +1436,7 @@
 1681362413 source:d:\code blocks\gamlib 6.0\camera.cpp
 	"stdafx.h"
 
-1681167319 source:d:\code blocks\gamlib 6.0\joystick.cpp
+1682165009 source:d:\code blocks\gamlib 6.0\joystick.cpp
 	"Joystick.h"
 
 1680880435 d:\code blocks\gamlib 6.0\joystick.h

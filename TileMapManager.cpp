@@ -562,6 +562,7 @@ void TileMapManager::printDataArray() const
 {
 	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Buffer Data: " << endl;
+	cout << "X---Y---Z---S---T---P---Q---R---G---B---A---Tx---Ty---Tz---Sx---Sy---Sz---Rx---Ry---Rz" << endl;
 
 	for (uint i = 0; i < vertexArray.size(); i++)
 	{

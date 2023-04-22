@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 IndexBuffer::IndexBuffer(GLuint count, GLintptr size, const void *data)
-{		
+{
 	GLuint vertex = 0;
 	void *zero = nullptr;
 	bufferCount = count;
@@ -11,9 +11,9 @@ IndexBuffer::IndexBuffer(GLuint count, GLintptr size, const void *data)
 
 	glGenBuffers(1, &bufferObjectID);
 	glBindBuffer(bufferTarget, bufferObjectID);
-	
+
 	if (data == nullptr)
-	{				
+	{
 		GLuint vertex = 0;
 		GLuint quad = 0;
 
@@ -38,7 +38,7 @@ IndexBuffer::IndexBuffer(GLuint count, GLintptr size, const void *data)
 				quad++;
 				vertex = 0;
 			}
-		}		
+		}
 
 		glBufferData(bufferTarget, bufferCount * bufferDataSize, tempData, GL_DYNAMIC_DRAW);
 		delete[] tempData;
@@ -60,12 +60,12 @@ void IndexBuffer::update(GLintptr offset, GLintptr size, const void *data)
 	glBufferSubData(bufferTarget, offset, size, data);
 }
 
-void IndexBuffer::attach() 
+void IndexBuffer::attach()
 {
 	glBindBuffer(bufferTarget, bufferObjectID);
 }
 
-void IndexBuffer::detach() 
+void IndexBuffer::detach()
 {
 	glBindBuffer(bufferTarget, 0);
 }
@@ -82,10 +82,3 @@ void IndexBuffer::print() const
 	cout << "Buffer Size = " << bufferDataSize * bufferCount << " Bytes" << endl;
 	cout << "*****************************************************" << endl;
 }
-
-/*
-	zero = (void *)malloc(bufferCount * bufferDataSize);
-	memset(zero, 0, bufferCount * bufferDataSize);
-
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufferCount * bufferDataSize, zero, GL_DYNAMIC_DRAW);
-*/

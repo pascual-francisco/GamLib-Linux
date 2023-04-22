@@ -27,5 +27,5 @@ Joystick::~Joystick()
 
 Joystick::Joystick(const Joystick& other)
 {
-    //copy ctor
+
 }
