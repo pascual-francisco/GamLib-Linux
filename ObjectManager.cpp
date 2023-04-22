@@ -90,9 +90,9 @@ void ObjectManager::initLayouts()
 	/*
 	DATA BUFFER:
 	Entity 0
-		Sprite 0 [XYZW-STPQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
-		21 Float * 4 Vertices = 84 Floats
-		1 Quad = 84 Floats
+		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
+		17 Float * 4 Vertices = 68 Floats
+		1 Quad = 6 Floats
 */
 	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 3, GL_FALSE, 17, 0 * 4);
 	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 17, 3 * 4);
@@ -217,7 +217,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->texturePalette);
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value + image->textureHeight.value);
 	dataArray[offset] = textureX + textureW;
@@ -227,7 +227,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->texturePalette);
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value);
 	dataArray[offset] = textureX + textureW;
@@ -237,7 +237,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	dataArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
 	dataArray[offset] = GLfloat(sprite->texturePalette);
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	//glTexCoord2f(image->textureX.value, image->textureY.value);
 	dataArray[offset] = textureX;
@@ -258,7 +258,7 @@ void ObjectManager::updateColor(Sprite *sprite, GLuint offset)
 	dataArray[offset] = sprite->vertexColor[0].b;
 	offset++;
 	dataArray[offset] = sprite->vertexColor[0].a;
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	dataArray[offset] = sprite->vertexColor[1].r;
 	offset++;
@@ -267,7 +267,7 @@ void ObjectManager::updateColor(Sprite *sprite, GLuint offset)
 	dataArray[offset] = sprite->vertexColor[1].b;
 	offset++;
 	dataArray[offset] = sprite->vertexColor[1].a;
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	dataArray[offset] = sprite->vertexColor[2].r;
 	offset++;
@@ -276,7 +276,7 @@ void ObjectManager::updateColor(Sprite *sprite, GLuint offset)
 	dataArray[offset] = sprite->vertexColor[2].b;
 	offset++;
 	dataArray[offset] = sprite->vertexColor[2].a;
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	dataArray[offset] = sprite->vertexColor[3].r;
 	offset++;

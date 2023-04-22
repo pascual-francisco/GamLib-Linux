@@ -90,9 +90,9 @@ void ObjectManager::initLayouts()
 	/*
 	DATA BUFFER:
 	Entity 0
-		Sprite 0 [XYZW-STPQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] , [XYZW-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
-		21 Float * 4 Vertices = 84 Floats
-		1 Quad = 84 Floats
+		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
+		17 Float * 4 Vertices = 68 Floats
+		1 Quad = 68 Floats
 */
 	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 3, GL_FALSE, 17, 0 * 4);
 	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 17, 3 * 4);
@@ -448,7 +448,7 @@ void ObjectManager::print() const
 
 void ObjectManager::printInfo() const
 {
-	cout << "**************************************************" << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Object Manager Info:" << endl;
 	cout << "Program ID = " << programID << endl;
 	cout << "Batch Draw Calls = " << batchDrawCalls << endl;
@@ -458,14 +458,15 @@ void ObjectManager::printInfo() const
 	cout << "Quad Count = " << dataArray.size() / quadFloatCount << endl;
 	cout << "Quad Float Count = "<<quadFloatCount << endl;
 	cout << "Vertex Buffer Stride Count = " <<vertexBufferStrideCount << endl;
-	cout << "**************************************************" << endl;
+	cout << "Object Manager Info:" << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 
 void ObjectManager::printDataArray() const
 {
 	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Buffer Data: " << endl;
-	cout << "[X    Y    Z    S    T    P    Q    R    G    B    A     T    T    T     S    S    S		R		R		R]" << endl;
+	cout << "X---Y---Z---S---T---P---Q---R---G---B---A---Tx---Ty---Tz---Sx---Sy---Sz---Rx---Ry---Rz" << endl;
 
 	for (uint i = 0; i < dataArray.size(); i++)
 	{
@@ -477,16 +478,18 @@ void ObjectManager::printDataArray() const
 		cout << dataArray[i] << ",    ";
 	}
 
+	cout << "Buffer Data: " << endl;
 	cout <<endl<< "******************************************************************************************************************************************************************************" << endl;
 }
 
 void ObjectManager::printEntities() const
 {
 	cout << "**************************************************" << endl;
-	cout << "Buffer Entities: " << endl;
+	cout << "Buffer Entities Data: " << endl;
 
 	for (GLuint i = 0; i < entitiesArray.size(); i++)
 		entitiesArray[i]->print();
 
+	cout << "Buffer Entities Data: " << endl;
 	cout << "**************************************************" << endl;
 }

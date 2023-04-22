@@ -330,7 +330,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->texturePalette);
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value + image->textureHeight.value);
 	vertexArray[offset] = textureX + textureW;
@@ -340,7 +340,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->texturePalette);
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value);
 	vertexArray[offset] = textureX + textureW;
@@ -350,7 +350,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->texturePalette);
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	//glTexCoord2f(image->textureX.value, image->textureY.value);
 	vertexArray[offset] = textureX;
@@ -371,7 +371,7 @@ void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = sprite->vertexColor[0].b;
 	offset++;
 	vertexArray[offset] = sprite->vertexColor[0].a;
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	vertexArray[offset] = sprite->vertexColor[1].r;
 	offset++;
@@ -380,7 +380,7 @@ void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = sprite->vertexColor[1].b;
 	offset++;
 	vertexArray[offset] = sprite->vertexColor[1].a;
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	vertexArray[offset] = sprite->vertexColor[2].r;
 	offset++;
@@ -389,7 +389,7 @@ void TileMapManager::updateColor(Sprite *sprite, GLuint offset)
 	vertexArray[offset] = sprite->vertexColor[2].b;
 	offset++;
 	vertexArray[offset] = sprite->vertexColor[2].a;
-	offset += (17 - 2);
+	offset += (17 - 3);
 
 	vertexArray[offset] = sprite->vertexColor[3].r;
 	offset++;
@@ -574,7 +574,7 @@ void TileMapManager::printDataArray() const
 		cout << vertexArray[i] << ",    ";
 	}
 
-	cout <<endl<< "Buffer Data: " << endl;
+	cout << endl<< "Buffer Data: " << endl;
 	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 
