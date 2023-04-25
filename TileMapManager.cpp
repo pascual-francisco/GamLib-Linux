@@ -92,6 +92,10 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
 		{
 			(*tait) = new Sprite();
+			(*tait)->tileDimension.x = tileWidth;
+			(*tait)->tileDimension.y = tileHeight;
+			(*tait)->pageDimension.x = 16.0;
+			(*tait)->pageDimension.y = 16.0;
 		}
 	}
 
