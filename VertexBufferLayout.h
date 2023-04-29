@@ -11,21 +11,21 @@ class VertexBufferLayout
 	GLuint			count;
 	GLuint			dataType;
 	GLboolean		normalize;
-	GLuint			attributeLocation;	
+	GLuint			attributeLocation;
 	const GLchar	*attributeName;
-	GLuint			shaderProgramID;	
+	GLuint			shaderProgramID;
 
 	public:
-		__declspec(dllexport) VertexBufferLayout();
-		__declspec(dllexport) VertexBufferLayout(GLuint shaderProgramID, const GLchar *attributeName, GLuint count, GLboolean normalize, GLuint strideSize, GLuint offset);
-		__declspec(dllexport) ~VertexBufferLayout();
-				
-		__declspec(dllexport) void attach();
-		__declspec(dllexport) void dettach();
-		__declspec(dllexport) void print() const;
-		
+		  VertexBufferLayout();
+		  VertexBufferLayout(GLuint shaderProgramID, const GLchar *attributeName, GLuint count, GLboolean normalize, GLuint strideSize, GLuint offset);
+		  ~VertexBufferLayout();
+
+		  void attach();
+		  void dettach();
+		  void print() const;
+
 };
-	
+
 #endif // !VERTEXBUFFERLAYOUT_H
 
 
@@ -46,16 +46,16 @@ class VertexBufferLayout
 		enable();
 		glVertexAttribPointer(attributeLocation, count, GL_UNSIGNED_INT, normalize, sizeof(GL_UNSIGNED_INT) * count, offset);
 	}
-	
-		
-		switch (T) 
+
+
+		switch (T)
 		{
 			case GLbyte:
 				glVertexAttribPointer(attributeLocation, count, GL_BYTE, normalize, sizeof(GL_BYTE) * count, offset);
 				break;
 
 			case GLuint:
-				
+
 				break;
 
 			case GLfloat:
@@ -75,14 +75,14 @@ class VertexBufferLayout
 				break;
 		}
 
-	
+
 
 	template<class T>
 	inline VertexBufferLayout<T>::~VertexBufferLayout()
 	{
 
 	}
-	
+
 	template<class T>
 	inline void VertexBufferLayout<T>::enable()
 	{
@@ -96,7 +96,7 @@ class VertexBufferLayout
 	}
 
 
-	
+
 	attributeLocation = glGetAttribLocation(shaderProgramID, attributeName);
 		enable();
 
@@ -126,6 +126,6 @@ class VertexBufferLayout
 			glVertexAttribPointer(attributeLocation, count, GL_FLOAT, normalize, sizeof(GL_FLOAT) * count, offset);
 			break;
 		};
-		
+
 	*/
 

@@ -6,8 +6,8 @@
 class SpriteDelegate
 {
 	public:
-		__declspec(dllexport) SpriteDelegate() {}
-		__declspec(dllexport) virtual ~SpriteDelegate() {}
-	
+		  SpriteDelegate() {}
+		  virtual ~SpriteDelegate() {}
+
 };
 #endif // !SPRITEDELEGATE_H

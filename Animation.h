@@ -1,5 +1,5 @@
 #pragma once
-#include "Stdafx.h"
+#include "stdafx.h"
 
 #ifndef ANIMATION_H
 #define ANIMATION_H
@@ -27,19 +27,19 @@ class Animation
 		STOP
 	};
 
-	__declspec(dllexport) Animation(GLint firstframe = 0, GLint lastfframe = 1, GLint actualframe = 0, GLfloat frametime = 0, GLuint actualstate = 0);
-   	__declspec(dllexport) Animation(const Animation &);
-   	__declspec(dllexport)  ~Animation();
+	  Animation(GLint firstframe = 0, GLint lastfframe = 1, GLint actualframe = 0, GLfloat frametime = 0, GLuint actualstate = 0);
+   	  Animation(const Animation &);
+   	   ~Animation();
 
-	__declspec(dllexport) void init(GLint firstframe = 0, GLint lastfframe = 1, GLint actualframe = 0, GLfloat frametime = 0, GLuint actualstate = 0);
-    __declspec(dllexport) void update();
-    __declspec(dllexport) void print() const;
+	  void init(GLint firstframe = 0, GLint lastfframe = 1, GLint actualframe = 0, GLfloat frametime = 0, GLuint actualstate = 0);
+      void update();
+      void print() const;
 
-	__declspec(dllexport) const Animation &operator=(const Animation &);
-    __declspec(dllexport) bool operator==(const Animation &) const;
-	__declspec(dllexport) bool operator<(const Animation &) const;
-	__declspec(dllexport) bool operator>(const Animation &) const;
-	__declspec(dllexport) bool operator*( Animation &) ;
+	  const Animation &operator=(const Animation &);
+      bool operator==(const Animation &) const;
+	  bool operator<(const Animation &) const;
+	  bool operator>(const Animation &) const;
+	  bool operator*( Animation &) ;
     };
 
 #endif // ANIMATION_H

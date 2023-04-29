@@ -12,16 +12,16 @@ public:
 	GLuint	vertexID;
 	GLuint	fragmentID;
 	string	filePath;
-		
-	__declspec(dllexport) Shader();
-	__declspec(dllexport) Shader(string file, const char* vname, const char* fname);
-	__declspec(dllexport) ~Shader();
-	__declspec(dllexport) void attach();
-	__declspec(dllexport) void detach();
+
+	  Shader();
+	  Shader(string file, const char* vname, const char* fname);
+	  ~Shader();
+	  void attach();
+	  void detach();
 
 	private:
-	__declspec(dllexport) void initShader(const char* vname, const char* fname);
-	__declspec(dllexport) void loadFile(const char* fn, string& str);
-	__declspec(dllexport) GLuint loadShader(string& source, GLuint mode);
+	  void initShader(const char* vname, const char* fname);
+	  void loadFile(const char* fn, string& str);
+	  GLuint loadShader(string& source, GLuint mode);
 };
 #endif

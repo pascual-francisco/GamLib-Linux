@@ -7,29 +7,29 @@
 class FrameBuffer : public BufferObject
 {
 	private:
-	
+
 	public:
-		GLuint attachmentPoints[18];		
+		GLuint attachmentPoints[18];
 		string frameBufferStatus;
-				
-	__declspec(dllexport) FrameBuffer(GLuint target);
-	__declspec(dllexport) ~FrameBuffer();
+
+	  FrameBuffer(GLuint target);
+	  ~FrameBuffer();
 
 
-	__declspec(dllexport)  void update(GLintptr offset, GLintptr size, const void *data);
-	__declspec(dllexport)  void attach();
-	__declspec(dllexport)  void attachRenderBuffer(RenderBuffer* buffer);	
-	__declspec(dllexport)  void attachColor(GLuint point, GLuint buffer);
-	__declspec(dllexport)  void attachDepth(GLuint buffer);
-	__declspec(dllexport)  void attachStencil(GLuint buffer);
-	__declspec(dllexport)  void attachTexture(GLuint buffer);
-	__declspec(dllexport)  void attachDraw();
-	__declspec(dllexport)  void attachRead();
-	__declspec(dllexport)  void checkStatus();
+	   void update(GLintptr offset, GLintptr size, const void *data);
+	   void attach();
+	   void attachRenderBuffer(RenderBuffer* buffer);
+	   void attachColor(GLuint point, GLuint buffer);
+	   void attachDepth(GLuint buffer);
+	   void attachStencil(GLuint buffer);
+	   void attachTexture(GLuint buffer);
+	   void attachDraw();
+	   void attachRead();
+	   void checkStatus();
 
-	__declspec(dllexport)  void detachPoints();
-	__declspec(dllexport)  void detach();
-	__declspec(dllexport)  void print() const;
+	   void detachPoints();
+	   void detach();
+	   void print() const;
 
 };
 #endif // !FRAMEBUFFER_H

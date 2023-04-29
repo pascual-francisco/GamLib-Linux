@@ -26,15 +26,15 @@ class Renderer
 	vector<Shader *> shaders;
 	vector<string>  shaderNames;
 
-	__declspec(dllexport)				Renderer(bool mode, string file, GLuint x, GLuint y, GLuint w, GLuint h);
-	__declspec(dllexport)				~Renderer();
-	__declspec(dllexport) virtual void	initGlobals();
-	__declspec(dllexport) virtual void	initSDL();
-	__declspec(dllexport) virtual void	initOpenGL();
-	__declspec(dllexport) virtual void	initGlew();
-	__declspec(dllexport) virtual void	initShaders();
-	__declspec(dllexport) virtual void	update();
-	__declspec(dllexport) virtual void	checkErrors();
+	 				Renderer(bool mode, string file, GLuint x, GLuint y, GLuint w, GLuint h);
+	 				~Renderer();
+	  virtual void	initGlobals();
+	  virtual void	initSDL();
+	  virtual void	initOpenGL();
+	  virtual void	initGlew();
+	  virtual void	initShaders();
+	  virtual void	update();
+	  virtual void	checkErrors();
 
 
 	static	GLfloat COSTABLE[360];

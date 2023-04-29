@@ -18,7 +18,7 @@ class GraphicElement
 	vec4			vertexColor[4];
 	GLubyte			collisionData;
 
-	__declspec(dllexport) GraphicElement()
+	  GraphicElement()
 	{
 		active = true;
 		texturePalette = 0;
@@ -56,9 +56,9 @@ class GraphicElement
 			vertexColor[i].a = 1.0f;
 		};
 
-	__declspec(dllexport) ~GraphicElement(){};
-	__declspec(dllexport) virtual void update() = 0;
-	__declspec(dllexport) virtual void print() const
+	  ~GraphicElement(){};
+	  virtual void update() = 0;
+	  virtual void print() const
 	{
 
 		cout << "Texture Palette = " << texturePalette << endl;

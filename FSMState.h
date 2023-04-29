@@ -11,19 +11,19 @@ class FSMState
 	GLfloat time;
 	GLfloat counter;
 
-	__declspec(dllexport) FSMState()
+	  FSMState()
 	{
 		name = "";
 		time = 0.0f;
 		counter = 0.0f;
 	};
-	__declspec(dllexport) ~FSMState() {};
+	  ~FSMState() {};
 
-	__declspec(dllexport) virtual void enter() = 0;
-	__declspec(dllexport) virtual void exit() = 0;
-	__declspec(dllexport) virtual void update() = 0;
+	  virtual void enter() = 0;
+	  virtual void exit() = 0;
+	  virtual void update() = 0;
 
-	__declspec(dllexport) void print() const
+	  void print() const
 	{
 
 		cout << "State Name = " << name << endl;

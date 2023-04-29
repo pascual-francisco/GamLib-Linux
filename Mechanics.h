@@ -19,17 +19,17 @@ public:
 	vec3	friction;
 	vec3	gravity;
 
-	__declspec(dllexport) Mechanics();
-	__declspec(dllexport) Mechanics(const Mechanics &);
-	__declspec(dllexport) ~Mechanics();
+	  Mechanics();
+	  Mechanics(const Mechanics &);
+	  ~Mechanics();
 
-	__declspec(dllexport)	const Mechanics &operator=(const Mechanics &);
-	__declspec(dllexport)	bool operator==(const Mechanics &) const;
-	__declspec(dllexport)	bool operator<(const Mechanics &) const;
-	__declspec(dllexport)	bool operator>(const Mechanics &) const;
-	__declspec(dllexport)	bool operator*(const Mechanics &) const;
-	__declspec(dllexport)	void update();
-	__declspec(dllexport)	void print() const;
+	 	const Mechanics &operator=(const Mechanics &);
+	 	bool operator==(const Mechanics &) const;
+	 	bool operator<(const Mechanics &) const;
+	 	bool operator>(const Mechanics &) const;
+	 	bool operator*(const Mechanics &) const;
+	 	void update();
+	 	void print() const;
 };
 
 #endif // !MECHANICS_H

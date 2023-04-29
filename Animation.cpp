@@ -1,5 +1,5 @@
 #pragma once
-#include "Stdafx.h"
+#include "stdafx.h"
 
 Animation::Animation(GLint firstframe, GLint lastframe, GLint actualframe, GLfloat frametime, GLuint actualstate)
 {

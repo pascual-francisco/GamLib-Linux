@@ -6,28 +6,28 @@
 
 class UniformBuffer: public BufferObject
 {
-public:	
+public:
 	const GLchar	**names;
 	const void		*data;
 	GLsizei			dataSize;
 	GLuint			shaderProgramID;
-	GLuint			uniformBufferID;	
+	GLuint			uniformBufferID;
 	GLuint			blockSize;
 	GLuint			blockIndex;
 	GLuint			*offsets;
 	GLuint			*indices;
 	GLuint			*sizes;
 	GLsizei			memberCount;
-	
+
 public:
-	__declspec(dllexport) UniformBuffer();
-	__declspec(dllexport) UniformBuffer(GLuint program, GLsizei count,       const void *data, GLsizei size);
-	__declspec(dllexport) ~UniformBuffer();
-	__declspec(dllexport) void init(GLuint program, GLsizei count, const void *data, GLsizei size);
-	__declspec(dllexport) void initUniformIndices();	
-	__declspec(dllexport) void initUniformLocations();
-	__declspec(dllexport) void attach() const;
-	__declspec(dllexport) void detach() const;
+	  UniformBuffer();
+	  UniformBuffer(GLuint program, GLsizei count,       const void *data, GLsizei size);
+	  ~UniformBuffer();
+	  void init(GLuint program, GLsizei count, const void *data, GLsizei size);
+	  void initUniformIndices();
+	  void initUniformLocations();
+	  void attach() const;
+	  void detach() const;
 };
 #endif // !VERTEXBUFFER_H
 #pragma once

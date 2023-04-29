@@ -7,15 +7,15 @@
 class Texture
 {
 	private:
-	__declspec(dllexport) void init(string name, string path, GLuint width, GLuint height, GLuint depth, GLenum target, GLuint unit, GLenum internalFormat, GLenum format, GLenum type);
-	__declspec(dllexport) void reserveImage3D();
-	__declspec(dllexport) void loadImage3D();
-	__declspec(dllexport) void reserveImage2D();
-	__declspec(dllexport) void loadImage2D();
+	  void init(string name, string path, GLuint width, GLuint height, GLuint depth, GLenum target, GLuint unit, GLenum internalFormat, GLenum format, GLenum type);
+	  void reserveImage3D();
+	  void loadImage3D();
+	  void reserveImage2D();
+	  void loadImage2D();
 
-	
+
 	public:
-	string	textureName;	
+	string	textureName;
 	GLuint	textureID;
 	string	texturePath;
 	GLsizei textureWidth;
@@ -25,19 +25,19 @@ class Texture
 	GLenum	textureTarget;
 	GLenum	textureDataFormat;
 	GLenum	textureInternalDataFormat;
-	GLenum	textureDataType;	
+	GLenum	textureDataType;
 
-	__declspec(dllexport) Texture(string name, string path, GLuint width, GLuint height, GLuint depth, GLenum target, GLuint unit, GLenum internalFormat, GLenum format, GLenum type);
-	__declspec(dllexport) Texture(Texture&);
-	__declspec(dllexport) ~Texture();
+	  Texture(string name, string path, GLuint width, GLuint height, GLuint depth, GLenum target, GLuint unit, GLenum internalFormat, GLenum format, GLenum type);
+	  Texture(Texture&);
+	  ~Texture();
 
-	__declspec(dllexport) const Texture &operator=(const Texture &);
-	__declspec(dllexport) bool operator==(const Texture &) const;
-	__declspec(dllexport) bool operator<(const Texture &) const;
-	__declspec(dllexport) bool operator>(const Texture &) const;
-	
-	__declspec(dllexport) void attach(GLuint unit);
-	__declspec(dllexport) void detach() const;
-	__declspec(dllexport) void print() const;
+	  const Texture &operator=(const Texture &);
+	  bool operator==(const Texture &) const;
+	  bool operator<(const Texture &) const;
+	  bool operator>(const Texture &) const;
+
+	  void attach(GLuint unit);
+	  void detach() const;
+	  void print() const;
 };
 #endif

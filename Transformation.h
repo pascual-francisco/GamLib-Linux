@@ -11,11 +11,11 @@ public:
 	vec3	rotate;
 	vec3	scale;
 	vec3	pivot;
-	
-	__declspec(dllexport) Transformation();
-	__declspec(dllexport) ~Transformation();
 
-	__declspec(dllexport) void print() const;
+	  Transformation();
+	  ~Transformation();
+
+	  void print() const;
 };
 #endif
 

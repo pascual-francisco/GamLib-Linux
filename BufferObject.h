@@ -14,7 +14,7 @@ class BufferObject
 	GLuint		bufferCount;
 	GLuint		bufferStorageFormat;
 
-	__declspec(dllexport) BufferObject()
+	  BufferObject()
 	{
 		bufferTarget = 0;
 		bufferObjectID = 0;
@@ -22,13 +22,13 @@ class BufferObject
 		bufferCount = 0;
 		bufferStorageFormat = 0;
 	};
-	__declspec(dllexport) BufferObject(GLuint count, GLintptr size, const void *data) {};
-	__declspec(dllexport) ~BufferObject() {};
+	  BufferObject(GLuint count, GLintptr size, const void *data) {};
+	  ~BufferObject() {};
 
-	__declspec(dllexport) virtual void update(GLintptr offset, GLintptr size, const void *data) = 0 ;
-	__declspec(dllexport) virtual void attach() = 0;
-	__declspec(dllexport) virtual void detach() = 0 ;
-	__declspec(dllexport) virtual void print() const
+	  virtual void update(GLintptr offset, GLintptr size, const void *data) = 0 ;
+	  virtual void attach() = 0;
+	  virtual void detach() = 0 ;
+	  virtual void print() const
 	{
 		cout << "Buffer Object ID = " << bufferObjectID << endl;
 

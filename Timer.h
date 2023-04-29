@@ -7,17 +7,17 @@
 	class Timer
 	{
 		public:
-		LARGE_INTEGER inTime;
-		LARGE_INTEGER outTime;
-		LARGE_INTEGER frameTime;
-		LARGE_INTEGER frequency;		
-		UINT actualFrame;
-		UINT frameRate;
+		long int inTime;
+		long int  outTime;
+		long int  frameTime;
+		long int  frequency;
+		uint actualFrame;
+		uint frameRate;
 		list<TimerDelegate*> timerDelegate;
 
-		__declspec(dllexport) Timer(unsigned int = 30);
-		__declspec(dllexport) ~Timer();
-		__declspec(dllexport) void update();
+		  Timer(unsigned int = 30);
+		  ~Timer();
+		  void update();
 	};
 	#endif
 

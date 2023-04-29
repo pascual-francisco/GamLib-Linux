@@ -8,33 +8,33 @@ class GameObject
 {
 	public:
 	string		name;
-	bool		active;	
+	bool		active;
 	uint		healthPoints;
 	uint		attackDamage;
 	uint		weakness;
 	float		direction;
-	
-	__declspec(dllexport) GameObject()
+
+	  GameObject()
 	{
-		name = "name"; 
-		active = false;		
+		name = "name";
+		active = false;
 		healthPoints = 0;
 		attackDamage = 0;
 		weakness = 0;
 	};
 
-	__declspec(dllexport) GameObject(const GameObject &object) 
+	  GameObject(const GameObject &object)
 	{
 		name = object.name;
 		active = object.active;
 		healthPoints = object.healthPoints;
 		attackDamage = object.attackDamage;
-		weakness = object.weakness;		
+		weakness = object.weakness;
 	}
 
-	__declspec(dllexport) ~GameObject(){};		
-	
-	__declspec(dllexport)  virtual void update() = 0;
-	__declspec(dllexport)  virtual void print() const = 0;
+	  ~GameObject(){};
+
+	   virtual void update() = 0;
+	   virtual void print() const = 0;
 };
 #endif // !GAMEOBJECT_H

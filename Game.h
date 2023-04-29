@@ -33,22 +33,22 @@ class Game
 	vector<Scene *>  scenes;
 
 
-	__declspec(dllexport) Game(bool mode, string file, GLfloat x, GLfloat y, GLfloat w, GLfloat h);
-	__declspec(dllexport) ~Game();
+	  Game(bool mode, string file, GLfloat x, GLfloat y, GLfloat w, GLfloat h);
+	  ~Game();
 
-	__declspec(dllexport) virtual void	initScenes() = 0;
-	__declspec(dllexport) virtual void	initTextures() = 0;
-	__declspec(dllexport) virtual void	initSounds() = 0;
-	__declspec(dllexport) virtual void	initUniforms() = 0;
-	__declspec(dllexport) virtual void	initBuffers() = 0;
+	  virtual void	initScenes() = 0;
+	  virtual void	initTextures() = 0;
+	  virtual void	initSounds() = 0;
+	  virtual void	initUniforms() = 0;
+	  virtual void	initBuffers() = 0;
 
-	__declspec(dllexport) virtual void	update() = 0;
-	__declspec(dllexport) virtual void	updateUniforms() = 0;
-	__declspec(dllexport) virtual void	updateTextures() = 0;
-	__declspec(dllexport) virtual void	updateSounds() = 0;
-	__declspec(dllexport) virtual void	updateBuffers() = 0;
-	__declspec(dllexport) virtual void	updateScene() = 0;
-	__declspec(dllexport) virtual void	checkEvents() = 0;
+	  virtual void	update() = 0;
+	  virtual void	updateUniforms() = 0;
+	  virtual void	updateTextures() = 0;
+	  virtual void	updateSounds() = 0;
+	  virtual void	updateBuffers() = 0;
+	  virtual void	updateScene() = 0;
+	  virtual void	checkEvents() = 0;
 };
 
 #endif // !GAME_H

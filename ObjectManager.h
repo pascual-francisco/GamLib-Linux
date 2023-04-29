@@ -15,15 +15,15 @@ class ObjectManager
 	GLuint textureCounter;
 	GLint maxTextureUnits;
 
-	__declspec(dllexport) void updateDataArray(Sprite* sprite, GLuint offset);
-	__declspec(dllexport) void updatePosition(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateTexture(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateColor(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateTranslate(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateScale(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateRotate(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateEnitities();
-	__declspec(dllexport) void updateVertexBuffer();
+	  void updateDataArray(Sprite* sprite, GLuint offset);
+	  void updatePosition(Sprite *sprite, GLuint offset);
+	  void updateTexture(Sprite *sprite, GLuint offset);
+	  void updateColor(Sprite *sprite, GLuint offset);
+	  void updateTranslate(Sprite *sprite, GLuint offset);
+	  void updateScale(Sprite *sprite, GLuint offset);
+	  void updateRotate(Sprite *sprite, GLuint offset);
+	  void updateEnitities();
+	  void updateVertexBuffer();
 
 	public:
 	GLuint	programID;
@@ -41,18 +41,18 @@ class ObjectManager
 	VertexBuffer		*ptrVertexBuffer;
 	VertexArray			*ptrVertexArray;
 
-	__declspec(dllexport) ObjectManager(GLuint program = 0, GLenum mode = GL_TRIANGLES);
-	__declspec(dllexport) ~ObjectManager();
+	  ObjectManager(GLuint program = 0, GLenum mode = GL_TRIANGLES);
+	  ~ObjectManager();
 
-	__declspec(dllexport) void  initDataArray();
-	__declspec(dllexport) void	initBuffers();
-	__declspec(dllexport) void	initLayouts();
-	__declspec(dllexport) void  batchDraw(GLenum mode = GL_TRIANGLES);
+	  void  initDataArray();
+	  void	initBuffers();
+	  void	initLayouts();
+	  void  batchDraw(GLenum mode = GL_TRIANGLES);
 
-	__declspec(dllexport) void update();
-	__declspec(dllexport) void print() const;
-	__declspec(dllexport) void printInfo() const;
-	__declspec(dllexport) void printDataArray() const;
-	__declspec(dllexport) void printEntities() const;
+	  void update();
+	  void print() const;
+	  void printInfo() const;
+	  void printDataArray() const;
+	  void printEntities() const;
 };
 #endif // !OBJECTMANAGER_H

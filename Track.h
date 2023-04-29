@@ -5,30 +5,30 @@
 
 	class Track
 	{
-		private:		
+		private:
 		KeyFrame				PK;
-		KeyFrame				NK;		
+		KeyFrame				NK;
 		float					derivative;
 		float					timeDerivative;
-		int						keyIndex;				
-	
-		public:				
+		int						keyIndex;
+
+		public:
 		bool					loop;
 		int						keys;
-		vector<KeyFrame>		keyFrames;			
+		vector<KeyFrame>		keyFrames;
 		int						frames;
-		int						head;		
+		int						head;
 		float					value;
 		float					time;
-		bool					constant;			
+		bool					constant;
 		vector<TrackDelegate*>	trackDelegate;
 		int						frameTime;
 		int						frameCounter;
-		int						actualState;					
-		
-		enum TrackStates	
+		int						actualState;
+
+		enum TrackStates
 		{
-			FORWARD, 
+			FORWARD,
 			BACKWARD,
 			PAUSE,
 			STOP,
@@ -42,35 +42,35 @@
 			GO_TO_KEY_LOOP_FORWARD,
 			GO_TO_KEY_LOOP_BACKWARD,
 			GO_TO_KEY_STOP,
-		};		
-								
-		__declspec(dllexport) Track(int frames =0, int keys =0, int frameTime = 0, int state = 3, bool constant = false, float value = 0.0f);				
-		__declspec(dllexport) Track(const Track&);
-		__declspec(dllexport) ~Track();
-		__declspec(dllexport) const Track& operator=(const Track&);
-		__declspec(dllexport) bool operator==(const Track&) const;
-		__declspec(dllexport) bool operator<(const Track&) const;
-		
-		__declspec(dllexport) void updateEvent();
-		__declspec(dllexport) void applyDerivative();		
-		__declspec(dllexport) void calculateDerivative();		
-		__declspec(dllexport) void forward();
-		__declspec(dllexport) void backward();
-		__declspec(dllexport) void pause();
-		__declspec(dllexport) void stop();		
-		__declspec(dllexport) void goToKey(int key = 0);
-		__declspec(dllexport) void goToKeyAndForward(int key = 0);
-		__declspec(dllexport) void goToKeyAndBackward(int key = 0);
-		__declspec(dllexport) void goToKeyAndStop(int key = 0);
-		__declspec(dllexport) void goToFirstKey();
-		__declspec(dllexport) void goToFirstKeyAndStop();
-		__declspec(dllexport) void goToFirstKeyAndBackward();
-		__declspec(dllexport) void goToFirstKeyAndForward();
-		__declspec(dllexport) void goToLastKey();	
-		__declspec(dllexport) void goToLastKeyAndStop();	
-		__declspec(dllexport) void goToLastKeyAndBackward();	
-		__declspec(dllexport) void goToLastKeyAndForward();	
-		__declspec(dllexport) void update();	
-		__declspec(dllexport) void print() const;
+		};
+
+		  Track(int frames =0, int keys =0, int frameTime = 0, int state = 3, bool constant = false, float value = 0.0f);
+		  Track(const Track&);
+		  ~Track();
+		  const Track& operator=(const Track&);
+		  bool operator==(const Track&) const;
+		  bool operator<(const Track&) const;
+
+		  void updateEvent();
+		  void applyDerivative();
+		  void calculateDerivative();
+		  void forward();
+		  void backward();
+		  void pause();
+		  void stop();
+		  void goToKey(int key = 0);
+		  void goToKeyAndForward(int key = 0);
+		  void goToKeyAndBackward(int key = 0);
+		  void goToKeyAndStop(int key = 0);
+		  void goToFirstKey();
+		  void goToFirstKeyAndStop();
+		  void goToFirstKeyAndBackward();
+		  void goToFirstKeyAndForward();
+		  void goToLastKey();
+		  void goToLastKeyAndStop();
+		  void goToLastKeyAndBackward();
+		  void goToLastKeyAndForward();
+		  void update();
+		  void print() const;
 	};
 	#endif

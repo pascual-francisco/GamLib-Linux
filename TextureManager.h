@@ -7,9 +7,9 @@
 class TextureManager
 {
 	public:
-	__declspec(dllexport)		TextureManager();
-	__declspec(dllexport)		~TextureManager();
-	__declspec(dllexport) void	initTexture(GLuint name, string path, GLuint quantity, GLuint target);
-	__declspec(dllexport) void print() const;
+	 		TextureManager();
+	 		~TextureManager();
+	  void	initTexture(GLuint name, string path, GLuint quantity, GLuint target);
+	  void print() const;
 };
 #endif // !TEXTUREMANAGER_H

@@ -16,7 +16,7 @@ class Scene
 	TileMapManager	*ptrForeground;
 	Camera          *ptrCamera;
 
-	__declspec(dllexport) 	Scene(GLuint id = 0, bool act = true,
+	  	Scene(GLuint id = 0, bool act = true,
 							GLfloat viewportX = 0.0f, GLfloat viewportY = 0.0f, GLfloat viewportW = 256.0f, GLfloat viewportH = 224.0f,
 							GLuint program = 0, GLuint type = 0,
 							GLfloat left = 0.0f, GLfloat right = 256.0f, GLfloat bottom = 0.0f, GLfloat top = 240.0f,
@@ -25,17 +25,17 @@ class Scene
                             GLfloat upX = 0.0f, GLfloat upY = 1.0f, GLfloat upZ = 1.0f);
 
 
-	__declspec(dllexport) 	virtual ~Scene();
+	  	virtual ~Scene();
 
-	__declspec(dllexport) virtual void	initObjects()  = 0;
-	__declspec(dllexport) virtual void	initBackground() = 0;
-	__declspec(dllexport) virtual void	initForeground() = 0;
+	  virtual void	initObjects()  = 0;
+	  virtual void	initBackground() = 0;
+	  virtual void	initForeground() = 0;
 
-	__declspec(dllexport) void update();
-	__declspec(dllexport) virtual void	updateObjects()  = 0;
-	__declspec(dllexport) virtual void	updateBackground()  = 0;
-	__declspec(dllexport) virtual void	updateForeground()  = 0;
-	__declspec(dllexport) void print() const;
+	  void update();
+	  virtual void	updateObjects()  = 0;
+	  virtual void	updateBackground()  = 0;
+	  virtual void	updateForeground()  = 0;
+	  void print() const;
 
 };
 #endif// !SCENE_H

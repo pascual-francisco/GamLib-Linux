@@ -10,16 +10,16 @@ private:
 
 
 	public:
-	__declspec(dllexport) PixelBuffer(GLuint count, GLintptr size, const void *data, GLenum target);
-	__declspec(dllexport) ~PixelBuffer();
+	  PixelBuffer(GLuint count, GLintptr size, const void *data, GLenum target);
+	  ~PixelBuffer();
 
-	__declspec(dllexport)  void update(GLintptr offset, GLintptr size, const void *data);
-	__declspec(dllexport)  void attach() ;
-	__declspec(dllexport)  void detach() ;
-	__declspec(dllexport)  void print() const;
+	   void update(GLintptr offset, GLintptr size, const void *data);
+	   void attach() ;
+	   void detach() ;
+	   void print() const;
 
-	__declspec(dllexport)  void attachPack();
-	__declspec(dllexport)  void attachUnpack();
+	   void attachPack();
+	   void attachUnpack();
 
 };
 #endif // !PIXELBUFFER_H

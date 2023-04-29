@@ -6,8 +6,8 @@
 class EntityDelegate
 {
 public:
-	__declspec(dllexport) EntityDelegate() {}
-	__declspec(dllexport) virtual ~EntityDelegate() {}
+	  EntityDelegate() {}
+	  virtual ~EntityDelegate() {}
 
 };
 #endif // !ENTITYDELEGATE_H

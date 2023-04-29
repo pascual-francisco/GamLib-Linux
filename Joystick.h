@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "stdafx.h"
 
 #ifndef JOYSTICK_H
 #define JOYSTICK_H

@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "stdafx.h"
 
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H

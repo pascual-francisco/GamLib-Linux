@@ -23,7 +23,6 @@ Entity::Entity(const Entity &e)
 	attackDamage = e.attackDamage;
 	weakness = e.weakness;
 	tracks = e.tracks;
-
 }
 
 const Entity& Entity::operator=(const Entity &e)

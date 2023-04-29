@@ -17,17 +17,17 @@ class TileMapManager
 	GLuint	actualPage;
 	bool	mainPage;
 
-	__declspec(dllexport) void initBuffers();
-	__declspec(dllexport) void initLayouts();
-	__declspec(dllexport) void updateVertexArray(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updatePosition(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateTexture(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateColor(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateTranslate(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateScale(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateRotate(Sprite *sprite, GLuint offset);
-	__declspec(dllexport) void updateEnitities();
-	__declspec(dllexport) void updateVertexBuffer();
+	  void initBuffers();
+	  void initLayouts();
+	  void updateVertexArray(Sprite *sprite, GLuint offset);
+	  void updatePosition(Sprite *sprite, GLuint offset);
+	  void updateTexture(Sprite *sprite, GLuint offset);
+	  void updateColor(Sprite *sprite, GLuint offset);
+	  void updateTranslate(Sprite *sprite, GLuint offset);
+	  void updateScale(Sprite *sprite, GLuint offset);
+	  void updateRotate(Sprite *sprite, GLuint offset);
+	  void updateEnitities();
+	  void updateVertexBuffer();
 
 	public:
 	GLfloat offsetX;
@@ -59,21 +59,21 @@ class TileMapManager
 	VertexBuffer		*ptrVertexBuffer;
 	VertexArray			*ptrVertexArray;
 
-	__declspec(dllexport) TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLuint *mapData = nullptr, GLuint viewportwidth = 256, GLuint viewportheight = 224, GLuint tilewidth = 16, GLuint tileheight = 16, GLuint tileseparation = 0, GLuint tileframetime = 0,  GLuint program = 0, GLenum mode = GL_TRIANGLES);
-	__declspec(dllexport) ~TileMapManager();
-	__declspec(dllexport) void batchDraw();
-	__declspec(dllexport) void update();
-	__declspec(dllexport) void loadTile();
-	__declspec(dllexport) void loadPage(GLfloat tileDestinationX = 0, GLfloat tileDestinationY = 0, GLuint pageSource = 0, GLuint pageDestination = 0);
-	__declspec(dllexport) void movePage(GLfloat tileDestinationX = 0, GLfloat tileDestinationY = 0, GLuint page = 0);
-	__declspec(dllexport) void loadFirstPage(GLuint pageSource = 0);
-	__declspec(dllexport) void loadSecondPage(GLuint pageSource = 0);
-	__declspec(dllexport) void loadThirdPage(GLuint pageSource = 0);
-	__declspec(dllexport) void loadFourthPage(GLuint pageSource = 0);
-	__declspec(dllexport) void print() const;
-	__declspec(dllexport) void printInfo() const;
-	__declspec(dllexport) void printDataArray() const;
-	__declspec(dllexport) void printSprites() const;
-	__declspec(dllexport) void printTiles() const;
+	  TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLuint *mapData = nullptr, GLuint viewportwidth = 256, GLuint viewportheight = 224, GLuint tilewidth = 16, GLuint tileheight = 16, GLuint tileseparation = 0, GLuint tileframetime = 0,  GLuint program = 0, GLenum mode = GL_TRIANGLES);
+	  ~TileMapManager();
+	  void batchDraw();
+	  void update();
+	  void loadTile();
+	  void loadPage(GLfloat tileDestinationX = 0, GLfloat tileDestinationY = 0, GLuint pageSource = 0, GLuint pageDestination = 0);
+	  void movePage(GLfloat tileDestinationX = 0, GLfloat tileDestinationY = 0, GLuint page = 0);
+	  void loadFirstPage(GLuint pageSource = 0);
+	  void loadSecondPage(GLuint pageSource = 0);
+	  void loadThirdPage(GLuint pageSource = 0);
+	  void loadFourthPage(GLuint pageSource = 0);
+	  void print() const;
+	  void printInfo() const;
+	  void printDataArray() const;
+	  void printSprites() const;
+	  void printTiles() const;
 };
 #endif // !TILEMAPMANAGER_H

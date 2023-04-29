@@ -10,12 +10,12 @@ public:
 	GLuint	vertexArrayID;
 
 public:
-	__declspec(dllexport) VertexArray();
-	__declspec(dllexport) ~VertexArray();
+	  VertexArray();
+	  ~VertexArray();
 
-	__declspec(dllexport) void init();
-	__declspec(dllexport) void attach() const;
-	__declspec(dllexport) void detach() const;
+	  void init();
+	  void attach() const;
+	  void detach() const;
 };
 #endif // !VERTEXBUFFER_H
 #pragma once
