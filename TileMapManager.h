@@ -15,7 +15,8 @@ class TileMapManager
 	GLuint	textureCounter;
 	GLint	maxTextureUnits;
 	GLuint	actualPage;
-	bool	mainPage;
+	GLuint  frameCounter;
+    bool	mainPage;
 
 	  void initBuffers();
 	  void initLayouts();

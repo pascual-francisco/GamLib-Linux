@@ -1,53 +1,55 @@
+#pragma once
 #include "stdafx.h"
 
 	Track::Track(int frames,int keys,int frameTime, int state, bool constant, float value)
-	{		
+	{
+
 		this->frames = (frames>0?frames:0);
-		this->keys = (keys>0?keys:0);		
+		this->keys = (keys>0?keys:0);
 		this->frameTime = (frameTime>=0?frameTime:0);
 		actualState = state;
 		head = 0;
 		keyIndex = 0;
 		derivative = 0.0f;
 		timeDerivative = 0.0f;
-		this->value = 0.0f;		
+		this->value = 0.0f;
 		loop = false;
 		frameCounter = 0;
 		this->constant = constant;
 		time = 0;
 
 		if(this->constant)
-		{		
-			this->value = value;			
-			keyFrames.clear();							
+		{
+			this->value = value;
+			keyFrames.clear();
 			this->frames = 1;
 			keyFrames.push_back(KeyFrame());
 		}
 		else
-		{		
+		{
 			PK = KeyFrame();
-			NK = KeyFrame();						
+			NK = KeyFrame();
 			for(unsigned int i=0; i<this->keys; i++)
 			{
 				keyFrames.push_back(KeyFrame());
-			}						
-		}			
+			}
+		}
 	}
 
 	Track::Track(const Track& t)
 	{
 		if(&t != this)
-		{	
+		{
 			frameCounter = t.frameCounter;
 			frameTime = t.frameTime;
-			trackDelegate = t.trackDelegate;		
+			trackDelegate = t.trackDelegate;
 			value = t.value;
 			derivative = t.derivative;
 			timeDerivative = t.timeDerivative;
 			constant = t.constant;
-			keyIndex = t.keyIndex;			
+			keyIndex = t.keyIndex;
 			PK = t.PK;
-			NK = t.NK;				
+			NK = t.NK;
 			head = t.head;
 			frames = t.frames;
 			keyFrames = t.keyFrames;
@@ -65,7 +67,7 @@
 	const Track& Track::operator=(const Track& t)
 	{
 		if(&t != this)
-		{	
+		{
 			frameCounter = t.frameCounter;
 			frameTime = t.frameTime;
 			trackDelegate = t.trackDelegate;
@@ -73,9 +75,9 @@
 			derivative = t.derivative;
 			timeDerivative = t.timeDerivative;
 			constant = t.constant;
-			keyIndex = t.keyIndex;		
+			keyIndex = t.keyIndex;
 			PK = t.PK;
-			NK = t.NK;		
+			NK = t.NK;
 			head = t.head;
 			frames = t.frames;
 			keyFrames = t.keyFrames;
@@ -93,14 +95,14 @@
 			loop == t.loop &&
 			keys == t.keys &&
 			keyFrames == t.keyFrames &&
-			PK == t.PK &&  NK == t.NK && 
+			PK == t.PK &&  NK == t.NK &&
 			keyIndex == t.keyIndex &&
 			value == t.value &&
 			derivative == t.derivative &&
 			timeDerivative == t.timeDerivative &&
 			constant == t.constant &&
 			frameTime == t.frameTime &&
-			frameCounter == t.frameCounter)		
+			frameCounter == t.frameCounter)
 		{
 			return true;
 		}
@@ -120,36 +122,38 @@
 		{
 			return false;
 		}
+
+
 	}
 
 	void Track::calculateDerivative()
 	{
-		
+
 	}
 
 	void Track::applyDerivative()
-	{	
+	{
 		float tempValue = 0.0f;
 		float tempTime = 0.0f;
 		int h = 0;
 		time = 0;
-		timeDerivative = abs(NK.time - PK.time);		
+		timeDerivative = abs(NK.time - PK.time);
 		h = abs(head - PK.time);
-		tempTime = h / timeDerivative;						
-		if(_isnan(tempTime) == 0)
+		tempTime = h / timeDerivative;
+		if(isnan(tempTime) == 0)
 		{
 			time = tempTime;
-		}		
+		}
 
 		float p0t = 0.0f;
 		float p0v = 0.0f;
-		
+
 		float p1t = 0.0f;
 		float p1v = 0.0f;
-		
+
 		float p2t = 0.0f;
 		float p2v = 0.0f;
-		
+
 		float p3t = 0.0f;
 		float p3v = 0.0f;
 
@@ -162,14 +166,14 @@
 					p0t = PK.time;
 					p0v = PK.value;
 					p1t = NK.time;
-					p1v = NK.value;					
+					p1v = NK.value;
 
 					tempValue = p0v + (p1v  - p0v) * time;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
-				}	
+					}
+				}
 				if(NK.easingForward == KeyFrame::ACCELERATION)
 				{
 					p0t = PK.time;
@@ -179,11 +183,11 @@
 					p2t = NK.time;
 					p2v = NK.value;
 					tempValue = (1-time) * (1-time) * p0v + 2 * time * (1-time) * p1v + time * time * p2v;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
-				}			
+					}
+				}
 				if(NK.easingForward == KeyFrame::DECELERATION)
 				{
 					p0t = PK.time;
@@ -193,37 +197,37 @@
 					p2t = NK.time;
 					p2v = NK.value;
 					tempValue = (1-time) * (1-time) * p0v + 2 * time * (1-time) * p1v + time * time * p2v;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
-				}	
+					}
+				}
 				if(NK.easingForward == KeyFrame::SMOOTHSTEP)
-				{			
+				{
 					p0t = PK.time;
 					p0v = PK.value;
-				
+
 					p1t = NK.time;
 					p1v = PK.value;
-				
+
 					p2t = PK.time;
 					p2v = NK.value;
-				
+
 					p3t = NK.time;
 					p3v = NK.value;
 					tempValue = p0v * (1-time) * (1-time)  * (1-time) + 3 * p1v * time *  (1-time) * (1-time)  + 3 * p2v * time * time * (1-time) + p3v * time * time * time;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
+					}
 				}
 
 				if(NK.easingForward == KeyFrame::DISCRETE)
-				{			
+				{
 					value = PK.value;
 				}
 			}
-		
+
 			if(actualState == 1 || actualState == 7)
 			{
 				if(NK.easingReverse == KeyFrame::LINEAR)
@@ -233,11 +237,11 @@
 					p1t = NK.time;
 					p1v = NK.value;
 					tempValue = p0v + (p1v  - p0v) * time;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
-				}	
+					}
+				}
 				if(NK.easingReverse == KeyFrame::ACCELERATION)
 				{
 					p0t = PK.time;
@@ -247,11 +251,11 @@
 					p2t = NK.time;
 					p2v = NK.value;
 					tempValue = (1-time) * (1-time) * p0v + 2 * time * (1-time) * p1v + time * time * p2v;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
-				}			
+					}
+				}
 				if(NK.easingReverse == KeyFrame::DECELERATION)
 				{
 					p0t = PK.time;
@@ -261,32 +265,32 @@
 					p2t = NK.time;
 					p2v = NK.value;
 					tempValue = (1-time) * (1-time) * p0v + 2 * time * (1-time) * p1v + time * time * p2v;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
-				}	
+					}
+				}
 				if(NK.easingReverse == KeyFrame::SMOOTHSTEP)
-				{			
+				{
 					p0t = PK.time;
 					p0v = PK.value;
-				
+
 					p1t = NK.time;
 					p1v = PK.value;
-				
+
 					p2t = PK.time;
 					p2v = NK.value;
-				
+
 					p3t = NK.time;
 					p3v = NK.value;
 					tempValue = p0v * (1-time) * (1-time)  * (1-time) + 3 * p1v * time *  (1-time) * (1-time)  + 3 * p2v * time * time * (1-time) + p3v * time * time * time;
-					if(_isnan(tempValue) == 0)
+					if(isnan(tempValue) == 0)
 					{
 						value = tempValue;
-					}					
+					}
 				}
 				if(NK.easingReverse == KeyFrame::DISCRETE)
-				{			
+				{
 					value = PK.value;
 				}
 			}
@@ -310,10 +314,10 @@
 							if((*it) != NULL)
 							{
 								(*it)->onForward();
-							}							
+							}
 						}
 					}
-						
+
 					if(actualState == TrackAction::BACKWARD)
 					{
 						for( it = NK.keyDelegate.begin(); it != NK.keyDelegate.end(); it++)
@@ -322,18 +326,18 @@
 							{
 								(*it)->onBackward();
 							}
-						}	
+						}
 					}
 
 					if(actualState == TrackAction::LOOP_FORWARD)
-					{	
+					{
 						for( it = NK.keyDelegate.begin(); it != NK.keyDelegate.end(); it++)
 						{
 							if((*it) != NULL)
 							{
 								(*it)->onLoopForward();
 							}
-						}	
+						}
 					}
 
 					if(actualState == TrackAction::LOOP_BACKWARD)
@@ -344,12 +348,12 @@
 							{
 								(*it)->onLoopBackward();
 							}
-						}	
+						}
 					}
 				}
-			
+
 				if(NK.action.active)
-				{	
+				{
 					switch(NK.action.actualState)
 					{
 						case TrackAction::LOOP_FORWARD:
@@ -357,29 +361,29 @@
 							if(NK.action.direction == actualState || actualState == TrackAction::STOP)
 							actualState = TrackAction::LOOP_FORWARD;
 						}
-						break;		
+						break;
 
 						case TrackAction::FORWARD:
 						{
 							if(NK.action.direction == actualState || actualState == TrackAction::STOP)
 							actualState = TrackAction::FORWARD;
 						}
-						break;				
+						break;
 
 						case TrackAction::LOOP_BACKWARD:
 						{
 							if(NK.action.direction == actualState || actualState == TrackAction::STOP)
 							actualState = TrackAction::LOOP_BACKWARD;
 						}
-						break;		
+						break;
 
 						case TrackAction::BACKWARD:
 						{
 							if(NK.action.direction == actualState || actualState == TrackAction::STOP)
-							actualState = TrackAction::BACKWARD;				
+							actualState = TrackAction::BACKWARD;
 						}
 						break;
-					
+
 						case TrackAction::PAUSE:
 						{
 							if(NK.action.pauseCounter == 0)
@@ -388,49 +392,49 @@
 							}
 
 							if(NK.action.pauseTime > 0)
-							{						
+							{
 								if(NK.action.pauseCounter < NK.action.pauseTime)
 								{
 									if(actualState == TrackAction::PAUSE )
 									{
 										NK.action.pauseCounter++;
 									}
-							
+
 									if(NK.action.direction == actualState )
 									{
 										actualState = TrackAction::PAUSE;
 										NK.action.pauseCounter++;
-									}						
+									}
 								}
 								else
-								{							
-									actualState = NK.action.previousAction;							
-									NK.action.pauseCounter = 0;																
+								{
+									actualState = NK.action.previousAction;
+									NK.action.pauseCounter = 0;
 								}
 							}
 						}
 						break;
 
 						case TrackAction::PAUSE_FORWARD:
-						{					
+						{
 							if(NK.action.pauseCounter < NK.action.pauseTime)
 							{
 								if(actualState == TrackAction::PAUSE )
 								{
 									NK.action.pauseCounter++;
 								}
-						
+
 								if(NK.action.direction == actualState )
 								{
 									actualState = TrackAction::PAUSE;
-									NK.action.pauseCounter++;						
-								}						
+									NK.action.pauseCounter++;
+								}
 							}
 							else
 							{
-								actualState = TrackAction::FORWARD;						
+								actualState = TrackAction::FORWARD;
 								NK.action.pauseCounter = 0;
-							}	
+							}
 						}
 						break;
 
@@ -442,27 +446,27 @@
 								{
 									NK.action.pauseCounter++;
 								}
-						
+
 								if(NK.action.direction == actualState )
 								{
 									actualState = TrackAction::PAUSE;
-									NK.action.pauseCounter++;						
+									NK.action.pauseCounter++;
 								}
 							}
 							else
-							{						
+							{
 								actualState = TrackAction::BACKWARD;
 								NK.action.pauseCounter = 0;
-							}	
+							}
 						}
 						break;
-				
+
 						case TrackAction::GO_TO_KEY:
 						{
 							if(NK.action.direction == actualState)
 							{
 								goToKey(NK.action.destinationKey);
-							}								
+							}
 						}
 						break;
 
@@ -471,7 +475,7 @@
 							if(NK.action.direction == actualState)
 							{
 								goToKeyAndForward(NK.action.destinationKey);
-							}								
+							}
 						}
 						break;
 
@@ -480,7 +484,7 @@
 							if(NK.action.direction == actualState)
 							{
 								goToKeyAndBackward(NK.action.destinationKey);
-							}								
+							}
 						}
 						break;
 
@@ -489,7 +493,7 @@
 							if(NK.action.direction == actualState)
 							{
 								goToKeyAndStop(NK.action.destinationKey);
-							}								
+							}
 						}
 						break;
 
@@ -498,21 +502,21 @@
 							if(NK.action.direction == actualState)
 							{
 								actualState = TrackAction::STOP;
-							}								
+							}
 						}
 						break;
 
 						default:
-						break;														
+						break;
 					}
 				}
-			}	
+			}
 		}
 	}
 
 	void Track::update()
-	{				
-		applyDerivative();	
+	{
+		applyDerivative();
 		updateEvent();
 		unsigned int previousState = actualState;
 		float previousValue = value;
@@ -520,13 +524,13 @@
 		int headPosition = head;
 
 		if(!constant)
-		{											
+		{
 			switch(actualState)
 			{
 				case TrackAction::FORWARD:
 				{
 					loop = false;
-					forward();					
+					forward();
 
 					//On forward event//
 					if(trackDelegate.size() != 0)
@@ -545,7 +549,7 @@
 				case TrackAction::BACKWARD:
 				{
 					loop = false;
-					backward();				
+					backward();
 
 					//On reverse event//
 					if(trackDelegate.size() != 0)
@@ -561,10 +565,10 @@
 				}
 				break;
 
-				case TrackAction::PAUSE:			
+				case TrackAction::PAUSE:
 				{
 					loop = false;
-					pause();				
+					pause();
 
 					//On pause event//
 					if(trackDelegate.size() != 0)
@@ -583,7 +587,7 @@
 				case TrackAction::STOP:
 				{
 					loop = false;
-					stop();				
+					stop();
 
 					//On stop event//
 					if(trackDelegate.size() != 0)
@@ -598,12 +602,12 @@
 					}
 				}
 				break;
-			
+
 				case TrackAction::LOOP_FORWARD:
-				{					
-					loop = true;					
+				{
+					loop = true;
 					forward();
-					
+
 					//On loop forward event//
 					if(trackDelegate.size() != 0)
 					{
@@ -633,7 +637,7 @@
 								(*it)->onLoopBackward();
 							}
 						}
-					}				
+					}
 				}
 				break;
 
@@ -641,7 +645,7 @@
 				break;
 			}
 		}
-		
+
 
 		//On changed state event//
 		if(actualState != previousState)
@@ -687,7 +691,7 @@
 				}
 			}
 		}
-				
+
 		//On first frame event//
 		if(head == 0)
 		{
@@ -702,7 +706,7 @@
 				}
 			}
 		}
-		
+
 		//On last frame event//
 		if(head == frames - 1)
 		{
@@ -730,9 +734,9 @@
 							(*it)->onValueChanged(value);
 						}
 					}
-				}		
+				}
 			}
-			
+
 			//On value changed to zero event//
 			if(value <= 0.0f)
 			{
@@ -745,9 +749,9 @@
 							(*it)->onValueChangedToZero();
 						}
 					}
-				}		
-			}			
-			
+				}
+			}
+
 			//On value changed to one event//
 			if(value >= 1.0f)
 			{
@@ -760,8 +764,8 @@
 							(*it)->onValueChangedToOne();
 						}
 					}
-				}		
-			}						
+				}
+			}
 
 			//On key frame event
 			if(head == NK.time)
@@ -775,7 +779,7 @@
 							(*it)->onKeyFrame(head);
 						}
 					}
-				}	
+				}
 			}
 
 			//On head position changed event//
@@ -790,7 +794,7 @@
 							(*it)->onHeadPositionChanged(head);
 						}
 					}
-				}	
+				}
 			}
 
 			//On head position changed forward//
@@ -805,7 +809,7 @@
 							(*it)->onHeadPositionChangedForward(head);
 						}
 					}
-				}	
+				}
 			}
 
 			//On head position changed backward//
@@ -820,53 +824,53 @@
 							(*it)->onHeadPositionChangedBackward(head);
 						}
 					}
-				}	
+				}
 			}
 	}
 
 	void Track::forward()
-	{	
+	{
 		if(head < frames - 1)
 		{
 			if(head == NK.time)
-			{									
+			{
 				if(keyIndex >= 0 && keyIndex <= keys - 1)
 				{
 					//Set the previous key frame//
-					PK = keyFrames.at(keyIndex);					
-					
+					PK = keyFrames.at(keyIndex);
+
 					if(keyIndex < keys - 1)
 					{
 						keyIndex++;
 					}
-						
+
 					//Set the next key frame//
-					NK = keyFrames.at(keyIndex);				
-				}																	
-			}				
-				
+					NK = keyFrames.at(keyIndex);
+				}
+			}
+
 			if(frameCounter > frameTime)
-			{									
-				head++;				
+			{
+				head++;
 				frameCounter = 0;
 			}
 			else
 			{
 				frameCounter++;
-			}				
-		}			
+			}
+		}
 		else
 		{
 			if(loop)
-			{			
+			{
 				goToFirstKey();
 				actualState = TrackAction::LOOP_FORWARD;
-			}	
-		}		
+			}
+		}
 	}
 
 	void Track::backward()
-	{				
+	{
 		if(head > 0)
 		{
 			if(head == NK.time)
@@ -875,75 +879,75 @@
 				{
 					//Set previous key frame//
 					PK = keyFrames.at(keyIndex);
-					
+
 					if(keyIndex > 0)
 					{
 						keyIndex--;
 					}
-					
+
 					//Set next key frame//
 					NK = keyFrames.at(keyIndex);
-				}					
+				}
 			}
 
 			if(frameCounter > frameTime)
-			{																	
-				head--;										
+			{
+				head--;
 				frameCounter = 0;
 			}
 			else
 			{
 				frameCounter++;
 			}
-		}	
+		}
 		else
 		{
 			if(loop)
-			{			
+			{
 				goToLastKey();
 				actualState = TrackAction::LOOP_BACKWARD;
-			}	
+			}
 		}
-	}	
+	}
 
 	void Track::goToKey( int key)
-	{			
+	{
 		if(key >=0 && key <= keys - 1)
 		{
-			keyIndex = key;			
-			NK = keyFrames.at(keyIndex);		
+			keyIndex = key;
+			NK = keyFrames.at(keyIndex);
 			head = NK.time;
-		}			
+		}
 	}
 
 	void Track::goToKeyAndForward( int key)
-	{			
+	{
 		if(key >=0 && key <= keys - 1)
 		{
-			keyIndex = key;			
-			NK = keyFrames.at(keyIndex);		
+			keyIndex = key;
+			NK = keyFrames.at(keyIndex);
 			head = NK.time;
 			actualState = TrackAction::FORWARD;
 		}
 	}
 
 	void Track::goToKeyAndBackward( int key)
-	{			
+	{
 		if(key >=0 && key <= keys - 1)
 		{
-			keyIndex = key;			
-			NK = keyFrames.at(keyIndex);		
+			keyIndex = key;
+			NK = keyFrames.at(keyIndex);
 			head = NK.time;
 			actualState = TrackAction::BACKWARD;
 		}
 	}
 
 	void Track::goToKeyAndStop( int key)
-	{			
+	{
 		if(key >=0 && key <= keys - 1)
 		{
-			keyIndex = key;			
-			NK = keyFrames.at(keyIndex);		
+			keyIndex = key;
+			NK = keyFrames.at(keyIndex);
 			head = NK.time;
 			actualState = TrackAction::STOP;
 		}
@@ -998,31 +1002,31 @@
 	void Track::goToLastKey()
 	{
 		keyIndex = keys - 1;
-		head = frames - 1; 		
-		NK = keyFrames.at(keyIndex);		
+		head = frames - 1;
+		NK = keyFrames.at(keyIndex);
 	}
 
 	void Track::goToLastKeyAndForward()
 	{
 		keyIndex = keys - 1;
-		head = frames - 1;		
-		NK = keyFrames.at(keyIndex);		
+		head = frames - 1;
+		NK = keyFrames.at(keyIndex);
 		actualState = TrackAction::FORWARD;
 	}
 
 	void Track::goToLastKeyAndBackward()
 	{
 		keyIndex = keys - 1;
-		head = frames - 1;		
-		NK = keyFrames.at(keyIndex);		
+		head = frames - 1;
+		NK = keyFrames.at(keyIndex);
 		actualState = TrackAction::BACKWARD;
 	}
 
 	void Track::goToLastKeyAndStop()
 	{
 		keyIndex = keys - 1;
-		head = frames - 1;		
-		NK = keyFrames.at(keyIndex);		
+		head = frames - 1;
+		NK = keyFrames.at(keyIndex);
 		actualState = TrackAction::STOP;
 	}
 

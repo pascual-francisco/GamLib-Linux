@@ -6,7 +6,7 @@ Shader::Shader()
 	filePath = "Assets/Shaders/";
 	programID = 0;
 	vertexID = 0;
-	fragmentID = 0;	
+	fragmentID = 0;
 }
 
 Shader::Shader(string file, const char *vname, const char *fname)
@@ -35,12 +35,12 @@ void Shader::initShader(const char* vname, const char* fname)
 	ofstream out;
 
 	time_t now = time(0);
-	ctime_s(buffer, 1000, &now);
+	ctime_r(&now, buffer);
 
 	if (!out.is_open())
-	{		
+	{
 		out.open(filePath + "shaderlog.txt", ios::trunc);
-		out << "Shader Logs " << buffer;	
+		out << "Shader Logs " << buffer;
 	}
 
 	loadFile(vname, source);
@@ -55,13 +55,13 @@ void Shader::initShader(const char* vname, const char* fname)
 
 	out << "Vertex Shader Info Log: " << endl;
 	cout << "Vertex Shader Info Log: " << endl;
-	
-	out << "Vertex Shader name = " << vname << endl;		
+
+	out << "Vertex Shader name = " << vname << endl;
 	cout << "Vertex Shader name = " << vname << endl;
-	
+
 	out << "Vertex Shader id = " << vertexID << endl;
 	cout << "Vertex Shader id = " << vertexID << endl;
-	
+
 	if (strcmp(buffer, "") == 0)
 	{
 		out << "Vertex Shader status OK!" << endl;
@@ -83,9 +83,9 @@ void Shader::initShader(const char* vname, const char* fname)
 
 	out << "Fragment Shader name = " << fname << endl;
 	cout << "Fragment Shader name = " << fname << endl;
-	
+
 	out << "Fragment Shader id = " << fragmentID << endl;
-	cout << "Fragment Shader id = " << fragmentID << endl;	
+	cout << "Fragment Shader id = " << fragmentID << endl;
 
 	if (strcmp(buffer, "") == 0)
 	{
@@ -97,13 +97,13 @@ void Shader::initShader(const char* vname, const char* fname)
 		out << "Fragment Shader ERROR!" << endl << buffer << endl;
 		cout << "Fragment Shader ERROR!" << endl << buffer << endl;
 	}
-		
-	programID = glCreateProgram();	
-	glGetProgramInfoLog(programID, 1000, NULL, buffer);	
+
+	programID = glCreateProgram();
+	glGetProgramInfoLog(programID, 1000, NULL, buffer);
 
 	out << "Program Info Log: " << endl;
 	cout << "Program Info Log: " << endl;
-	
+
 	out << "Program id = " << programID << endl;
 	cout << "Program id = " << programID << endl;
 
@@ -129,7 +129,7 @@ void Shader::loadFile(const char* fn, string& str)
 	ifstream in(fn);
 
 	if (!in.is_open())
-	{		
+	{
 		cout << "The file " << fn << " cannot be opened"<< endl;
 		system("pause");
 		exit(EXIT_FAILURE);
@@ -137,7 +137,7 @@ void Shader::loadFile(const char* fn, string& str)
 
 	char tmp[300];
 	while (!in.eof())
-	{	
+	{
 		in.getline(tmp, 300);
 		str += tmp;
 		str += '\n';
@@ -145,15 +145,15 @@ void Shader::loadFile(const char* fn, string& str)
 }
 
 GLuint Shader::loadShader(string& source, GLuint mode)
-{	
+{
 	//char buffer[1000] = { 0 };
-	const char* csource = source.c_str();	
+	const char* csource = source.c_str();
 	GLuint id = 0;
-	
+
 	id = glCreateShader(mode);
 	glShaderSource(id, 1, &csource, NULL);
 	glCompileShader(id);
-	//glGetShaderInfoLog(id, 1000, NULL, buffer);	
+	//glGetShaderInfoLog(id, 1000, NULL, buffer);
 	return id;
 }
 

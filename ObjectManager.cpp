@@ -90,10 +90,11 @@ void ObjectManager::initLayouts()
 	/*
 	DATA BUFFER:
 	Entity 0
-		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 21 Floats
-		17 Float * 4 Vertices = 68 Floats
-		1 Quad = 6 Floats
-*/
+		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 20  Floats
+		20 Float * 4 Vertices = 80 Floats
+		1 Quad = 80 Floats
+	*/
+
 	ptrvPosLayout = new VertexBufferLayout(programID, "vPos", 3, GL_FALSE, 20, 0 * 4);
 	ptrvTexLayout = new VertexBufferLayout(programID, "vTex", 4, GL_FALSE, 20, 3 * 4);
 	ptrvColLayout = new VertexBufferLayout(programID, "vCol", 4, GL_FALSE, 20, 7 * 4);
@@ -395,8 +396,19 @@ void ObjectManager::batchDraw(GLenum mode)
 		//Bind each quad texture to 32 texture units
 		for (uint j = 0; j < (dataArray.size() / quadFloatCount); j++)
 		{
-			glActiveTexture(GL_TEXTURE0 + GLuint(dataArray[offset]));
-			glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(dataArray[offset]));
+                if(dataArray[offset] == 100)
+                //Object is a rectangle//
+				{
+                    glActiveTexture(0);
+                    glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+                }
+				else
+				//Object is a sprite//
+				{
+                    glActiveTexture(GL_TEXTURE0 + GLint(dataArray[offset]));
+                    glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(dataArray[offset]));
+				}
+
 			for (uint k = 0; k < 4; k++)
 			{
 				dataArray[offset] = GLfloat(j);
@@ -413,8 +425,18 @@ void ObjectManager::batchDraw(GLenum mode)
 			//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
 			for (int j = 0; j < maxTextureUnits; j++)
 			{
-				glActiveTexture(GL_TEXTURE0 + GLint(dataArray[offset]));
-				glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(dataArray[offset]));
+				if(dataArray[offset] == 100)
+				//Object is a rectangle//
+				{
+                    glActiveTexture(0);
+                    glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+                }
+				else
+				//Object is a sprite//
+				{
+                    glActiveTexture(GL_TEXTURE0 + GLint(dataArray[offset]));
+                    glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(dataArray[offset]));
+				}
 
 				for (uint k = 0; k < 4; k++)
 				{

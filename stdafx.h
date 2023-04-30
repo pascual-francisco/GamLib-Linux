@@ -1,6 +1,7 @@
 #pragma once
 
 //Standard Libraries//
+using namespace std;
 #include <list>
 #include <map>
 #include <stack>
@@ -8,26 +9,23 @@
 #include <math.h>
 #include <cstring>
 #include <string>
-#include <time.h>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 #include <typeinfo>
 
-using namespace std;
-
 //Libraries//
+#include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include <GL/glew.h>
+#include <GL/freeglut.h>
 #include <GL/glu.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
 
-#include "TimerDelegate.h"
-#include "Timer.h"
 #include "TrackAction.h"
 #include "KeyFrameDelegate.h"
 #include "KeyFrame.h"

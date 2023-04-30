@@ -69,9 +69,8 @@ void Renderer::initSDL()
 	}
 
 	char buffer[300] = { 0 };
-
 	time_t now = time(0);
-	ctime_s(buffer, 300, &now);
+	ctime_r(&now, buffer);
 
 	logFile << "-------------------------------------------------------------------------------------------------------------------------------------";
 	logFile << endl << "Renderer Log: " << buffer;

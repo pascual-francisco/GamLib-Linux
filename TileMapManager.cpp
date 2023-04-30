@@ -51,12 +51,12 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	vector<Sprite *>::iterator tait;
 	vector<float >::iterator vait;
 
-	BYTE palette = 0x00;
-	BYTE page = 0x00;
-	WORD tileColumn = 0x0000;
-	WORD tileRow = 0x0000;
-	BYTE tileFrames = 0x00;
-	BYTE collisionData = 0x00;
+	char palette = 0x00;
+	char page = 0x00;
+	short tileColumn = 0x0000;
+    short tileRow = 0x0000;
+	char tileFrames = 0x00;
+	char collisionData = 0x00;
 
 	//Init all the tiles from the array of data
 
@@ -80,10 +80,11 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 			(*mtit)->collisionData = collisionData;
 
 			if(tileFrames > 0)
-				(*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
-
-			i++;
-		}
+			{
+                (*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
+                i++;
+            }
+        }
 	}
 
 	//Init 4 pages of tiles for copy to vertex buffer
@@ -145,7 +146,7 @@ void TileMapManager::initLayouts()
 	/*
 	DATA BUFFER:
 	Entity 0
-		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 17  Floats
+		Sprite 0 [XYZ-STPQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] , [XYZ-STRQ-RGBA-TTT-SSS-RRR] = 20  Floats
 		20 Float * 4 Vertices = 80 Floats
 		1 Quad = 80 Floats
 	*/
@@ -516,8 +517,18 @@ void TileMapManager::batchDraw()
 		//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
 		for (int j = 0; j < maxTextureUnits; j++)
 		{
-			glActiveTexture(GL_TEXTURE0 + GLuint(vertexArray[offset]));
-			glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(vertexArray[offset]));
+			if(vertexArray[offset] == 100)
+            //Object is a rectangle//
+			{
+                glActiveTexture(0);
+                glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+            }
+			else
+			//Object is a sprite//
+			{
+                glActiveTexture(GL_TEXTURE0 + GLint(vertexArray[offset]));
+                glBindTexture(GL_TEXTURE_2D_ARRAY, GLuint(vertexArray[offset]));
+            }
 
 			for (uint k = 0; k < 4; k++)
 			{

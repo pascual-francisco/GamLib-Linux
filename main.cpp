@@ -1,26 +1,15 @@
-#pragma once
-#include "stdafx.h"
+// The functions contained in this file are pretty dummy
+// and are included only as a placeholder. Nevertheless,
+// they *will* get included in the shared library if you
+// don't remove them :)
+//
+// Obviously, you 'll have to write yourself the super-duper
+// functions to include in the resulting library...
+// Also, it's not necessary to write every function in this file.
+// Feel free to add more files in this project. They will be
+// included in the resulting library.
 
-extern "C" DLL_EXPORT BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+extern "C"
 {
-    switch (fdwReason)
-    {
-        case DLL_PROCESS_ATTACH:
-            // attach to process
-            // return FALSE to fail DLL load
-            break;
 
-        case DLL_PROCESS_DETACH:
-            // detach from process
-            break;
-
-        case DLL_THREAD_ATTACH:
-            // attach to thread
-            break;
-
-        case DLL_THREAD_DETACH:
-            // detach from thread
-            break;
-    }
-    return TRUE; // successful
 }
