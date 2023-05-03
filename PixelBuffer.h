@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 #ifndef PIXELBUFFER_H

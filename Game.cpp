@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 Game::Game(bool mode, string file, GLfloat x, GLfloat y, GLfloat w, GLfloat h)

@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 #ifndef TEXTURE_H

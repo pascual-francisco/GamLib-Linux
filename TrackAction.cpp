@@ -1,5 +1,4 @@
-#pragma once
-#include "stdafx.h"
+#include "TrackAction.h"
 
 	TrackAction::TrackAction(bool alive,  int type,  int fireDirection,  int time,  int k)
 	{

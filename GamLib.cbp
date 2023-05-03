@@ -54,7 +54,6 @@
 		<Unit filename="FeedbackBuffer.h" />
 		<Unit filename="FrameBuffer.cpp" />
 		<Unit filename="FrameBuffer.h" />
-		<Unit filename="GamLib.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameObject.h" />
@@ -116,7 +115,6 @@
 		<Unit filename="VertexBufferLayout.cpp" />
 		<Unit filename="VertexBufferLayout.h" />
 		<Unit filename="framework.h" />
-		<Unit filename="main.cpp" />
 		<Unit filename="resource.h" />
 		<Unit filename="stdafx.h" />
 		<Unit filename="targetver.h" />

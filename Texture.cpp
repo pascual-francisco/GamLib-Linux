@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 Texture::Texture(string name, string path, GLuint width, GLuint height, GLuint depth, GLenum target, GLuint unit, GLenum internalFormat, GLenum format, GLenum type)

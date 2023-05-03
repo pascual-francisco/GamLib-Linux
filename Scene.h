@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 #ifndef SCENE_H
@@ -22,7 +21,7 @@ class Scene
 							GLfloat left = 0.0f, GLfloat right = 256.0f, GLfloat bottom = 0.0f, GLfloat top = 240.0f,
                             GLfloat near = 1000.0f , GLfloat far = -1000.0f, GLfloat eyeX = 0.0f, GLfloat eyeY = 0.0f, GLfloat eyeZ = 0.0f,
                             GLfloat centerX = 0.0f , GLfloat centerY = 0.0f , GLfloat centerZ = -1.0f,
-                            GLfloat upX = 0.0f, GLfloat upY = 1.0f, GLfloat upZ = 1.0f);
+                            GLfloat upX = 0.0f, GLfloat upY = 1.0f, GLfloat upZ = 0.0f);
 
 
 	  	virtual ~Scene();

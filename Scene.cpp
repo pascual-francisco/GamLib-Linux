@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 Scene::Scene(GLuint id, bool act, GLfloat viewportX, GLfloat viewportY, GLfloat viewportW, GLfloat viewportH, GLuint program, GLuint type, GLfloat left, GLfloat right, GLfloat bottom,

@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 	Track::Track(int frames,int keys,int frameTime, int state, bool constant, float value)

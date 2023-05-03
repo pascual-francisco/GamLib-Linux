@@ -1,4 +1,4 @@
-#pragma once
+
 #include "stdafx.h"
 /*
 UniformBuffer::UniformBuffer()
@@ -13,7 +13,7 @@ UniformBuffer::UniformBuffer()
     shaderProgramID = 0;
     uniformBufferID = 0;
     blockSize = 0;
-    blockIndex = 0;    
+    blockIndex = 0;
     memberCount = 0;
 }
 
@@ -33,11 +33,11 @@ void UniformBuffer::init(GLuint program, GLsizei count, const void *data, GLsize
     memberCount = count;
 
     string name = "uniform_";
-    
+
     names = new const GLchar*[memberCount];
     for (GLsizei i = 0; i < memberCount; i++)
     {
-        name.append(to_string(i));        
+        name.append(to_string(i));
         names[i] = name.c_str();
     }
 
@@ -109,7 +109,7 @@ void UniformBuffer::detach() const
     GLsizei uniformBlockSize;
     GLint singleSize, offset;
 
-    GLfloat colors[] = 
+    GLfloat colors[] =
     {
         0.45,0.45,1,1,
         0.45,0.45,1,1,
@@ -124,11 +124,11 @@ void UniformBuffer::detach() const
         hf = (GLfloat) height;
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(60.0, wf/hf, 0.1, 100.0);    
+        gluPerspective(60.0, wf/hf, 0.1, 100.0);
     }
 
     void init_opengl()
-    {    
+    {
         reshape(width, height);
         //load_shader and link_program are utility functions omitted here
         vshad_id = load_shader(GL_VERTEX_SHADER, "gooch.vs");
@@ -137,21 +137,21 @@ void UniformBuffer::detach() const
         glAttachShader(prog_id, vshad_id);
         glAttachShader(prog_id, fshad_id);
         link_program(prog_id);
-        
+
         //Update the uniforms using ARB_uniform_buffer_object
         glGenBuffers(1, &buffer_id);
 
-        //There's only one uniform block here, the 'colors0' uniform block. 
+        //There's only one uniform block here, the 'colors0' uniform block.
         //It contains the color info for the gooch shader.
         uniformBlockIndex = glGetUniformBlockIndex(prog_id, "colors0");
-        
+
         //We need to get the uniform block's size in order to back it with the
         //appropriate buffer
         glGetActiveUniformBlockiv(prog_id, uniformBlockIndex,
                                      GL_UNIFORM_BLOCK_DATA_SIZE,
                                      &uniformBlockSize);
         glError();
-        
+
         //Create UBO.
         glBindBuffer(GL_UNIFORM_BUFFER, buffer_id);
         glBufferData(GL_UNIFORM_BUFFER, uniformBlockSize,
@@ -168,11 +168,11 @@ void UniformBuffer::detach() const
         glGetUniformIndices(prog_id, 1, &names[2], &index);
         glGetActiveUniformsiv(prog_id, 1, &index,
                                  GL_UNIFORM_OFFSET, &offset);
-        
+
         glGetActiveUniformsiv(prog_id, 1, &index,
                                  GL_UNIFORM_SIZE, &singleSize);
         glError();
-        
+
         glViewport(0, 0, width, height);
     }
 
@@ -180,7 +180,7 @@ void UniformBuffer::detach() const
     {
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
-        
+
         glUseProgram(prog_id);
 
         glEnable(GL_DEPTH_TEST);
@@ -208,7 +208,7 @@ void UniformBuffer::detach() const
             init_opengl();
             initialized = 1;
         }
-        
+
         render();
     }
 
@@ -221,7 +221,7 @@ void UniformBuffer::detach() const
     // Copyright (c) 2002-2006 3Dlabs Inc. Ltd.
     // See 3Dlabs-License.txt for license information
 
-    vec3 LightPosition = vec3(0.0, 10.0, 4.0); 
+    vec3 LightPosition = vec3(0.0, 10.0, 4.0);
 
     varying float NdotL;
     varying vec3  ReflectVec;
@@ -258,7 +258,7 @@ void UniformBuffer::detach() const
     void main (void)
     {
         vec3 kcool    = min(CoolColor + DiffuseCool * SurfaceColor, 1.0);
-        vec3 kwarm    = min(WarmColor + DiffuseWarm * SurfaceColor, 1.0); 
+        vec3 kwarm    = min(WarmColor + DiffuseWarm * SurfaceColor, 1.0);
         vec3 kfinal   = mix(kcool, kwarm, NdotL);
 
         vec3 nreflect = normalize(ReflectVec);

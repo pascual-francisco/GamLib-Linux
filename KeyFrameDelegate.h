@@ -1,4 +1,4 @@
-#include "stdafx.h"
+    #include "stdafx.h"
 
 	#ifndef KEYFRAMEDELEGATE_H
 	#define KEYFRAMEDELEGATE_H

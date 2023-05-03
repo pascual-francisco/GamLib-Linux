@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 Animation::Animation(GLint firstframe, GLint lastframe, GLint actualframe, GLfloat frametime, GLuint actualstate)

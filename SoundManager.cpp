@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 SoundManager::SoundManager(int frequency, uint format, int channels, int chunkSize)
@@ -50,11 +49,17 @@ void SoundManager::initBGM(GLuint name, string path)
 
 void SoundManager::playBGM(GLuint name)
 {
-
+    if(Mix_PlayMusic( bgmMap.at(name), -1) != 0)
+    {
+       cout << "Failed to play music: " << Mix_GetError() << endl;
+    }
 }
 
 void SoundManager::playSFX(GLuint name)
 {
+    Mix_PlayChannel( -1, sfxMap.at(name), 0);
+
+
 }
 
 void SoundManager::print() const
@@ -71,4 +76,37 @@ void SoundManager::print() const
 	cout << "SFX count = " << sfxMap.size() << endl;
 	cout << "**************************************************" << endl;
 }
+
+
+
+/*
+vector<string> SoundMixer::soundList;
+
+SoundMixer::SoundMixer()
+{
+	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 1024);
+	chunk = NULL;
+}
+
+SoundMixer::~SoundMixer()
+{
+	Mix_FreeChunk(chunk);
+	Mix_CloseAudio();
+	soundList.clear();
+}
+
+void SoundMixer::update()
+{
+	for(unsigned int i = 0; i<soundList.size(); i++)
+	{
+		chunk = Mix_LoadWAV(soundList[i].c_str());
+		if(chunk!=NULL)
+		{
+			Mix_PlayChannel(0, chunk, 0 );
+		}
+	}
+
+	soundList.clear();
+}
+*/
 

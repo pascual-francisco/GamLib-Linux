@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 Sprite::Sprite(GLuint palette, GLuint page):GraphicElement()

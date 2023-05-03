@@ -1,4 +1,4 @@
-#include "stdafx.h"
+    #include "stdafx.h"
 
 	#ifndef TRACK_H
 	#define TRACK_H

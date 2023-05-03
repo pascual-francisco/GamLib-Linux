@@ -1,4 +1,5 @@
-#include "stdafx.h"
+    #include "stdafx.h"
+
 	#ifndef KEYFRAME_H
 	#define KEYFRAME_H
 
@@ -11,10 +12,11 @@
 			LINEAR, ACCELERATION,  DECELERATION, SMOOTHSTEP, DISCRETE
 		};
 
-
 		TrackAction	action;
+
 		float	value;
-		int	time;
+		int	    time;
+
 		vector<KeyFrameDelegate*>	keyDelegate;
 
 		 int	easingForward;

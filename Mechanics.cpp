@@ -1,10 +1,9 @@
-#pragma once
 #include "stdafx.h"
 
 Mechanics::Mechanics()
 {
 	mass = 0.0f;
-	position = vec3();	
+	position = vec3();
 	acceleration = vec3();
 	maxSpeed = vec3();
 	speed = vec3();
@@ -35,7 +34,7 @@ Mechanics::~Mechanics()
 
 }
 
-const Mechanics &Mechanics::operator=(const Mechanics &m) 
+const Mechanics &Mechanics::operator=(const Mechanics &m)
 {
 	if (&m != this)
 	{
@@ -49,7 +48,7 @@ const Mechanics &Mechanics::operator=(const Mechanics &m)
 		momentum = m.momentum;
 		gravity = m.gravity;
 	}
-	return *this;	
+	return *this;
 }
 
 bool Mechanics::operator==(const Mechanics &m) const
@@ -66,7 +65,7 @@ bool Mechanics::operator==(const Mechanics &m) const
 		gravity == m.gravity	)
 	{
 		return true;
-	}	
+	}
 	else
 		return false;
 }

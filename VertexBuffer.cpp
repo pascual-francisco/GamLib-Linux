@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 VertexBuffer::VertexBuffer(GLuint count, GLintptr size, const void *data)

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+    #include "stdafx.h"
 
 	TrackDelegate::TrackDelegate(){}
 	TrackDelegate::~TrackDelegate(){}
@@ -7,7 +7,7 @@
 	void TrackDelegate::onHeadPositionChangedBackward( int time){}
 	void TrackDelegate::onValueChanged(float value){}
 	void TrackDelegate::onValueChangedToZero(){}
-	void TrackDelegate::onValueChangedToOne(){}	
+	void TrackDelegate::onValueChangedToOne(){}
 	void TrackDelegate::onForward(){}
 	void TrackDelegate::onBackward(){}
 	void TrackDelegate::onFirstFrame(){}

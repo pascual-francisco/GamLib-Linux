@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 Transformation::Transformation()
@@ -11,7 +10,7 @@ Transformation::Transformation()
 
 Transformation::~Transformation()
 {
-	
+
 }
 
 void Transformation::print() const

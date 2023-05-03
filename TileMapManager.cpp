@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *mapData, GLuint viewportw, GLuint viewporth, GLuint tilewidth, GLuint tileheight, GLuint tileseparation, GLuint tileframetime, GLuint program, GLenum mode)
@@ -37,6 +36,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	viewPortH = viewporth;
 	drawingMode = mode;
 	maxTextureUnits = 0;
+	frameCounter = 0;
 
 	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
 	batchDrawOffset = maxTextureUnits * 6;
@@ -79,11 +79,11 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 			(*mtit)->tileSeparation = tileSeparation;
 			(*mtit)->collisionData = collisionData;
 
+
 			if(tileFrames > 0)
-			{
                 (*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
-                i++;
-            }
+
+            i++;
         }
 	}
 
@@ -101,7 +101,6 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	}
 
 	//Create data array for updates
-
 	if (vertexArray.size() > 0)
 	{
 		for (vait = vertexArray.begin(); vait != vertexArray.end(); vait++)

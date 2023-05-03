@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 IndexBuffer::IndexBuffer(GLuint count, GLintptr size, const void *data)

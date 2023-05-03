@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 GLfloat Renderer::COSTABLE[360];
@@ -79,25 +78,22 @@ void Renderer::initSDL()
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		logFile << "SDL Error: Initialization SDL Error" << SDL_GetError() << endl;
-		cout << "SDL Error: Initialization SDL Error" << endl;
-		exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
 	}
 	else
 	{
 		logFile << "SDL initialized no error" << endl;
-		cout << "SDL initialized no error" << endl;
 	}
 
 	//Initalize SDL_IMAGE//
 	if (!IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG))
 	{
-		cout << "SDL_Image Error: Initialization SDL_Image Error" << SDL_GetError() << endl;
+		logFile << "SDL_Image Error: Initialization SDL_Image Error" << SDL_GetError() << endl;
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		logFile << "SDL_Image initialized no error" << endl;
-		cout << "SDL_Image initialized no error" << endl;
 	}
 
 	//Create window//
@@ -112,13 +108,11 @@ void Renderer::initSDL()
 		//Create context//
 		if (ptrGLContext = SDL_GL_CreateContext(ptrWindow))
 		{
-			cout << "OpenGL context created no error" << endl;
-			logFile << "OpenGL context created no error" << endl;
+            logFile << "OpenGL context created no error" << endl;
 		}
 
 		if (ptrGLContext == NULL)
 		{
-			printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError());
 			logFile << "OpenGL context could not be created! SDL Error: %s\n", SDL_GetError();
 		}
 		else
@@ -126,7 +120,6 @@ void Renderer::initSDL()
 			//Use Vsync//
 			if (SDL_GL_SetSwapInterval(1) < 0)
 			{
-				printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 				logFile << "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError();
 			}
 		}
@@ -175,36 +168,31 @@ void Renderer::initGlew()
 	if (glewError == GLEW_OK)
 	{
 		logFile << "GLEW initialized no error" << endl;
-		cout << "GLEW initialized no error" << endl;
-	}
+    }
 
 	//Missing GL version
 	if (glewError == GLEW_ERROR_NO_GL_VERSION)
 	{
 		logFile << "GLEW Error: Missing GL version" << endl;
-		cout << "GLEW Error: Missing GL version" << endl;
-		exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
 	}
 
 	//Need at least OpenGL 1.1
 	if (glewError == GLEW_ERROR_GL_VERSION_10_ONLY)
 	{
 		logFile << "GLEW Error: Need at least OpenGL 1.1" << endl;
-		cout << "GLEW Error: Missing GL version" << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	if (glewError == GLEW_ERROR_GLX_VERSION_11_ONLY)
 	{
 		logFile << "GLEW Error: Need at least GLX 1.2" << endl;
-		cout << "GLEW Error: Need at least GLX 1.2" << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	if (glewError == GLEW_ERROR_NO_GLX_DISPLAY)
 	{
 		logFile << "GLEW Error: Need GLX display for GLX support" << endl;
-		cout << "GLEW Error: Need GLX display for GLX support" << endl;
 		exit(EXIT_FAILURE);
 	}
 }
@@ -252,35 +240,30 @@ void Renderer::checkErrors()
 	if (error == GL_INVALID_ENUM)
 	{
 		logFile << "OpenGL Error: GL_INVALID_ENUM An unacceptable value is specified for an enumerated argument." << endl;
-		cout << "OpenGL Error: GL_INVALID_ENUM An unacceptable value is specified for an enumerated argument." << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	if (error == GL_INVALID_VALUE)
 	{
 		logFile << "OpenGL Error: GL_INVALID_VALUE A numeric argument is out of range." << endl;
-		cout << "OpenGL Error: GL_INVALID_VALUE A numeric argument is out of range." << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	if (error == GL_INVALID_OPERATION)
 	{
 		logFile << "OpenGL Error: GL_INVALID_OPERATION The specified operation is not allowed in the current state." << endl;
-		cout << "OpenGL Error: GL_INVALID_OPERATION The specified operation is not allowed in the current state." << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	if (error == GL_INVALID_FRAMEBUFFER_OPERATION)
 	{
 		logFile << "OpenGL Error: GL_INVALID_FRAMEBUFFER_OPERATION The command is trying to Renderer to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete." << endl;
-		cout << "OpenGL Error: GL_INVALID_FRAMEBUFFER_OPERATION The command is trying to Renderer to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete." << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	if (error == GL_OUT_OF_MEMORY)
 	{
 		logFile << "OpenGL Error: GL_OUT_OF_MEMORY There is not enough memory left to execute the command. " << endl;
-		cout << "OpenGL Error: GL_OUT_OF_MEMORY There is not enough memory left to execute the command. " << endl;
 		exit(EXIT_FAILURE);
 	}
 }

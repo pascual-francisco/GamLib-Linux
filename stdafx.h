@@ -1,7 +1,4 @@
-#pragma once
-
 //Standard Libraries//
-using namespace std;
 #include <list>
 #include <map>
 #include <stack>
@@ -14,6 +11,7 @@ using namespace std;
 #include <iostream>
 #include <stdexcept>
 #include <typeinfo>
+using namespace std;
 
 //Libraries//
 #include <GL/glew.h>

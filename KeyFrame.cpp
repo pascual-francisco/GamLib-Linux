@@ -1,13 +1,13 @@
 #include "stdafx.h"
 
-	KeyFrame:: KeyFrame(int keyTime, float keyValue,  int easingF,  int easingR, bool actionActive,  int actionState,  int fireDirection,  int time,  int key)	
+	KeyFrame:: KeyFrame(int keyTime, float keyValue,  int easingF,  int easingR, bool actionActive,  int actionState,  int fireDirection,  int time,  int key)
 	{
 		reset();
 		this->time = keyTime;
 		value = keyValue;
 		easingForward = easingF;
 		easingReverse = easingR;
-		action = TrackAction(actionActive,actionState, fireDirection, time,key); 		
+		action = TrackAction(actionActive,actionState, fireDirection, time,key);
 	}
 
 	KeyFrame::KeyFrame(const KeyFrame& key)
@@ -37,7 +37,7 @@
 		action.active = false;
 		action.actualState = TrackAction::FORWARD;
 		action.pauseTime = 0;
-		action.pauseCounter = 0;		
+		action.pauseCounter = 0;
 	}
 
 	const KeyFrame& KeyFrame::operator=(const KeyFrame& key)
@@ -56,15 +56,15 @@
 
 	bool KeyFrame::operator==(const KeyFrame& key) const
 	{
-		if(time == key.time && 
+		if(time == key.time &&
 			value == key.value &&
 			easingForward == key.easingForward &&
 			easingReverse == key.easingReverse &&
-			action == key.action && 
+			action == key.action &&
 			keyDelegate == key.keyDelegate
 			)
 		{
-			return true;	
+			return true;
 		}
 		else
 		{
@@ -73,7 +73,7 @@
 	}
 
 	bool KeyFrame::operator<(const KeyFrame& key) const
-	{	
+	{
 		if(time < key.time)
 		{
 			return true;
@@ -85,7 +85,7 @@
 	}
 
 	bool KeyFrame::operator>(const KeyFrame& key) const
-	{	
+	{
 		if(time > key.time)
 		{
 			return true;

@@ -1,8 +1,7 @@
-#pragma once
 #include "stdafx.h"
 
 VertexArray::VertexArray()
-{	
+{
 	vertexArrayID = 0;
 	init();
 }
@@ -19,10 +18,10 @@ void VertexArray::init()
 }
 
 void VertexArray::attach() const
-{	
+{
 	glBindVertexArray(vertexArrayID);
 }
-	
+
 void VertexArray::detach() const
 {
 	glBindVertexArray(0);

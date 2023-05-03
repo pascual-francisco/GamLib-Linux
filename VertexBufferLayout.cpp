@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 
 VertexBufferLayout::VertexBufferLayout()
@@ -8,7 +7,7 @@ VertexBufferLayout::VertexBufferLayout()
 	normalize = false;
 	attributeLocation = 0;
 	attributeName = "name";
-	shaderProgramID = 0;	
+	shaderProgramID = 0;
 	strideSize = 0;
 }
 
@@ -28,7 +27,7 @@ VertexBufferLayout::VertexBufferLayout(GLuint id, const GLchar *nam, GLuint cou,
 
 VertexBufferLayout::~VertexBufferLayout()
 {
-	
+
 }
 
 void VertexBufferLayout::attach()
@@ -48,7 +47,7 @@ void VertexBufferLayout::print() const
 	cout << "Program ID = "<<shaderProgramID << endl;
 	cout << "Stride Size = " << strideSize << endl;
 	cout << "Count = " << count << endl;
-	
+
 	cout << "Normalize = ";
 	if(normalize == GL_FALSE)
 		cout << "False" << endl;
