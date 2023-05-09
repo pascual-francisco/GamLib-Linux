@@ -5,20 +5,17 @@
 
 class PackBuffer : public BufferObject
 {
-private:
+    private:
 
 
+    public:
+    PackBuffer(GLuint count, GLintptr size, const void *data);
+    ~PackBuffer();
 
-public:
-
-
-	  PackBuffer(GLuint count, GLintptr size, const void *data);
-	  ~PackBuffer();
-
-	   void update(GLintptr offset, GLintptr size, const void *data);
-	   void attach() ;
-	   void detach() ;
-	   void print() const;
+    void update(GLintptr offset, GLintptr size, const void *data);
+    void attach() ;
+    void detach() ;
+    void print() const;
 };
 #endif // !PACKBUFFER_H
 

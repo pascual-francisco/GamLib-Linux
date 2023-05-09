@@ -1,4 +1,3 @@
-
 #include "stdafx.h"
 
 #ifndef	UNIFORMBUFFER_H
@@ -6,7 +5,7 @@
 
 class UniformBuffer: public BufferObject
 {
-public:
+    public:
 	const GLchar	**names;
 	const void		*data;
 	GLsizei			dataSize;
@@ -19,15 +18,15 @@ public:
 	GLuint			*sizes;
 	GLsizei			memberCount;
 
-public:
-	  UniformBuffer();
-	  UniformBuffer(GLuint program, GLsizei count,       const void *data, GLsizei size);
-	  ~UniformBuffer();
-	  void init(GLuint program, GLsizei count, const void *data, GLsizei size);
-	  void initUniformIndices();
-	  void initUniformLocations();
-	  void attach() const;
-	  void detach() const;
+    public:
+	UniformBuffer();
+	UniformBuffer(GLuint program, GLsizei count,       const void *data, GLsizei size);
+	~UniformBuffer();
+	void init(GLuint program, GLsizei count, const void *data, GLsizei size);
+	void initUniformIndices();
+	void initUniformLocations();
+	void attach() const;
+	void detach() const;
 };
 #endif // !VERTEXBUFFER_H
-#pragma once
+

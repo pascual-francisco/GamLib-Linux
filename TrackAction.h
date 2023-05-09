@@ -32,11 +32,11 @@
 			GO_TO_KEY_STOP,
 		};
 
-		  TrackAction(bool  alive = false,  int type = 0,  int activeDirection = 0,  int time = 0,  int key = 0);
-		  TrackAction(const TrackAction&);
-		  ~TrackAction();
-		  const TrackAction& operator=(const TrackAction&);
-		  bool operator==(const TrackAction&) const;
-		  bool operator<(const TrackAction&) const;
+        TrackAction(bool  alive = false,  int type = 0,  int activeDirection = 0,  int time = 0,  int key = 0);
+        TrackAction(const TrackAction&);
+        ~TrackAction();
+        const TrackAction& operator=(const TrackAction&);
+        bool operator==(const TrackAction&) const;
+        bool operator<(const TrackAction&) const;
 	};
 	#endif

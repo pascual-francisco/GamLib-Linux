@@ -17,6 +17,7 @@ public:
 	  ~Shader();
 	  void attach();
 	  void detach();
+	  void print() const;
 
 	private:
 	  void initShader(const char* vname, const char* fname);

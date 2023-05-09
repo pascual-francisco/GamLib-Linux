@@ -9,45 +9,44 @@ class Game
 	GLuint			actualScene;
 	string			assetsPath;
 	SDL_FRect		viewPort;
-	bool			active;
-	bool			debugMode;
-	bool			upButton;
-	bool			downButton;
-	bool			rightButton;
-	bool			leftButton;
-	bool			startButton;
-	bool			selectButton;
-	bool			aButton;
-	bool			bButton;
-	bool			xButton;
-	bool			yButton;
-	bool			lButton;
-	bool			rButton;
+	bool			   active;
+	bool			   debugMode;
+	bool			   upButton;
+	bool			   downButton;
+	bool			   rightButton;
+	bool			   leftButton;
+	bool			   startButton;
+	bool			   selectButton;
+	bool			   aButton;
+	bool			   bButton;
+	bool			   xButton;
+	bool			   yButton;
+	bool			   lButton;
+	bool			   rButton;
 	SDL_Event		gameEvents;
 	GLuint			joystickCount;
-	SDL_Joystick	*ptrJoystick;
-	Renderer		*ptrRenderer;
+	SDL_Joystick   *ptrJoystick;
+	Renderer		   *ptrRenderer;
 	TextureManager	*ptrTextureManager;
 	SoundManager	*ptrSoundManager;
-	vector<Scene *>  scenes;
+	vector<Scene *> scenes;
 
+    Game(bool mode, string file, GLuint shaders,  GLfloat x, GLfloat y, GLfloat w, GLfloat h);
+    ~Game();
 
-	  Game(bool mode, string file, GLfloat x, GLfloat y, GLfloat w, GLfloat h);
-	  ~Game();
+    virtual void	initScenes() = 0;
+    virtual void	initTextures() = 0;
+    virtual void	initSounds() = 0;
+    virtual void	initUniforms() = 0;
+    virtual void	initBuffers() = 0;
 
-	  virtual void	initScenes() = 0;
-	  virtual void	initTextures() = 0;
-	  virtual void	initSounds() = 0;
-	  virtual void	initUniforms() = 0;
-	  virtual void	initBuffers() = 0;
-
-	  virtual void	update() = 0;
-	  virtual void	updateUniforms() = 0;
-	  virtual void	updateTextures() = 0;
-	  virtual void	updateSounds() = 0;
-	  virtual void	updateBuffers() = 0;
-	  virtual void	updateScene() = 0;
-	  virtual void	checkEvents() = 0;
+    virtual void	update() = 0;
+    virtual void	updateUniforms() = 0;
+    virtual void	updateTextures() = 0;
+    virtual void	updateSounds() = 0;
+    virtual void	updateBuffers() = 0;
+    virtual void	updateScene() = 0;
+    virtual void	checkEvents() = 0;
 };
 
 #endif // !GAME_H

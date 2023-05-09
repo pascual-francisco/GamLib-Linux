@@ -9,11 +9,9 @@ RenderBuffer::RenderBuffer(GLenum  target, GLenum  attachPoint, GLuint format, G
 	height = h;
 
 	glGenRenderbuffers(1, &bufferObjectID);
-	glBindRenderbuffer(GL_RENDERBUFFER, bufferObjectID);	
+	glBindRenderbuffer(GL_RENDERBUFFER, bufferObjectID);
 	glRenderbufferStorage(GL_RENDERBUFFER, bufferStorageFormat, width, height);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);	
-
-	
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
 RenderBuffer::~RenderBuffer()
@@ -26,12 +24,12 @@ void RenderBuffer::update(GLintptr offset, GLintptr size, const void *data)
 {
 }
 
-void RenderBuffer::attach() 
+void RenderBuffer::attach()
 {
-	glBindRenderbuffer(GL_RENDERBUFFER, bufferObjectID);	
+	glBindRenderbuffer(GL_RENDERBUFFER, bufferObjectID);
 }
 
-void RenderBuffer::detach() 
+void RenderBuffer::detach()
 {
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
@@ -41,10 +39,10 @@ void RenderBuffer::print() const
 	cout << "*****************************************************" << endl;
 	cout << "Render Buffer Info:" << endl;
 	BufferObject::print();
-	cout << "Image Size = " << width << " x "<<height << endl;	
-	
+	cout << "Image Size = " << width << " x "<<height << endl;
+
 	cout << "Buffer Attachment = ";
-	
+
 	if (attachment == GL_COLOR_ATTACHMENT0)
 		cout << "GL_COLOR_ATTACHMENT0" << endl;
 
@@ -71,7 +69,7 @@ void RenderBuffer::print() const
 
 	if (attachment == GL_DEPTH_ATTACHMENT)
 		cout << "GL_DEPTH_ATTACHMENT" << endl;
-	
+
 	if (attachment == GL_STENCIL_ATTACHMENT)
 		cout << "GL_STENCIL_ATTACHMENT" << endl;
 

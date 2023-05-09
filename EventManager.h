@@ -6,10 +6,10 @@
 class EventManager
 {
     public:
-        SDL_Event* ptrEvents;
-        EventManager();
-        virtual ~EventManager();
-        void checkEvents();
+    SDL_Event* ptrEvents;
+    EventManager();
+    virtual ~EventManager();
+    void checkEvents();
 
     protected:
 

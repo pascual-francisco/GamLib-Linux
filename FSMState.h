@@ -10,19 +10,19 @@ class FSMState
 	GLfloat time;
 	GLfloat counter;
 
-	  FSMState()
+    FSMState()
 	{
 		name = "";
 		time = 0.0f;
 		counter = 0.0f;
 	};
-	  ~FSMState() {};
+    ~FSMState() {};
 
-	  virtual void enter() = 0;
-	  virtual void exit() = 0;
-	  virtual void update() = 0;
+    virtual void enter() = 0;
+    virtual void exit() = 0;
+    virtual void update() = 0;
 
-	  void print() const
+    void print() const
 	{
 
 		cout << "State Name = " << name << endl;

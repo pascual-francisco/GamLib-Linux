@@ -71,7 +71,6 @@ class BufferObject
 		if (bufferStorageFormat == GL_RGB)
 			cout << "GL_RGB" << endl;
 
-
 		if (bufferStorageFormat == GL_DEPTH_COMPONENT)
 			cout << "GL_DEPTH_COMPONENT" << endl;
 
@@ -104,7 +103,6 @@ class BufferObject
 		cout << "Buffer Count = " << bufferCount <<" Pixels"<< endl;
 
 		cout << "Buffer Size = " << bufferDataSize * bufferCount << " Bytes" << endl;
-
 	};
 };
 #endif // !BUFFEROBJECT_H

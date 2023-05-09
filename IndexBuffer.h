@@ -6,13 +6,12 @@
 class IndexBuffer: public BufferObject
 {
 	public:
-	  IndexBuffer(GLuint count, GLintptr size, const void *data);
-	  ~IndexBuffer();
+    IndexBuffer(GLuint count, GLintptr size, const void *data);
+    ~IndexBuffer();
 
-	  void update(GLintptr offset, GLintptr size, const void *data);
-	  void attach() ;
-	  void detach() ;
-	  void print() const;
+    void update(GLintptr offset, GLintptr size, const void *data);
+    void attach() ;
+    void detach() ;
+    void print() const;
 };
 #endif // !INDEXBUFFER_H
-#pragma once

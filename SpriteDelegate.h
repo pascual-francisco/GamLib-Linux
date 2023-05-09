@@ -6,8 +6,8 @@
 class SpriteDelegate
 {
 	public:
-		  SpriteDelegate() {}
-		  virtual ~SpriteDelegate() {}
+    SpriteDelegate() {}
+	virtual ~SpriteDelegate() {}
 
 };
 #endif // !SPRITEDELEGATE_H

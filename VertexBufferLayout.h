@@ -16,13 +16,13 @@ class VertexBufferLayout
 	GLuint			shaderProgramID;
 
 	public:
-		  VertexBufferLayout();
-		  VertexBufferLayout(GLuint shaderProgramID, const GLchar *attributeName, GLuint count, GLboolean normalize, GLuint strideSize, GLuint offset);
-		  ~VertexBufferLayout();
+    VertexBufferLayout();
+    VertexBufferLayout(GLuint shaderProgramID, const GLchar *attributeName, GLuint count, GLboolean normalize, GLuint strideSize, GLuint offset);
+    ~VertexBufferLayout();
 
-		  void attach();
-		  void dettach();
-		  void print() const;
+    void attach();
+    void dettach();
+    void print() const;
 
 };
 

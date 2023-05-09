@@ -9,7 +9,7 @@ private:
 
 
 	public:
-		GLuint textureUnit;
+	GLuint textureUnit;
 
 	  TextureBuffer(GLuint count, GLintptr size, const void *data, GLuint format, GLuint unit);
 	  ~TextureBuffer();

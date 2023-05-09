@@ -14,15 +14,15 @@ class ObjectManager
 	GLuint textureCounter;
 	GLint maxTextureUnits;
 
-	  void updateDataArray(Sprite* sprite, GLuint offset);
-	  void updatePosition(Sprite *sprite, GLuint offset);
-	  void updateTexture(Sprite *sprite, GLuint offset);
-	  void updateColor(Sprite *sprite, GLuint offset);
-	  void updateTranslate(Sprite *sprite, GLuint offset);
-	  void updateScale(Sprite *sprite, GLuint offset);
-	  void updateRotate(Sprite *sprite, GLuint offset);
-	  void updateEnitities();
-	  void updateVertexBuffer();
+    void updateDataArray(Sprite* sprite, GLuint offset);
+    void updatePosition(Sprite *sprite, GLuint offset);
+    void updateTexture(Sprite *sprite, GLuint offset);
+	void updateColor(Sprite *sprite, GLuint offset);
+	void updateTranslate(Sprite *sprite, GLuint offset);
+	void updateScale(Sprite *sprite, GLuint offset);
+	void updateRotate(Sprite *sprite, GLuint offset);
+	void updateEnitities();
+	void updateVertexBuffer();
 
 	public:
 	GLuint	programID;
@@ -40,18 +40,18 @@ class ObjectManager
 	VertexBuffer		*ptrVertexBuffer;
 	VertexArray			*ptrVertexArray;
 
-	  ObjectManager(GLuint program = 0, GLenum mode = GL_TRIANGLES);
-	  ~ObjectManager();
+    ObjectManager(GLuint program = 0, GLenum mode = GL_TRIANGLES);
+    ~ObjectManager();
 
-	  void  initDataArray();
-	  void	initBuffers();
-	  void	initLayouts();
-	  void  batchDraw(GLenum mode = GL_TRIANGLES);
+    void  initDataArray();
+    void	initBuffers();
+    void	initLayouts();
+    void  batchDraw(GLenum mode = GL_TRIANGLES);
 
-	  void update();
-	  void print() const;
-	  void printInfo() const;
-	  void printDataArray() const;
-	  void printEntities() const;
+    void update();
+    void print() const;
+    void printInfo() const;
+    void printDataArray() const;
+    void printEntities() const;
 };
 #endif // !OBJECTMANAGER_H

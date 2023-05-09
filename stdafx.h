@@ -1,16 +1,15 @@
+#pragma once
+
 //Standard Libraries//
 #include <list>
 #include <map>
 #include <stack>
 #include <vector>
 #include <math.h>
-#include <cstring>
 #include <string>
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <stdexcept>
-#include <typeinfo>
 using namespace std;
 
 //Libraries//
@@ -68,4 +67,3 @@ using namespace glm;
 #include "Renderer.h"
 #include "Game.h"
 #include "EventManager.h"
-

@@ -6,14 +6,14 @@
 class GameObject
 {
 	public:
-	string		name;
-	bool		active;
-	uint		healthPoints;
-	uint		attackDamage;
-	uint		weakness;
-	float		direction;
+	string	name;
+	bool	active;
+	uint	healthPoints;
+	uint	attackDamage;
+	uint	weakness;
+	float	direction;
 
-	  GameObject()
+    GameObject()
 	{
 		name = "name";
 		active = false;
@@ -22,7 +22,7 @@ class GameObject
 		weakness = 0;
 	};
 
-	  GameObject(const GameObject &object)
+    GameObject(const GameObject &object)
 	{
 		name = object.name;
 		active = object.active;
@@ -31,9 +31,9 @@ class GameObject
 		weakness = object.weakness;
 	}
 
-	  ~GameObject(){};
+    ~GameObject(){};
 
-	   virtual void update() = 0;
-	   virtual void print() const = 0;
+    virtual void update() = 0;
+    virtual void print() const = 0;
 };
 #endif // !GAMEOBJECT_H

@@ -6,16 +6,16 @@
 
 class VertexArray
 {
-public:
+    public:
 	GLuint	vertexArrayID;
 
-public:
-	  VertexArray();
-	  ~VertexArray();
+    public:
+	VertexArray();
+	~VertexArray();
 
-	  void init();
-	  void attach() const;
-	  void detach() const;
+	void init();
+	void attach() const;
+	void detach() const;
 };
 #endif // !VERTEXBUFFER_H
-#pragma once
+

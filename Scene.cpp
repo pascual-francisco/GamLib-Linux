@@ -15,7 +15,34 @@ GLfloat top, GLfloat znear, GLfloat zfar, GLfloat eyeX, GLfloat eyeY, GLfloat ey
 	ptrBackground = nullptr;
 	ptrForeground = nullptr;
 
-    ptrCamera = new Camera(true, program, type, left, right, bottom, top, znear, zfar, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+    //ptrCamera = new Camera(true, program, type, left, right, bottom, top, znear, zfar, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+
+//
+//   mat4 projection = mat4(1.0f);
+//	mat4 view = mat4(1.0f);
+//
+//	//Init Samplers
+//	int samplers[32];
+//	for (uint i = 0; i < 32; i++)
+//		samplers[i] = i;
+//
+//	glUniform1iv(glGetUniformLocation(programID, "fSamplers"), 32, samplers);
+//
+//	//Init Matrices to 1
+//	projection = mat4(1.0f);
+//	view = mat4(1.0f);
+//
+//	//Init Projection
+//	projection = glm::ortho(0.0f, float(viewPort.w), 0.0f, float(viewPort.h), 1000.0f, -1000.0f);
+//
+//	//Init Camera
+//	view = glm::lookAt(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, -1.0f), vec3(0.0f, 1.0f, 0.0f));
+//
+//	//Init Origin
+//	view = glm::translate(view, vec3(0.0f, 0.0f, 0.0f));
+//
+//	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
+//	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
 }
 
 Scene::~Scene()

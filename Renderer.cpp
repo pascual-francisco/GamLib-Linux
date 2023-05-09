@@ -7,7 +7,7 @@ GLfloat Renderer::ACOSTABLE[360];
 GLfloat Renderer::ASINTABLE[360];
 GLfloat Renderer::ATANTABLE[360];
 
-Renderer::Renderer(bool mode, string file, GLuint x, GLuint y, GLuint w, GLuint h)
+Renderer::Renderer(bool mode, string path, GLuint shadersQuantity, GLuint x, GLuint y, GLuint w, GLuint h)
 {
 	debugMode = mode;
 	active = true;
@@ -18,7 +18,7 @@ Renderer::Renderer(bool mode, string file, GLuint x, GLuint y, GLuint w, GLuint 
 	viewPort.y = y;
 	viewPort.w = w;
 	viewPort.h = h;
-	assetsPath = file;
+	assetsPath = path;
 
 	ptrWindow = nullptr;
 	ptrShaders = nullptr;
@@ -27,6 +27,8 @@ Renderer::Renderer(bool mode, string file, GLuint x, GLuint y, GLuint w, GLuint 
 	ptrPixelBuffer = nullptr;
 	ptrTextureManager = nullptr;
 	ptrTextureBuffer = nullptr;
+
+   shaders.reserve(shadersQuantity);
 
 	initGlobals();
 	initSDL();
@@ -197,19 +199,23 @@ void Renderer::initGlew()
 	}
 }
 
-void Renderer::initShaders()
+void Renderer::initShaders(string vertex, string fragment)
 {
 	//Initialize all the program shaders//
-
-	ptrShaders = new Shader * [1];
-
 	string vs, fs;
-	vs = assetsPath + "texRect.vp";
-	fs = assetsPath + "textRect.fp";
-	ptrShaders[0] = new Shader(assetsPath, vs.c_str(), fs.c_str());
-
-	if (ptrShaders[0] != nullptr)
-		ptrShaders[0]->attach();
+	vs = assetsPath + vertex;
+	fs = assetsPath + fragment;
+	shaders.push_back(new Shader(assetsPath, vs.c_str(), fs.c_str()));
+//
+//	ptrShaders = new Shader * [1];
+//
+//	string vs, fs;
+//	vs = assetsPath + vertex;
+//	fs = assetsPath + fragment;
+//	ptrShaders[0] = new Shader(assetsPath, vs.c_str(), fs.c_str());
+//
+//	if (ptrShaders[0] != nullptr)
+//		ptrShaders[0]->attach();
 
 	//Init Samplers
 	GLint maxTextureUnits = 0;
@@ -266,4 +272,16 @@ void Renderer::checkErrors()
 		logFile << "OpenGL Error: GL_OUT_OF_MEMORY There is not enough memory left to execute the command. " << endl;
 		exit(EXIT_FAILURE);
 	}
+}
+
+void Renderer::print() const
+{
+   cout << "*****************************************************" << endl;
+   cout<<"Renderer Info:"<<endl;
+   cout<<"Shaders Info:"<<endl;
+   for(uint i; i<shaders.size() ; i++)
+   {
+      shaders[i]->print();
+   }
+   cout << "*****************************************************" << endl;
 }

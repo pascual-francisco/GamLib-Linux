@@ -54,7 +54,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	char palette = 0x00;
 	char page = 0x00;
 	short tileColumn = 0x0000;
-    short tileRow = 0x0000;
+   short tileRow = 0x0000;
 	char tileFrames = 0x00;
 	char collisionData = 0x00;
 
@@ -81,10 +81,12 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 
 
 			if(tileFrames > 0)
-                (*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
+			{
+            (*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
+         }
 
-            i++;
-        }
+         i++;
+      }
 	}
 
 	//Init 4 pages of tiles for copy to vertex buffer

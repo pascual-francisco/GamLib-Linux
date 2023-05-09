@@ -29,7 +29,7 @@ Shader::~Shader()
 void Shader::initShader(const char* vname, const char* fname)
 {
 	char buffer[1000] = { 0 };
-	char log[300] = { 0 };
+	//char log[300] = { 0 };
 	string source;
 	ofstream out;
 
@@ -168,4 +168,15 @@ void Shader::detach()
 {
 	glDetachShader(programID, vertexID);
 	glDetachShader(programID, fragmentID);
+}
+
+void Shader::print() const
+{
+   cout << "*****************************************************" << endl;
+   cout<<"Shader Info:"<<endl;
+   cout<<"File Path = "<<filePath<<endl;
+   cout<<"Program Id = "<<programID<<endl;
+   cout<<"Vertex Id = "<<vertexID<<endl;
+   cout<<"Fragment Id = "<<fragmentID<<endl;
+   cout << "*****************************************************" << endl;
 }

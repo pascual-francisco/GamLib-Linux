@@ -12,10 +12,10 @@ public:
 	vec3	scale;
 	vec3	pivot;
 
-	  Transformation();
-	  ~Transformation();
+    Transformation();
+    ~Transformation();
 
-	  void print() const;
+    void print() const;
 };
 #endif
 

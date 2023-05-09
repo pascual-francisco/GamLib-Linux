@@ -6,12 +6,12 @@
 class Entity: public GameObject
 {
 	public:
-	Mechanics			 mechanics;
-	stack < FSMState * > brain;
+	Mechanics		mechanics;
+	stack < FSMState * > 	brain;
 	vector<Track *>		tracks;
 	vector<Sprite *>	sprite;
-	static uint			maxInstances;
-	static uint			instances;
+	static uint		maxInstances;
+	static uint		instances;
 
 
 	  Entity();
