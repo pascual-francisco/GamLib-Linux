@@ -6,27 +6,25 @@
 class GraphicElement
 {
 	public:
-	bool 			active;
-	GLuint 			texturePalette;
-	GLuint 			palettePage;
-	GLuint 			tileSeparation;
-	vec2			tileCell;
-	vec2			tileDimension;
-   Transformation 	transformation;
-	vec4			vertexColor[4];
+	bool 			   active;
+	GLuint 		   texturePalette;
+	GLuint 		   palettePage;
+   vec2			   tilePosition;
+	vec2			   tileDimension;
+   Transformation transformation;
+   vec4			   vertexColor[4];
 	GLubyte			collisionData;
 
-	  GraphicElement()
+   GraphicElement()
 	{
 		active = true;
 		texturePalette = 0;
 		palettePage = 0;
-		tileSeparation = 0;
-		tileCell.x = 0.0;
-		tileCell.y = 0.0;
+      tilePosition.x = 0.0;
+		tilePosition.y = 0.0;
 		tileDimension.x = 16.0f;
 		tileDimension.y = 16.0f;
-         transformation.pivot.x = 0;
+      transformation.pivot.x = 0;
 		transformation.pivot.y = 0;
 		transformation.pivot.z = 0;
 		transformation.translate.x = 0;
@@ -59,10 +57,9 @@ class GraphicElement
 
 		cout << "Texture Palette = " << texturePalette << endl;
 		cout << "Palette Page  = " << palettePage << endl;
-		cout << "Tile Cell = [" << tileCell.x << ", " << tileCell.y << "]" << endl;
+		cout << "Tile Position = [" << tilePosition.x << ", " << tilePosition.y << "]" << endl;
 		cout << "Tile Dimension = [" << tileDimension.x << ", " << tileDimension.y << "]" << endl;
-      cout << "Tile Separation = " << tileSeparation << endl;
-		cout << "Collision Data = " << collisionData << endl;
+      cout << "Collision Data = " << collisionData << endl;
 		transformation.print();
 		cout << "vertexColor [0] = [ " << vertexColor[0].r << ", " << vertexColor[0].g << ", " << vertexColor[0].b << ", " << vertexColor[0].a << " ]" << endl;
 		cout << "vertexColor [1] = [ " << vertexColor[1].r << ", " << vertexColor[1].g << ", " << vertexColor[1].b << ", " << vertexColor[1].a << " ]" << endl;

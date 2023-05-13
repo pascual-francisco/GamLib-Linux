@@ -30,9 +30,8 @@ Sprite::Sprite(const Sprite &object)
 		active = object.active;
 		texturePalette = object.texturePalette;
 		palettePage = object.palettePage;
-		tileSeparation = object.tileSeparation;
-		tileCell.x = object.tileCell.x;
-		tileCell.y = object.tileCell.y;
+      tilePosition.x = object.tilePosition.x;
+		tilePosition.y = object.tilePosition.y;
 		tileDimension.x = object.tileDimension.x;
 		tileDimension.y = object.tileDimension.y;
       transformation = object.transformation;
@@ -54,9 +53,8 @@ const Sprite &Sprite::operator=(const Sprite &object)
 		active = object.active;
 		texturePalette = object.texturePalette;
 		palettePage = object.palettePage;
-		tileSeparation = object.tileSeparation;
-		tileCell.x = object.tileCell.x;
-		tileCell.y = object.tileCell.y;
+      tilePosition.x = object.tilePosition.x;
+		tilePosition.y = object.tilePosition.y;
 		tileDimension.x = object.tileDimension.x;
 		tileDimension.y = object.tileDimension.y;
       transformation = object.transformation;
@@ -80,9 +78,8 @@ bool Sprite::operator ==(const Sprite &object) const
 		active == object.active &&
 		texturePalette == object.texturePalette &&
 		palettePage == object.palettePage &&
-		tileSeparation == object.tileSeparation &&
-		tileCell.x == object.tileCell.x &&
-		tileCell.y == object.tileCell.y &&
+      tilePosition.x == object.tilePosition.x &&
+		tilePosition.y == object.tilePosition.y &&
 		tileDimension.x == object.tileDimension.x &&
 		tileDimension.y == object.tileDimension.y &&
       vertexColor[0] == object.vertexColor[0] &&
@@ -118,12 +115,12 @@ bool Sprite::operator >(const Sprite &object) const
 bool Sprite::operator*( Sprite &object)
 {
 	SDL_Rect a, b;
-	a.x = tileCell.x;
-	a.y = tileCell.y;
+	a.x = tilePosition.x;
+	a.y = tilePosition.y;
 	a.w = tileDimension.x;
 	a.h = tileDimension.x;
-	b.x = object.tileCell.x;
-	b.y = object.tileCell.y;
+	b.x = object.tilePosition.x;
+	b.y = object.tilePosition.y;
 	b.w = object.tileDimension.x;
 	b.h = object.tileDimension.x;
 

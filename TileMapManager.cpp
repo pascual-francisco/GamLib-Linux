@@ -74,10 +74,9 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 			collisionData = ((mapData[i] & 0x0000000F)     );
 
 			(*mtit) = new Sprite(palette, page);
-			(*mtit)->tileCell.x = tileColumn;
-			(*mtit)->tileCell.y = tileRow;
-			(*mtit)->tileSeparation = tileSeparation;
-			(*mtit)->collisionData = collisionData;
+			(*mtit)->tilePosition.x = tileColumn;
+			(*mtit)->tilePosition.y = tileRow;
+         (*mtit)->collisionData = collisionData;
 
 
 			if(tileFrames > 0)
@@ -330,16 +329,15 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &pageDimensionY);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
-  	GLfloat textureX = ( (sprite->tileCell.x * sprite->tileDimension.x) + (1 *  sprite->tileCell.x) ) / pageDimensionX;
-	GLfloat textureY = ( (sprite->tileCell.y * sprite->tileDimension.y) + (1 *  sprite->tileCell.y) ) / pageDimensionY;
+  	GLfloat textureX = ( (sprite->tilePosition.x * sprite->tileDimension.x) + (tileSeparation *  sprite->tilePosition.x) ) / pageDimensionX;
+	GLfloat textureY = ( (sprite->tilePosition.y * sprite->tileDimension.y) + (tileSeparation *  sprite->tilePosition.y) ) / pageDimensionY;
 	GLfloat textureW = sprite->tileDimension.x / pageDimensionX;
 	GLfloat textureH = sprite->tileDimension.y / pageDimensionY;
-
 
 	if(sprite->ptrAnimation != nullptr)
 	{
 		sprite->ptrAnimation->update();
-		textureX = ( ( (sprite->tileCell.x + sprite->ptrAnimation->actualFrame) * tileWidth) + (tileSeparation *  sprite->tileCell.x) ) / pageDimensionX;
+		textureX = ( ( (sprite->tilePosition.x + sprite->ptrAnimation->actualFrame) * tileWidth) + (tileSeparation *  sprite->tilePosition.x) ) / pageDimensionX;
 	}
 
 	//glTexCoord2f(image->textureX.value, image->textureY.value + image->textureHeight.value);
@@ -629,7 +627,7 @@ void TileMapManager::printTiles() const
 
 	for (uint i = 0; i <tilesArray.size(); i++)
 	{
-		cout << "[ " << tilesArray[i]->tileCell.x << "," << tilesArray[i]->tileCell.y <<" ]";
+		cout << "[ " << tilesArray[i]->tilePosition.x << "," << tilesArray[i]->tilePosition.y <<" ]";
 
 		if (w < ((viewPortW / tileWidth) - 1))
 			w++;
