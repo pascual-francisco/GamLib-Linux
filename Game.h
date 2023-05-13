@@ -31,7 +31,7 @@ class Game
 	SoundManager	*ptrSoundManager;
 	vector<Scene *> scenes;
 
-    Game(bool mode, string file, GLuint shaders,  GLfloat x, GLfloat y, GLfloat w, GLfloat h);
+    Game(bool mode, string file,  GLfloat x, GLfloat y, GLfloat w, GLfloat h);
     ~Game();
 
     virtual void	initScenes() = 0;

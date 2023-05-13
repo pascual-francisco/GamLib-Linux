@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-Game::Game(bool mode, string file, GLuint shaders,  GLfloat x, GLfloat y, GLfloat w, GLfloat h)
+Game::Game(bool mode, string file,  GLfloat x, GLfloat y, GLfloat w, GLfloat h)
 {
 	active = true;
 	actualScene = 0;
@@ -23,7 +23,7 @@ Game::Game(bool mode, string file, GLuint shaders,  GLfloat x, GLfloat y, GLfloa
 	lButton = false;
 	rButton = false;
 	ptrJoystick = nullptr;
-   ptrRenderer = new Renderer(mode, file, shaders, x, y, w, h);
+   ptrRenderer = new Renderer(mode, file, x, y, w, h);
 }
 
 Game::~Game()

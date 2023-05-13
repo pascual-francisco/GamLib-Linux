@@ -12,8 +12,7 @@ class GraphicElement
 	GLuint 			tileSeparation;
 	vec2			tileCell;
 	vec2			tileDimension;
-	vec2			pageDimension;
-	Transformation 	transformation;
+   Transformation 	transformation;
 	vec4			vertexColor[4];
 	GLubyte			collisionData;
 
@@ -27,9 +26,7 @@ class GraphicElement
 		tileCell.y = 0.0;
 		tileDimension.x = 16.0f;
 		tileDimension.y = 16.0f;
-		pageDimension.x = 16.0f;
-		pageDimension.y = 16.0f;
-		transformation.pivot.x = 0;
+         transformation.pivot.x = 0;
 		transformation.pivot.y = 0;
 		transformation.pivot.z = 0;
 		transformation.translate.x = 0;
@@ -64,8 +61,7 @@ class GraphicElement
 		cout << "Palette Page  = " << palettePage << endl;
 		cout << "Tile Cell = [" << tileCell.x << ", " << tileCell.y << "]" << endl;
 		cout << "Tile Dimension = [" << tileDimension.x << ", " << tileDimension.y << "]" << endl;
-		cout << "Page Dimension = [" << pageDimension.x << ", " << pageDimension.y << "]" << endl;
-		cout << "Tile Separation = " << tileSeparation << endl;
+      cout << "Tile Separation = " << tileSeparation << endl;
 		cout << "Collision Data = " << collisionData << endl;
 		transformation.print();
 		cout << "vertexColor [0] = [ " << vertexColor[0].r << ", " << vertexColor[0].g << ", " << vertexColor[0].b << ", " << vertexColor[0].a << " ]" << endl;

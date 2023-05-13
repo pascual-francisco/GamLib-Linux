@@ -12,12 +12,11 @@ TextureManager::~TextureManager()
 
 void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLuint target)
 {
-	GLuint textureID = 0;
-	string file;
+   string file;
 	SDL_Surface *ptrImage = NULL;
 
-	glGenTextures(1, &textureID);
-	glBindTexture(target, textureID);
+	glGenTextures(1, &name);
+	glBindTexture(target, name);
 
 	glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -84,7 +83,6 @@ void TextureManager::initTexture(GLuint name, string path, GLuint quantity, GLui
 
 				if (ptrImage != NULL)
 					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, ptrImage->w, ptrImage->h, 1, GL_RGBA, GL_UNSIGNED_BYTE, ptrImage->pixels);
-
 			}
 		}
 		SDL_FreeSurface(ptrImage);

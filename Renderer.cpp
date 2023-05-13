@@ -7,7 +7,7 @@ GLfloat Renderer::ACOSTABLE[360];
 GLfloat Renderer::ASINTABLE[360];
 GLfloat Renderer::ATANTABLE[360];
 
-Renderer::Renderer(bool mode, string path, GLuint shadersQuantity, GLuint x, GLuint y, GLuint w, GLuint h)
+Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint h)
 {
 	debugMode = mode;
 	active = true;
@@ -19,27 +19,28 @@ Renderer::Renderer(bool mode, string path, GLuint shadersQuantity, GLuint x, GLu
 	viewPort.w = w;
 	viewPort.h = h;
 	assetsPath = path;
+	actualShader = 0;
 
 	ptrWindow = nullptr;
-	ptrShaders = nullptr;
 	ptrFrameBuffers = nullptr;
 	ptrRenderBuffers = nullptr;
 	ptrPixelBuffer = nullptr;
 	ptrTextureManager = nullptr;
 	ptrTextureBuffer = nullptr;
 
-   shaders.reserve(shadersQuantity);
-
 	initGlobals();
 	initSDL();
 	initOpenGL();
 	initGlew();
-	initShaders();
+	initShader();
+
+	if(shaders[actualShader] != nullptr)
+      shaders[actualShader]->attach();
+
 }
 
 Renderer::~Renderer()
 {
-	delete[] ptrShaders;
 	delete[] ptrFrameBuffers;
 	delete[] ptrRenderBuffers;
 	delete ptrTextureManager;
@@ -147,7 +148,7 @@ void Renderer::initOpenGL()
 		logFile << "OpenGL initialized no error" << endl;
 	}
 
-	glViewport(0, 0, viewPort.w * 3, viewPort.h * 3);
+
 
 	if (debugMode)
 	{
@@ -199,35 +200,23 @@ void Renderer::initGlew()
 	}
 }
 
-void Renderer::initShaders(string vertex, string fragment)
+void Renderer::initShader(string vertex, string fragment)
 {
 	//Initialize all the program shaders//
-	string vs, fs;
-	vs = assetsPath + vertex;
-	fs = assetsPath + fragment;
-	shaders.push_back(new Shader(assetsPath, vs.c_str(), fs.c_str()));
-//
-//	ptrShaders = new Shader * [1];
-//
-//	string vs, fs;
-//	vs = assetsPath + vertex;
-//	fs = assetsPath + fragment;
-//	ptrShaders[0] = new Shader(assetsPath, vs.c_str(), fs.c_str());
-//
-//	if (ptrShaders[0] != nullptr)
-//		ptrShaders[0]->attach();
+	shaders.push_back(new Shader(assetsPath, (assetsPath + vertex).c_str(), (assetsPath + fragment).c_str()));
+}
 
-	//Init Samplers
-	GLint maxTextureUnits = 0;
-	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-
-	int samplers[maxTextureUnits];
-	for (uint i = 0; i < maxTextureUnits; i++)
-		samplers[i] = i;
-
-	glUniform1iv(glGetUniformLocation(ptrShaders[0]->programID, "fSamplers"), maxTextureUnits, samplers);
-
-	logFile << "Max Texture Units = "<<  maxTextureUnits << endl;
+void Renderer::activateShader(GLuint id)
+{
+   if(id >= 0 && id < shaders.size() - 1)
+   {
+      if(id != actualShader)
+      {
+         shaders[actualShader]->detach();
+         actualShader = id;
+         shaders[actualShader]->attach();
+      }
+   }
 }
 
 void Renderer::update()
@@ -278,8 +267,17 @@ void Renderer::print() const
 {
    cout << "*****************************************************" << endl;
    cout<<"Renderer Info:"<<endl;
+   cout<<"Active = "<<active<<endl;
+   cout<<"Debug Mode= "<<debugMode<<endl;
+   cout<<"Assets Path = "<<assetsPath<<endl;
+   cout<<"Viewport = ["<<viewPort.x<<","<<viewPort.y<<","<<viewPort.w<<","<<viewPort.h<<"]"<<endl;
+   cout<<"Actual Frame = "<<actualFrame<<endl;
+   cout<<"FPS = "<<FPS<<endl;
+   cout<<"Actual Shader = "<<actualShader<<endl;
    cout<<"Shaders Info:"<<endl;
-   for(uint i; i<shaders.size() ; i++)
+
+
+   for(uint i = 0; i < shaders.size() ; i++)
    {
       shaders[i]->print();
    }

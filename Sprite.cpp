@@ -16,14 +16,7 @@ void Sprite::init(GLuint palette, GLuint page)
 	texturePalette = palette;
 	palettePage = page;
 	positionOffset = vec2(0.0f, 0.0f);
-	GLint w, h;
-	glBindTexture(GL_TEXTURE_2D_ARRAY, texturePalette);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &w);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &h);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-	pageDimension.x = float(w);
-	pageDimension.y = float(h);
-	ptrAnimation = nullptr;
+   ptrAnimation = nullptr;
 }
 
 
@@ -42,9 +35,7 @@ Sprite::Sprite(const Sprite &object)
 		tileCell.y = object.tileCell.y;
 		tileDimension.x = object.tileDimension.x;
 		tileDimension.y = object.tileDimension.y;
-		pageDimension.x = object.pageDimension.x;
-		pageDimension.y = object.pageDimension.y;
-		transformation = object.transformation;
+      transformation = object.transformation;
 		vertexColor[0] = object.vertexColor[0];
 		vertexColor[1] = object.vertexColor[1];
 		vertexColor[2] = object.vertexColor[2];
@@ -60,7 +51,6 @@ const Sprite &Sprite::operator=(const Sprite &object)
 	{
 		positionOffset = object.positionOffset;
 		ptrAnimation = object.ptrAnimation;
-
 		active = object.active;
 		texturePalette = object.texturePalette;
 		palettePage = object.palettePage;
@@ -69,9 +59,7 @@ const Sprite &Sprite::operator=(const Sprite &object)
 		tileCell.y = object.tileCell.y;
 		tileDimension.x = object.tileDimension.x;
 		tileDimension.y = object.tileDimension.y;
-		pageDimension.x = object.pageDimension.x;
-		pageDimension.y = object.pageDimension.y;
-		transformation = object.transformation;
+      transformation = object.transformation;
 		vertexColor[0] = object.vertexColor[0];
 		vertexColor[1] = object.vertexColor[1];
 		vertexColor[2] = object.vertexColor[2];
@@ -97,9 +85,7 @@ bool Sprite::operator ==(const Sprite &object) const
 		tileCell.y == object.tileCell.y &&
 		tileDimension.x == object.tileDimension.x &&
 		tileDimension.y == object.tileDimension.y &&
-		pageDimension.x == object.pageDimension.x &&
-		pageDimension.y == object.pageDimension.y &&
-		vertexColor[0] == object.vertexColor[0] &&
+      vertexColor[0] == object.vertexColor[0] &&
 		vertexColor[1] == object.vertexColor[1] &&
 		vertexColor[2] == object.vertexColor[2] &&
 		vertexColor[3] == object.vertexColor[3] &&

@@ -21,8 +21,8 @@ Camera::Camera(bool active, GLuint programID,  GLuint type, GLfloat left, GLfloa
     this->upX = upX;
     this->upY = upY;
     this->upZ = upZ;
-
-
+    mProjection = mat4(1.0f);
+    mView = mat4(1.0f);
     initCamera(active, programID, type, left, right, bottom, top, znear, zfar, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
 }
 
@@ -34,31 +34,52 @@ Camera::~Camera()
 void Camera::initCamera(bool active, GLuint programID,  GLuint type, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat znear, GLfloat zfar,
            GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ)
 {
-    this->active = active;
+   this->active = active;
 	this->programID = programID;
 
-    initProjection(type, left, right, bottom, top, zNear, zFar);
+	//Init Samplers
+	GLint maxTextureUnits = 0;
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
 
-    initView(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+	int samplers[maxTextureUnits];
+	for (uint i = 0; i < maxTextureUnits; i++)
+	{
+		samplers[i] = i;
+   }
 
-    initOrigin(eyeX, eyeY, eyeZ);
+	glUniform1iv(glGetUniformLocation(programID, "fSamplers"), maxTextureUnits, samplers);
 
-    projection = mat4(1.0f);
-	view = mat4(1.0f);
-	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
+
+   initProjection(type, left, right, bottom, top, zNear, zFar);
+
+   initView(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+
+   initOrigin(eyeX, eyeY, eyeZ);
+
+	glUniformMatrix4fv(glGetUniformLocation(programID, "mProjectionMatrix"), 1, GL_FALSE, &mProjection[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(programID, "mViewMatrix"), 1, GL_FALSE, &mView[0][0]);
+
 }
 
 void Camera::initProjection(GLuint type, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat znear, GLfloat zfar)
 {
-    this->projectionType = type;
-    this->left = left;
-    this->right = right;
-    this->top = top;
-    this->bottom = bottom;
-    this->zNear = znear;
-    this->zFar = zfar;
-	projection = glm::ortho(left, right, bottom, top, znear, zfar);
+   this->projectionType = type;
+   this->left = left;
+   this->right = right;
+   this->top = top;
+   this->bottom = bottom;
+   this->zNear = znear;
+   this->zFar = zfar;
+
+   if(type == 0)
+   {
+      mProjection = glm::ortho(left, right, bottom, top, znear, zfar);
+   }
+   else
+   {
+      mProjection = glm::perspective(45.0f, (abs(right-left)/abs(top-bottom)), znear, zfar);
+   }
+
 }
 
 void Camera::initView(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ)
@@ -72,7 +93,9 @@ void Camera::initView(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX,
     this->upX = upX;
     this->upY = upY;
     this->upZ = upZ;
-    view = glm::lookAt(vec3(eyeX, eyeY, eyeZ), vec3(centerX, centerY, centerZ), vec3(upX, upY, upZ));
+    mView = glm::lookAt(vec3(eyeX, eyeY, eyeZ),
+                        vec3(centerX, centerY, centerZ),
+                        vec3(upX, upY, upZ));
 }
 
 void Camera::initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ)
@@ -80,7 +103,7 @@ void Camera::initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ)
     this->eyeX = eyeX;
     this->eyeY = eyeY;
     this->eyeZ = eyeZ;
-	view = glm::translate(view, vec3(eyeX, eyeY, eyeZ));
+    mView = glm::translate(mView, vec3(eyeX, eyeY, eyeZ));
 }
 
 
@@ -89,8 +112,13 @@ void Camera::print()const
     cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Camera Info:" << endl;
 	cout << "Program ID = " << programID << endl;
+	cout << "Samplers Location = " << glGetUniformLocation(programID, "fSamplers") << endl;
+	cout << "Projection Matrix Location = " << glGetUniformLocation(programID, "mProjectionMatrix") << endl;
+   cout << "View Matrix Location = " << glGetUniformLocation(programID, "mViewMatrix") << endl;
 	cout << "Active ="<< active << endl;
-    cout << "Projection Type ="<<projectionType << endl;
+    cout << "Projection Type = ";
+    if(projectionType == 0)  { cout<<"Ortho"<<endl; }
+    else { cout<<"Perspective"<<endl;}
     cout << "Left = "<< left << endl;
     cout << "Right = "<< right << endl;
     cout << "Top = "<< top << endl;
@@ -109,3 +137,29 @@ void Camera::print()const
     cout << "Camera Info:" << endl;
     cout << "******************************************************************************************************************************************************************************" << endl;
 }
+
+
+/*
+//Init Samplers
+	int samplers[32];
+	for (uint i = 0; i < 32; i++)
+		samplers[i] = i;
+
+	glUniform1iv(glGetUniformLocation(programID, "fSamplers"), 32, samplers);
+
+	//Init Matrices to 1
+	projection = mat4(1.0f);
+	view = mat4(1.0f);
+
+	//Init Projection
+	projection = glm::ortho(0.0f, float(viewPort.w), 0.0f, float(viewPort.h), 1000.0f, -1000.0f);
+
+	//Init Camera
+	view = glm::lookAt(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, -1.0f), vec3(0.0f, 1.0f, 0.0f));
+
+	//Init Origin
+	view = glm::translate(view, vec3(0.0f, 0.0f, 0.0f));
+
+	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
+*/

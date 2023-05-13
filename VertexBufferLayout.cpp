@@ -45,6 +45,8 @@ void VertexBufferLayout::print() const
 	cout << "*****************************************************" << endl;
 	cout << "Vertex Buffer Layout Info:" << endl;
 	cout << "Program ID = "<<shaderProgramID << endl;
+	cout << "Attribute Name = " << attributeName<<endl;
+	cout << "Attribute Location = " << attributeLocation<<endl;
 	cout << "Stride Size = " << strideSize << endl;
 	cout << "Count = " << count << endl;
 

@@ -154,6 +154,8 @@ void ObjectManager::updateVertexBuffer()
 
 void ObjectManager::updateDataArray(Sprite *sprite, GLuint offset)
 {
+
+
 	updatePosition(sprite, offset + 0);
 	updateTexture(sprite, offset + 3);
 	updateColor(sprite, offset + 7);
@@ -164,7 +166,15 @@ void ObjectManager::updateDataArray(Sprite *sprite, GLuint offset)
 
 void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 {
-	//glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
+   GLint pageDimensionX = 0;
+   GLint pageDimensionY = 0;
+
+	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->texturePalette);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &pageDimensionX);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &pageDimensionY);
+	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+   //glVertex3f(-image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
 	dataArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.y;
@@ -173,7 +183,7 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset += (20 - 2);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, -image->pivotY.value, -image->pivotZ.value);
-	dataArray[offset] = (sprite->tileDimension.x / sprite->pageDimension.x) - sprite->transformation.pivot.x;
+	dataArray[offset] = (sprite->tileDimension.x / pageDimensionX) - sprite->transformation.pivot.x;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.y;
 	offset++;
@@ -181,9 +191,9 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	offset += (20 - 2);
 
 	//glVertex3f(float(pImage->w) - image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value);
-	dataArray[offset] = (sprite->tileDimension.x / sprite->pageDimension.x) - sprite->transformation.pivot.x;
+	dataArray[offset] = (sprite->tileDimension.x / pageDimensionX) - sprite->transformation.pivot.x;
 	offset++;
-	dataArray[offset] = (sprite->tileDimension.y / sprite->pageDimension.y) - sprite->transformation.pivot.y;
+	dataArray[offset] = (sprite->tileDimension.y / pageDimensionY) - sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
 	offset += (20 - 2);
@@ -191,22 +201,29 @@ void ObjectManager::updatePosition(Sprite *sprite, GLuint offset)
 	//glVertex3f(-image->pivotX.value, float(pImage->h) - image->pivotY.value, -image->pivotZ.value)
 	dataArray[offset] = -sprite->transformation.pivot.x;
 	offset++;
-	dataArray[offset] = (sprite->tileDimension.y / sprite->pageDimension.y) - sprite->transformation.pivot.y;
+	dataArray[offset] = (sprite->tileDimension.y / pageDimensionY) - sprite->transformation.pivot.y;
 	offset++;
 	dataArray[offset] = -sprite->transformation.pivot.z;
 }
 
 void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 {
-	GLfloat textureX = ( (sprite->tileCell.x * sprite->tileDimension.x) + (1 *  sprite->tileCell.x) ) / sprite->pageDimension.x;
-	GLfloat textureY = ( (sprite->tileCell.y * sprite->tileDimension.y) + (1 *  sprite->tileCell.y) ) / sprite->pageDimension.y;
-	GLfloat textureW = sprite->tileDimension.x / sprite->pageDimension.x;
-	GLfloat textureH = sprite->tileDimension.y / sprite->pageDimension.y;
+   GLint pageDimensionX = 0;
+   GLint pageDimensionY = 0;
+	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->texturePalette);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &pageDimensionX);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &pageDimensionY);
+	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+  	GLfloat textureX = ( (sprite->tileCell.x * sprite->tileDimension.x) + (1 *  sprite->tileCell.x) ) / pageDimensionX;
+	GLfloat textureY = ( (sprite->tileCell.y * sprite->tileDimension.y) + (1 *  sprite->tileCell.y) ) / pageDimensionY;
+	GLfloat textureW = sprite->tileDimension.x / pageDimensionX;
+	GLfloat textureH = sprite->tileDimension.y / pageDimensionY;
 
 	if(sprite->ptrAnimation != nullptr)
 	{
 		sprite->ptrAnimation->update();
-		textureX = ( ( (sprite->tileCell.x + sprite->ptrAnimation->actualFrame) *  sprite->tileDimension.x ) + (1 *  sprite->tileCell.x) ) / sprite->pageDimension.x;
+		textureX = ( ( (sprite->tileCell.x + sprite->ptrAnimation->actualFrame) *  sprite->tileDimension.x ) + (1 *  sprite->tileCell.x) ) / pageDimensionX;
 	}
 
 	//glTexCoord2f(image->textureX.value, image->textureY.value + image->textureHeight.value);

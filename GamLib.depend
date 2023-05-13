@@ -99,7 +99,7 @@
 1683158995 /home/francis/Documents/Code Blocks/GamLib/FSMState.h
 	"stdafx.h"
 
-1682884279 /home/francis/Documents/Code Blocks/GamLib/GraphicElement.h
+1683952854 /home/francis/Documents/Code Blocks/GamLib/GraphicElement.h
 	"stdafx.h"
 
 1682884422 /home/francis/Documents/Code Blocks/GamLib/Animation.h
@@ -164,22 +164,22 @@
 1682884329 /home/francis/Documents/Code Blocks/GamLib/SoundManager.h
 	"stdafx.h"
 
-1683157742 /home/francis/Documents/Code Blocks/GamLib/Camera.h
+1683857839 /home/francis/Documents/Code Blocks/GamLib/Camera.h
 	"stdafx.h"
 
-1683158880 /home/francis/Documents/Code Blocks/GamLib/Scene.h
+1683764822 /home/francis/Documents/Code Blocks/GamLib/Scene.h
 	"stdafx.h"
 
-1683592005 /home/francis/Documents/Code Blocks/GamLib/Renderer.h
+1683671283 /home/francis/Documents/Code Blocks/GamLib/Renderer.h
 	"stdafx.h"
 
-1683590942 /home/francis/Documents/Code Blocks/GamLib/Game.h
+1683671328 /home/francis/Documents/Code Blocks/GamLib/Game.h
 	"stdafx.h"
 
 1683158957 /home/francis/Documents/Code Blocks/GamLib/EventManager.h
 	"stdafx.h"
 
-1682173834 source:/home/francis/Documents/Code Blocks/GamLib/Camera.cpp
+1683857671 source:/home/francis/Documents/Code Blocks/GamLib/Camera.cpp
 	"stdafx.h"
 
 1682884142 source:/home/francis/Documents/Code Blocks/GamLib/Entity.cpp
@@ -193,7 +193,7 @@
 1602986904 source:/home/francis/Documents/Code Blocks/GamLib/FrameBuffer.cpp
 	"stdafx.h"
 
-1683590979 source:/home/francis/Documents/Code Blocks/GamLib/Game.cpp
+1683671317 source:/home/francis/Documents/Code Blocks/GamLib/Game.cpp
 	"stdafx.h"
 
 1682884495 source:/home/francis/Documents/Code Blocks/GamLib/IndexBuffer.cpp
@@ -214,7 +214,7 @@
 1682884484 source:/home/francis/Documents/Code Blocks/GamLib/Mechanics.cpp
 	"stdafx.h"
 
-1682884482 source:/home/francis/Documents/Code Blocks/GamLib/ObjectManager.cpp
+1683769331 source:/home/francis/Documents/Code Blocks/GamLib/ObjectManager.cpp
 	"stdafx.h"
 
 1602981969 source:/home/francis/Documents/Code Blocks/GamLib/PackBuffer.cpp
@@ -226,19 +226,19 @@
 1683238092 source:/home/francis/Documents/Code Blocks/GamLib/RenderBuffer.cpp
 	"stdafx.h"
 
-1683592148 source:/home/francis/Documents/Code Blocks/GamLib/Renderer.cpp
+1683764522 source:/home/francis/Documents/Code Blocks/GamLib/Renderer.cpp
 	"stdafx.h"
 
-1683587283 source:/home/francis/Documents/Code Blocks/GamLib/Scene.cpp
+1683858711 source:/home/francis/Documents/Code Blocks/GamLib/Scene.cpp
 	"stdafx.h"
 
-1683591258 source:/home/francis/Documents/Code Blocks/GamLib/Shader.cpp
+1683604269 source:/home/francis/Documents/Code Blocks/GamLib/Shader.cpp
 	"stdafx.h"
 
-1682981780 source:/home/francis/Documents/Code Blocks/GamLib/SoundManager.cpp
+1683675066 source:/home/francis/Documents/Code Blocks/GamLib/SoundManager.cpp
 	"stdafx.h"
 
-1682884464 source:/home/francis/Documents/Code Blocks/GamLib/Sprite.cpp
+1683953328 source:/home/francis/Documents/Code Blocks/GamLib/Sprite.cpp
 	"stdafx.h"
 
 1682884462 source:/home/francis/Documents/Code Blocks/GamLib/Texture.cpp
@@ -247,10 +247,10 @@
 1603037623 source:/home/francis/Documents/Code Blocks/GamLib/TextureBuffer.cpp
 	"stdafx.h"
 
-1682884458 source:/home/francis/Documents/Code Blocks/GamLib/TextureManager.cpp
+1683768310 source:/home/francis/Documents/Code Blocks/GamLib/TextureManager.cpp
 	"stdafx.h"
 
-1683511550 source:/home/francis/Documents/Code Blocks/GamLib/TileMapManager.cpp
+1683953447 source:/home/francis/Documents/Code Blocks/GamLib/TileMapManager.cpp
 	"stdafx.h"
 
 1682884451 source:/home/francis/Documents/Code Blocks/GamLib/Track.cpp
@@ -277,6 +277,6 @@
 1682884430 source:/home/francis/Documents/Code Blocks/GamLib/VertexBuffer.cpp
 	"stdafx.h"
 
-1682884425 source:/home/francis/Documents/Code Blocks/GamLib/VertexBufferLayout.cpp
+1683678212 source:/home/francis/Documents/Code Blocks/GamLib/VertexBufferLayout.cpp
 	"stdafx.h"
 

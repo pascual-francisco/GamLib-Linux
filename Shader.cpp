@@ -162,12 +162,14 @@ void Shader::attach()
 	glAttachShader(programID, fragmentID);
 	glLinkProgram(programID);
 	glUseProgram(programID);
+	cout<<"Shader Attached"<<endl;
 }
 
 void Shader::detach()
 {
 	glDetachShader(programID, vertexID);
 	glDetachShader(programID, fragmentID);
+	cout<<"Shader Detached"<<endl;
 }
 
 void Shader::print() const
