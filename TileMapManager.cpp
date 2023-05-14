@@ -38,8 +38,8 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	maxTextureUnits = 0;
 	frameCounter = 0;
 
-	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits * 6;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+	batchDrawOffset = maxTextureUnits;
 	pageTileCount = pageTiles;
 	mapPageCount = mapDataCount / pageTileCount;
 
@@ -524,10 +524,10 @@ void TileMapManager::batchDraw()
 
 	//Define offset to texture unit on vertex buffer
 	GLuint offset = 6;
-	//Draw vertices in groups of GL_MAX_TEXTURE_IMAGE_UNITS
+	//Draw vertices in groups of GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS
 	for (uint i = 0; i < batchDrawCalls; i++)
 	{
-		//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
+		//Bind each quad texture to GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS
 		for (int j = 0; j < maxTextureUnits; j++)
 		{
 			if(vertexArray[offset] == 100)

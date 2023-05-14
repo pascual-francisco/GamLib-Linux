@@ -37,19 +37,6 @@ void Camera::initCamera(bool active, GLuint programID,  GLuint type, GLfloat lef
    this->active = active;
 	this->programID = programID;
 
-	//Init Samplers
-	GLint maxTextureUnits = 0;
-	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-
-	int samplers[maxTextureUnits];
-	for (uint i = 0; i < maxTextureUnits; i++)
-	{
-		samplers[i] = i;
-   }
-
-	glUniform1iv(glGetUniformLocation(programID, "fSamplers"), maxTextureUnits, samplers);
-
-
    initProjection(type, left, right, bottom, top, zNear, zFar);
 
    initView(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
@@ -96,6 +83,9 @@ void Camera::initView(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX,
     mView = glm::lookAt(vec3(eyeX, eyeY, eyeZ),
                         vec3(centerX, centerY, centerZ),
                         vec3(upX, upY, upZ));
+
+
+
 }
 
 void Camera::initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ)
@@ -104,6 +94,7 @@ void Camera::initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ)
     this->eyeY = eyeY;
     this->eyeZ = eyeZ;
     mView = glm::translate(mView, vec3(eyeX, eyeY, eyeZ));
+
 }
 
 
@@ -137,29 +128,3 @@ void Camera::print()const
     cout << "Camera Info:" << endl;
     cout << "******************************************************************************************************************************************************************************" << endl;
 }
-
-
-/*
-//Init Samplers
-	int samplers[32];
-	for (uint i = 0; i < 32; i++)
-		samplers[i] = i;
-
-	glUniform1iv(glGetUniformLocation(programID, "fSamplers"), 32, samplers);
-
-	//Init Matrices to 1
-	projection = mat4(1.0f);
-	view = mat4(1.0f);
-
-	//Init Projection
-	projection = glm::ortho(0.0f, float(viewPort.w), 0.0f, float(viewPort.h), 1000.0f, -1000.0f);
-
-	//Init Camera
-	view = glm::lookAt(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, -1.0f), vec3(0.0f, 1.0f, 0.0f));
-
-	//Init Origin
-	view = glm::translate(view, vec3(0.0f, 0.0f, 0.0f));
-
-	glUniformMatrix4fv(glGetUniformLocation(programID, "vProjection"), 1, GL_FALSE, &projection[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(programID, "vView"), 1, GL_FALSE, &view[0][0]);
-*/

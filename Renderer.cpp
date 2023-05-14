@@ -37,6 +37,8 @@ Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint 
 	if(shaders[actualShader] != nullptr)
       shaders[actualShader]->attach();
 
+
+   logFile.close();
 }
 
 Renderer::~Renderer()
@@ -198,12 +200,27 @@ void Renderer::initGlew()
 		logFile << "GLEW Error: Need GLX display for GLX support" << endl;
 		exit(EXIT_FAILURE);
 	}
+
 }
 
 void Renderer::initShader(string vertex, string fragment)
 {
 	//Initialize all the program shaders//
 	shaders.push_back(new Shader(assetsPath, (assetsPath + vertex).c_str(), (assetsPath + fragment).c_str()));
+
+   //Init Samplers//
+	GLint maxTextureUnits = 0;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+	logFile << "GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = "<<maxTextureUnits<< endl;
+
+
+	int samplers[maxTextureUnits];
+	for (uint i = 0; i < maxTextureUnits; i++)
+	{
+		samplers[i] = i;
+   }
+
+	glUniform1iv(glGetUniformLocation(shaders[actualShader]->programID, "fSamplers"), maxTextureUnits, samplers);
 }
 
 void Renderer::activateShader(GLuint id)

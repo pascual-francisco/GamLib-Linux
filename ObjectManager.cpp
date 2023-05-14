@@ -15,8 +15,8 @@ ObjectManager::ObjectManager(GLuint program, GLenum mode)
 	programID = program;
 	drawingMode = mode;
 	maxTextureUnits = 0;
-	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits * 6;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+	batchDrawOffset = maxTextureUnits;
 	batchDrawCount = 0;
 	batchDrawCalls = 0;
 	textureCounter = 0;
@@ -389,7 +389,7 @@ void ObjectManager::batchDraw(GLenum mode)
 
 	if ((dataArray.size() / quadFloatCount) < GLuint(maxTextureUnits))
 	{
-		//Bind each quad texture to 32 texture units
+		//Bind each quad texture to GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS texture units
 		for (uint j = 0; j < (dataArray.size() / quadFloatCount); j++)
 		{
                 if(dataArray[offset] == 100)
@@ -415,10 +415,10 @@ void ObjectManager::batchDraw(GLenum mode)
 	}
 	else
 	{
-		//Draw vertices in groups of GL_MAX_TEXTURE_IMAGE_UNITS
+		//Draw vertices in groups of GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS
 		for (uint i = 0; i < batchDrawCalls; i++)
 		{
-			//Bind each quad texture to GL_MAX_TEXTURE_IMAGE_UNITS
+			//Bind each quad texture to GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS
 			for (int j = 0; j < maxTextureUnits; j++)
 			{
 				if(dataArray[offset] == 100)
