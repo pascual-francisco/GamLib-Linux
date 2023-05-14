@@ -217,7 +217,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset += (20 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value + image->textureHeight.value);
-	dataArray[offset] = sprite->tilePosition.x; + sprite->tileDimension.x;
+	dataArray[offset] = sprite->tilePosition.x + sprite->tileDimension.x;
 	offset++;
 	dataArray[offset] = sprite->tilePosition.y + sprite->tileDimension.y;
 	offset++;
@@ -227,7 +227,7 @@ void ObjectManager::updateTexture(Sprite *sprite, GLuint offset)
 	offset += (20 - 3);
 
 	//glTexCoord2f(image->textureX.value + image->textureWidth.value, image->textureY.value);
-	dataArray[offset] = sprite->tilePosition.x; + sprite->tileDimension.x;
+	dataArray[offset] = sprite->tilePosition.x + sprite->tileDimension.x;
 	offset++;
 	dataArray[offset] = sprite->tilePosition.y;
 	offset++;
