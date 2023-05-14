@@ -343,7 +343,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 	//glTexCoord2f(image->textureX.value, image->textureY.value + image->textureHeight.value);
 	vertexArray[offset] = textureX;
 	offset++;
-	vertexArray[offset] = textureX + textureH;
+	vertexArray[offset] = textureY + textureH;
 	offset++;
 	vertexArray[offset] = GLfloat(sprite->palettePage);
 	offset++;
