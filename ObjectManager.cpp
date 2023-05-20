@@ -16,7 +16,7 @@ ObjectManager::ObjectManager(GLuint program, GLenum mode)
 	drawingMode = mode;
 	maxTextureUnits = 0;
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits;
+	batchDrawOffset = maxTextureUnits * 6;
 	batchDrawCount = 0;
 	batchDrawCalls = 0;
 	textureCounter = 0;
@@ -496,7 +496,7 @@ void ObjectManager::printDataArray() const
 		cout << dataArray[i] << ",    ";
 	}
 
-	cout << "Buffer Data: " << endl;
+	cout <<endl<< "Buffer Data: " << endl;
 	cout <<endl<< "******************************************************************************************************************************************************************************" << endl;
 }
 

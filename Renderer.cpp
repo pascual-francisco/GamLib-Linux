@@ -7,7 +7,7 @@ GLfloat Renderer::ACOSTABLE[360];
 GLfloat Renderer::ASINTABLE[360];
 GLfloat Renderer::ATANTABLE[360];
 
-Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint h)
+Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint h, GLfloat z)
 {
 	debugMode = mode;
 	active = true;
@@ -18,6 +18,7 @@ Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint 
 	viewPort.y = y;
 	viewPort.w = w;
 	viewPort.h = h;
+	zoomFactor = z;
 	assetsPath = path;
 	actualShader = 0;
 
@@ -27,6 +28,7 @@ Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint 
 	ptrPixelBuffer = nullptr;
 	ptrTextureManager = nullptr;
 	ptrTextureBuffer = nullptr;
+	ptrCamera = nullptr;
 
 	initGlobals();
 	initSDL();
@@ -37,8 +39,22 @@ Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint 
 	if(shaders[actualShader] != nullptr)
       shaders[actualShader]->attach();
 
+   //Init Camera//
+   glViewport(0, 0, viewPort.w * zoomFactor, viewPort.h * zoomFactor);
+   ptrCamera = new Camera();
+	glUniformMatrix4fv(glGetUniformLocation(shaders[actualShader]->programID, "mProjectionMatrix"), 1, GL_FALSE, &ptrCamera->mProjection[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shaders[actualShader]->programID, "mViewMatrix"), 1, GL_FALSE, &ptrCamera->mView[0][0]);
 
-   logFile.close();
+   //Init Samplers//
+	GLint maxTextureUnits = 0;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+	logFile << "GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS "<<maxTextureUnits<< endl;
+
+	int samplers[maxTextureUnits];
+	for (uint i = 0; i < maxTextureUnits; i++)
+      samplers[i] = i;
+
+	glUniform1iv(glGetUniformLocation(shaders[0]->programID, "fSamplers"), maxTextureUnits, samplers);
 }
 
 Renderer::~Renderer()
@@ -48,6 +64,7 @@ Renderer::~Renderer()
 	delete ptrTextureManager;
 	delete ptrTextureBuffer;
 	delete ptrPixelBuffer;
+	delete ptrCamera;
 
 	logFile.close();
 }
@@ -150,8 +167,6 @@ void Renderer::initOpenGL()
 		logFile << "OpenGL initialized no error" << endl;
 	}
 
-
-
 	if (debugMode)
 	{
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -206,21 +221,7 @@ void Renderer::initGlew()
 void Renderer::initShader(string vertex, string fragment)
 {
 	//Initialize all the program shaders//
-	shaders.push_back(new Shader(assetsPath, (assetsPath + vertex).c_str(), (assetsPath + fragment).c_str()));
-
-   //Init Samplers//
-	GLint maxTextureUnits = 0;
-	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	logFile << "GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = "<<maxTextureUnits<< endl;
-
-
-	int samplers[maxTextureUnits];
-	for (uint i = 0; i < maxTextureUnits; i++)
-	{
-		samplers[i] = i;
-   }
-
-	glUniform1iv(glGetUniformLocation(shaders[actualShader]->programID, "fSamplers"), maxTextureUnits, samplers);
+   shaders.push_back(new Shader(assetsPath, (assetsPath + vertex).c_str(), (assetsPath + fragment).c_str()));
 }
 
 void Renderer::activateShader(GLuint id)
@@ -292,11 +293,14 @@ void Renderer::print() const
    cout<<"FPS = "<<FPS<<endl;
    cout<<"Actual Shader = "<<actualShader<<endl;
    cout<<"Shaders Info:"<<endl;
-
+   cout << "Samplers Location = " << glGetUniformLocation(shaders[actualShader]->programID, "fSamplers") << endl;
+	cout << "Projection Matrix Location = " << glGetUniformLocation(shaders[actualShader]->programID, "mProjectionMatrix") << endl;
+   cout << "View Matrix Location = " << glGetUniformLocation(shaders[actualShader]->programID, "mViewMatrix") << endl;
 
    for(uint i = 0; i < shaders.size() ; i++)
-   {
       shaders[i]->print();
-   }
+
+   ptrCamera->print();
+
    cout << "*****************************************************" << endl;
 }

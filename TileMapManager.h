@@ -55,9 +55,9 @@ class TileMapManager
 	VertexBufferLayout	*ptrvTraLayout;
 	VertexBufferLayout	*ptrvScaLayout;
 	VertexBufferLayout	*ptrvRotLayout;
-	IndexBuffer			*ptrIndexBuffer;
-	VertexBuffer		*ptrVertexBuffer;
-	VertexArray			*ptrVertexArray;
+	IndexBuffer			   *ptrIndexBuffer;
+	VertexBuffer		   *ptrVertexBuffer;
+	VertexArray			   *ptrVertexArray;
 
 	  TileMapManager(GLuint mapDataCount = 1, GLuint pageTiles = 224, GLuint *mapData = nullptr, GLuint viewportwidth = 256, GLuint viewportheight = 224, GLuint tilewidth = 16, GLuint tileheight = 16, GLuint tileseparation = 0, GLuint tileframetime = 0,  GLuint program = 0, GLenum mode = GL_TRIANGLES);
 	  ~TileMapManager();
@@ -72,7 +72,8 @@ class TileMapManager
 	  void loadFourthPage(GLuint pageSource = 0);
 	  void print() const;
 	  void printInfo() const;
-	  void printDataArray() const;
+	  void printVertexArray() const;
+	  void printMapTilesArray() const;
 	  void printSprites() const;
 	  void printTiles() const;
 };

@@ -39,7 +39,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	frameCounter = 0;
 
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits;
+	batchDrawOffset = maxTextureUnits * 6;
 	pageTileCount = pageTiles;
 	mapPageCount = mapDataCount / pageTileCount;
 
@@ -82,6 +82,10 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 			if(tileFrames > 0)
 			{
             (*mtit)->ptrAnimation = new Animation(0,tileFrames,0,tileFrameTime,Animation::LOOP_FORWARD);
+         }
+         else
+         {
+            (*mtit)->ptrAnimation = nullptr;
          }
 
          i++;
@@ -324,6 +328,7 @@ void TileMapManager::updateTexture(Sprite *sprite, GLuint offset)
 {
    GLint pageDimensionX = 0;
    GLint pageDimensionY = 0;
+
 	glBindTexture(GL_TEXTURE_2D_ARRAY, sprite->texturePalette);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_WIDTH, &pageDimensionX);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY, 0, GL_TEXTURE_HEIGHT, &pageDimensionY);
@@ -563,7 +568,7 @@ void TileMapManager::print() const
 {
 	printInfo();
 	printSprites();
-	printDataArray();
+	printVertexArray();
 }
 
 void TileMapManager::printInfo() const
@@ -586,7 +591,7 @@ void TileMapManager::printInfo() const
 	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 
-void TileMapManager::printDataArray() const
+void TileMapManager::printVertexArray() const
 {
 	cout << "******************************************************************************************************************************************************************************" << endl;
 	cout << "Buffer Data: " << endl;
@@ -599,10 +604,28 @@ void TileMapManager::printDataArray() const
 			if (i % vertexBufferStrideCount == 0)
 				cout << endl;
 		}
-		cout << vertexArray[i] << ",    ";
+		cout << vertexArray[i] << ", ";
 	}
 
 	cout << endl<< "Buffer Data: " << endl;
+	cout << "******************************************************************************************************************************************************************************" << endl;
+}
+
+void TileMapManager::printMapTilesArray() const
+{
+	cout << "******************************************************************************************************************************************************************************" << endl;
+	cout << "Map Tiles Data: " << endl;
+	for (uint i = 0; i < mapTilesArray.size(); i++)
+	{
+		if (i > 0)
+		{
+			if (i % vertexBufferStrideCount == 0)
+				cout << endl;
+		}
+		cout << mapTilesArray[i] << ",";
+	}
+
+	cout << endl<< "Map Tiles Data: " << endl;
 	cout << "******************************************************************************************************************************************************************************" << endl;
 }
 

@@ -22,8 +22,10 @@ class Renderer
 	TextureBuffer	   *ptrTextureBuffer;
    vector<Shader *>  shaders;
    GLuint            actualShader;
+   Camera            *ptrCamera;
+   GLfloat           zoomFactor;
 
-    Renderer(bool mode = true, string path = "Assets/Shaders/" ,  GLuint x = 0, GLuint y = 0, GLuint w = 256, GLuint h = 224);
+    Renderer(bool mode = true, string path = "Assets/Shaders/" ,  GLuint x = 0, GLuint y = 0, GLuint w = 256, GLuint h = 224, GLfloat z = 3.0f);
 	~Renderer();
 
 	virtual void	initGlobals();
