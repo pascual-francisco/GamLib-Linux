@@ -1,12 +1,13 @@
 #include "stdafx.h"
 
-Game::Game(bool mode, string file,  GLfloat x, GLfloat y, GLfloat w, GLfloat h)
+Game::Game(string name, bool mode, string file, GLfloat w, GLfloat h)
 {
 	active = true;
 	actualScene = 0;
 	assetsPath = file;
-	viewPort.x = x;
-	viewPort.y = y;
+	gameName = name;
+	viewPort.x = 0.0f;
+	viewPort.y = 0.0f;
 	viewPort.w = w;
 	viewPort.h = h;
 	debugMode = mode;
@@ -23,7 +24,9 @@ Game::Game(bool mode, string file,  GLfloat x, GLfloat y, GLfloat w, GLfloat h)
 	lButton = false;
 	rButton = false;
 	ptrJoystick = nullptr;
-   ptrRenderer = new Renderer(mode, file, x, y, w, h);
+	ptrCamera = nullptr;
+   ptrRenderer = new Renderer(name, mode, file, w, h);
+
 }
 
 Game::~Game()

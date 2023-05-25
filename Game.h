@@ -8,6 +8,7 @@ class Game
 	public:
 	GLuint			actualScene;
 	string			assetsPath;
+	string         gameName;
 	SDL_FRect		viewPort;
 	bool			   active;
 	bool			   debugMode;
@@ -29,9 +30,10 @@ class Game
 	Renderer		   *ptrRenderer;
 	TextureManager	*ptrTextureManager;
 	SoundManager	*ptrSoundManager;
+	Camera         *ptrCamera;
 	vector<Scene *> scenes;
 
-    Game(bool mode, string file,  GLfloat x, GLfloat y, GLfloat w, GLfloat h);
+    Game(string name, bool mode, string file, GLfloat w, GLfloat h);
     ~Game();
 
     virtual void	initScenes() = 0;

@@ -38,8 +38,8 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	maxTextureUnits = 0;
 	frameCounter = 0;
 
-	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits * 6;
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+   batchDrawOffset = maxTextureUnits * 6;
 	pageTileCount = pageTiles;
 	mapPageCount = mapDataCount / pageTileCount;
 
@@ -51,12 +51,12 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 	vector<Sprite *>::iterator tait;
 	vector<float >::iterator vait;
 
-	char palette = 0x00;
-	char page = 0x00;
-	short tileColumn = 0x0000;
-   short tileRow = 0x0000;
-	char tileFrames = 0x00;
-	char collisionData = 0x00;
+	int palette = 0x0;
+	int page = 0x0;
+	int tileColumn = 0x0000;
+   int tileRow = 0x0000;
+	int tileFrames = 0x00;
+	int collisionData = 0x00;
 
 	//Init all the tiles from the array of data
 
@@ -66,16 +66,18 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 
 		for (mtit = mapTilesArray.begin(); mtit != mapTilesArray.end(); mtit++)
 		{
-			palette = 		((mapData[i] & 0xF0000000) >> 28);
-			page = 			((mapData[i] & 0x0F000000) >> 24);
-			tileColumn = 	((mapData[i] & 0x00FF0000) >> 16);
-			tileRow = 		((mapData[i] & 0x0000FF00) >> 8);
-			tileFrames = 	((mapData[i] & 0x000000F0) >> 4);
-			collisionData = ((mapData[i] & 0x0000000F)     );
+         palette = 		((mapData[i]   & 0xF0000000)  >> 28);
+			page = 			((mapData[i]   & 0x0F000000) >> 24);
+			tileColumn = 	((mapData[i]   & 0x00FF0000) >> 16);
+			tileRow = 		((mapData[i]   & 0x0000FF00) >> 8);
+			tileFrames = 	((mapData[i]   & 0x000000F0) >> 4);
+			collisionData = ((mapData[i]  & 0x0000000F)     );
 
 			(*mtit) = new Sprite(palette, page);
 			(*mtit)->tilePosition.x = tileColumn;
 			(*mtit)->tilePosition.y = tileRow;
+			(*mtit)->tileDimension.x = tileWidth;
+			(*mtit)->tileDimension.y = tileHeight;
          (*mtit)->collisionData = collisionData;
 
 
@@ -98,7 +100,7 @@ TileMapManager::TileMapManager(GLuint mapDataCount, GLuint pageTiles, GLuint *ma
 		for (tait = tilesArray.begin(); tait != tilesArray.end(); tait++)
 		{
 			(*tait) = new Sprite();
-			(*tait)->tileDimension.x = tileWidth;
+         (*tait)->tileDimension.x = tileWidth;
 			(*tait)->tileDimension.y = tileHeight;
       }
 	}
@@ -239,17 +241,17 @@ void TileMapManager::loadFirstPage(GLuint pageSource)
 
 void TileMapManager::loadSecondPage(GLuint pageSource)
 {
-	loadPage(16, 0, pageSource, 1);
+	loadPage( viewPortW / tileWidth, 0, pageSource, 1);
 }
 
 void TileMapManager::loadThirdPage(GLuint pageSource)
 {
-	loadPage(0, -15, pageSource, 2);
+	loadPage(0, (viewPortH / tileHeight) - 1, pageSource, 2);
 }
 
 void TileMapManager::loadFourthPage(GLuint pageSource)
 {
-	loadPage(16, -15, pageSource, 3);
+	loadPage(viewPortW / tileWidth, (viewPortH / tileHeight) - 1, pageSource, 3);
 }
 
 void TileMapManager::updateEnitities()

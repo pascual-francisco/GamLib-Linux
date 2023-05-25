@@ -22,8 +22,8 @@ class GraphicElement
 		palettePage = 0;
       tilePosition.x = 0.0;
 		tilePosition.y = 0.0;
-		tileDimension.x = 16.0f;
-		tileDimension.y = 16.0f;
+		tileDimension.x = 0.0f;
+		tileDimension.y = 0.0f;
       transformation.pivot.x = 0;
 		transformation.pivot.y = 0;
 		transformation.pivot.z = 0;

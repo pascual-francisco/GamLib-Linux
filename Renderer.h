@@ -22,17 +22,17 @@ class Renderer
 	TextureBuffer	   *ptrTextureBuffer;
    vector<Shader *>  shaders;
    GLuint            actualShader;
-   Camera            *ptrCamera;
    GLfloat           zoomFactor;
+   string            gameName;
 
-    Renderer(bool mode = true, string path = "Assets/Shaders/" ,  GLuint x = 0, GLuint y = 0, GLuint w = 256, GLuint h = 224, GLfloat z = 3.0f);
+    Renderer(string name = "Game", bool mode = true, string path = "Assets/Shaders/", GLuint w = 256, GLuint h = 224, GLfloat z = 3.0f);
 	~Renderer();
 
 	virtual void	initGlobals();
 	virtual void	initSDL();
 	virtual void	initOpenGL();
 	virtual void	initGlew();
-	virtual void	initShader(string vertex = "texRect.vp", string fragment = "textRect.fp");
+	virtual void	initShader(string vertex = "texRect.vp", string fragment = "texRect.fp");
 	virtual void   activateShader(GLuint index);
 	virtual void	update();
 	virtual void	checkErrors();

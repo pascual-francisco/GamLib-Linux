@@ -3,9 +3,9 @@
 Camera::Camera(bool active,GLuint type, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat znear, GLfloat zfar,
            GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ)
 {
-    this->active = active;
-	this->programID = programID;
-	this->projectionType = type;
+   this->active = active;
+   this->programID = programID;
+   this->projectionType = type;
     this->left = left;
     this->right = right;
     this->top = top;
@@ -37,9 +37,7 @@ void Camera::initCamera(bool active,  GLuint type, GLfloat left, GLfloat right, 
    this->active = active;
 
    initProjection(type, left, right, bottom, top, zNear, zFar);
-
    initView(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
-
    initOrigin(eyeX, eyeY, eyeZ);
 }
 
@@ -64,26 +62,26 @@ void Camera::initProjection(GLuint type, GLfloat left, GLfloat right, GLfloat bo
 
 }
 
-void Camera::initView(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ)
+void Camera::initView(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat cx, GLfloat cy, GLfloat cz, GLfloat ux, GLfloat uy, GLfloat uz)
 {
-    this->eyeX = eyeX;
-    this->eyeY = eyeY;
-    this->eyeZ = eyeZ;
-    this->centerX = centerX;
-    this->centerY = centerY;
-    this->centerZ = centerZ;
-    this->upX = upX;
-    this->upY = upY;
-    this->upZ = upZ;
+    eyeX = ex;
+    eyeY = ey;
+    eyeZ = ez;
+    centerX = cx;
+    centerY = cy;
+    centerZ = cz;
+    upX = ux;
+    upY = uy;
+    upZ = uz;
     mView = glm::lookAt(vec3(eyeX, eyeY, eyeZ), vec3(centerX, centerY, centerZ), vec3(upX, upY, upZ));
 
 }
 
-void Camera::initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ)
+void Camera::initOrigin(GLfloat x, GLfloat y, GLfloat z)
 {
-    this->eyeX = eyeX;
-    this->eyeY = eyeY;
-    this->eyeZ = eyeZ;
+    eyeX = x;
+    eyeY = y;
+    eyeZ = z;
     mView = glm::translate(mView, vec3(eyeX, eyeY, eyeZ));
 
 }

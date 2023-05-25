@@ -36,8 +36,8 @@ class Camera
       		GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ);
 
       void initProjection(GLuint type, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar);
-      void initView(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat upX, GLfloat upY, GLfloat upZ);
-      void initOrigin(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ);
+      void initView(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat cx, GLfloat cy, GLfloat cz, GLfloat up, GLfloat uy, GLfloat uz);
+      void initOrigin(GLfloat x, GLfloat y, GLfloat z);
       void print() const;
     private:
 

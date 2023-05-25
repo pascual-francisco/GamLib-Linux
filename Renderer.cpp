@@ -7,54 +7,36 @@ GLfloat Renderer::ACOSTABLE[360];
 GLfloat Renderer::ASINTABLE[360];
 GLfloat Renderer::ATANTABLE[360];
 
-Renderer::Renderer(bool mode, string path, GLuint x, GLuint y, GLuint w, GLuint h, GLfloat z)
+Renderer::Renderer(string name, bool mode, string path, GLuint w, GLuint h, GLfloat z)
 {
+   active = true;
+	assetsPath = path;
 	debugMode = mode;
-	active = true;
-
+   gameName = name;
 	FPS = 60.0;
 	actualFrame = 0;
-	viewPort.x = x;
-	viewPort.y = y;
+	viewPort.x = 0.0f;
+	viewPort.y = 0.0f;
 	viewPort.w = w;
 	viewPort.h = h;
 	zoomFactor = z;
-	assetsPath = path;
 	actualShader = 0;
-
 	ptrWindow = nullptr;
 	ptrFrameBuffers = nullptr;
 	ptrRenderBuffers = nullptr;
 	ptrPixelBuffer = nullptr;
 	ptrTextureManager = nullptr;
 	ptrTextureBuffer = nullptr;
-	ptrCamera = nullptr;
 
 	initGlobals();
 	initSDL();
 	initOpenGL();
 	initGlew();
-	initShader();
+	initShader("texRect.vp", "texRect.fp");
 
-	if(shaders[actualShader] != nullptr)
-      shaders[actualShader]->attach();
-
-   //Init Camera//
+	//Init Camera//
    glViewport(0, 0, viewPort.w * zoomFactor, viewPort.h * zoomFactor);
-   ptrCamera = new Camera();
-	glUniformMatrix4fv(glGetUniformLocation(shaders[actualShader]->programID, "mProjectionMatrix"), 1, GL_FALSE, &ptrCamera->mProjection[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shaders[actualShader]->programID, "mViewMatrix"), 1, GL_FALSE, &ptrCamera->mView[0][0]);
 
-   //Init Samplers//
-	GLint maxTextureUnits = 0;
-	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	logFile << "GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS "<<maxTextureUnits<< endl;
-
-	int samplers[maxTextureUnits];
-	for (uint i = 0; i < maxTextureUnits; i++)
-      samplers[i] = i;
-
-	glUniform1iv(glGetUniformLocation(shaders[0]->programID, "fSamplers"), maxTextureUnits, samplers);
 }
 
 Renderer::~Renderer()
@@ -64,9 +46,7 @@ Renderer::~Renderer()
 	delete ptrTextureManager;
 	delete ptrTextureBuffer;
 	delete ptrPixelBuffer;
-	delete ptrCamera;
-
-	logFile.close();
+   logFile.close();
 }
 
 void Renderer::initGlobals()
@@ -119,7 +99,7 @@ void Renderer::initSDL()
 	}
 
 	//Create window//
-	ptrWindow = SDL_CreateWindow("2D Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, viewPort.w * 3, viewPort.h * 3, SDL_WINDOW_OPENGL);
+	ptrWindow = SDL_CreateWindow(gameName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, viewPort.w * 3, viewPort.h * 3, SDL_WINDOW_OPENGL);
 	if (ptrWindow == NULL)
 	{
 		printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -222,6 +202,9 @@ void Renderer::initShader(string vertex, string fragment)
 {
 	//Initialize all the program shaders//
    shaders.push_back(new Shader(assetsPath, (assetsPath + vertex).c_str(), (assetsPath + fragment).c_str()));
+
+   if(shaders[actualShader] != nullptr)
+      shaders[actualShader]->attach();
 }
 
 void Renderer::activateShader(GLuint id)
@@ -299,8 +282,6 @@ void Renderer::print() const
 
    for(uint i = 0; i < shaders.size() ; i++)
       shaders[i]->print();
-
-   ptrCamera->print();
 
    cout << "*****************************************************" << endl;
 }

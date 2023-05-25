@@ -15,8 +15,8 @@ ObjectManager::ObjectManager(GLuint program, GLenum mode)
 	programID = program;
 	drawingMode = mode;
 	maxTextureUnits = 0;
-	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-	batchDrawOffset = maxTextureUnits * 6;
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+   batchDrawOffset = maxTextureUnits * 6;
 	batchDrawCount = 0;
 	batchDrawCalls = 0;
 	textureCounter = 0;
